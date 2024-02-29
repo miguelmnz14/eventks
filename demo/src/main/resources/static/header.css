@@ -1,0 +1,44 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.topbar{
+    background-color: black;
+    color: red;
+    display: flex;
+    justify-content: space-between;
+}
+
+#logo{
+    width: 150px;
+    height: auto;
+}
+
+.navigation ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navigation ul li {
+    display: inline-block;
+    margin-right: 110px;
+    margin-top: 23px;
+}
+
+.navigation ul li a{
+    text-decoration: none;
+    color: red;
+    font-size: 20px;
+}
+
+.navigation ul li a:hover{
+    font-family: tag, sans-serif;
+}
+
+@font-face {
+    font-family: tag;
+    src: url("fuente.otf");
+
+}
