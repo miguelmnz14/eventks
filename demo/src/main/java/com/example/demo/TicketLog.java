@@ -7,5 +7,10 @@ public class TicketLog {
     public String entrada() {
         return "home";
     }
+    @GetMapping("/artist")
+    public String artist(){ return "artists";}
 
+    /* @GetMapping("/events")
+    public String events(){return "events";}*/
 }
+
