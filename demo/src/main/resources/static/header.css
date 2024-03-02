@@ -8,23 +8,30 @@ body{
     color: red;
     display: flex;
     justify-content: space-between;
+    font-family: Verdana, Geneva, Tahoma, sans-serif, Times, serif;
+}
+
+#picture{
+    width: 150px;
+    height: auto;
 }
 
 #logo{
-    width: 150px;
-    height: auto;
+    max-width: 150px;
 }
 
 .navigation ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    text-align: center;
 }
 
 .navigation ul li {
     display: inline-block;
-    margin-right: 110px;
-    margin-top: 23px;
+    min-width: 200px;
+    padding: 24px 10px 18px;
+    text-align: center;
 }
 
 .navigation ul li a{
@@ -35,10 +42,14 @@ body{
 
 .navigation ul li a:hover{
     font-family: tag, sans-serif;
+    font-size: 17px;
+}
+
+.navigation ul li a:active{
+    color: white;
 }
 
 @font-face {
     font-family: tag;
     src: url("fuente.otf");
-
 }
