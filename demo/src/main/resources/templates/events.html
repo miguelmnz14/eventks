@@ -7,11 +7,16 @@
 <body>
 {{>header}}
 <h1>Proximos Eventos</h1>
-<ul>
-    <li><a href="evento1.html">Evento 1</a></li>
-    <li><a href="evento2.html">Evento 2</a></li>
-    <li><a href="evento3.html">Evento 3</a></li>
-    <li><a href="evento4.html">Evento 4</a></li>
-</ul>
+
+
+{{#events}}
+<a href="/events/{{-index}}">{{name}} </a><br>
+{{/events}}
+
+{{^events}}
+<p>Todavia no hay eventos.</p>
+{{/events}}
+
+
 </body>
 </html>

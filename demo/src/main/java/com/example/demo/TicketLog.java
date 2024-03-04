@@ -10,8 +10,7 @@ public class TicketLog {
     }
     @GetMapping("/artist")
     public String artist(){ return "artists";}
-
-    @GetMapping("/events")
-    public String events(){return "events";}
 }
+
+
 
