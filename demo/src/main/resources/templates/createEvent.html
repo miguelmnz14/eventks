@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Crea un nuevo evento</h1>
+<form action="/events/new" method="post">
+
+    <p>Nombre: </p>
+    <input type="text"  name="name"><br>
+
+    <p>Descripccion: </p>
+    <textarea name="description"></textarea><br>
+
+    <p>artistas</p>
+    <input type="text" name="artists"><br>
+
+    <p>Precio por entrada: </p>
+    <input type="number" name="price" step="0.1"><br>
+
+    <p>Ticktes disponibles: </p>
+    <input type="number" name="ticketsAvailable"><br>
+
+    <input type="submit" value="Crear Evento"/>
+</form>
+</body>
+</html>
