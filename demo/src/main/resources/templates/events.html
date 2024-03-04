@@ -6,17 +6,16 @@
 </head>
 <body>
 {{>header}}
-<h1>Proximos Eventos</h1>
+    <h1>Proximos Eventos</h1>
 
 
-{{#events}}
-<a href="/events/{{-index}}">{{name}} </a><br>
-{{/events}}
+    {{#events}}
+    <a href="/events/{{-index}}">{{name}} </a><br>
+    {{/events}}
 
-{{^events}}
-<p>Todavia no hay eventos.</p>
-{{/events}}
-
-
+    {{^events}}
+    <p>Todavia no hay eventos.</p>
+    {{/events}}
+{{>footer}}
 </body>
 </html>
