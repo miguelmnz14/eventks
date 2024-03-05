@@ -1,13 +1,10 @@
-*{
+footer{
+    font-family: sans-serif;
+    text-decoration: none;
     margin: 0;
     padding: 0;
     text-decoration: none;
     color: white;
-}
-
-body{
-    font-family: sans-serif;
-    text-decoration: none;
 }
 
 .container{
