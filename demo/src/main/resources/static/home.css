@@ -58,10 +58,11 @@ body{
     font-size: 30px;
 }
 
-#image-slide-container{
+#slideshow-container {
     width: 100%;
     height: auto;
     overflow: hidden;
+    max-height: 300px;
 }
 
 .slide {
@@ -69,6 +70,7 @@ body{
     height: auto;
     display: none;
 }
+
 
 @font-face {
     font-family: tag1;
