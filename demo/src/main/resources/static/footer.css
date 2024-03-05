@@ -3,8 +3,6 @@ footer{
     text-decoration: none;
     margin: 0;
     padding: 0;
-    text-decoration: none;
-    color: white;
 }
 
 .container{
@@ -28,6 +26,8 @@ footer{
 .links a{
     margin-right: 20px;
     font-size: 23px;
+    color: white;
+    text-decoration: none;
 }
 
 .links a:last-child{
@@ -45,6 +45,8 @@ footer{
 
 .social-media a{
     margin-right: 20px;
+    color: white;
+    text-decoration: none;
 }
 
 .social-media a:last-child{
