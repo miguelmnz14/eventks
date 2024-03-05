@@ -1,10 +1,7 @@
 package com.example.demo;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 
 import java.util.ArrayList;
@@ -37,4 +34,23 @@ public class EventController {
         events.add(event);
         return "eventSubmitted";
     }
+    @GetMapping("/events/delete/{numEvent}")
+    public String deleteEvent(Model model,@PathVariable int numEvent){
+        events.remove(numEvent-1);
+        return "eventDeleted";
+    }
+    @GetMapping("/events/edit/{numEvent}")
+    public String modifyEvent(Model model,@PathVariable int numEvent){
+        Event event=events.get(numEvent-1);
+        model.addAttribute("event", event);
+        model.addAttribute("numEvent", numEvent);
+        return "modifyEvent";
+    }
+    @PostMapping("/events/edit/{numEvent}")
+    public String changeEvent(Model model,Event updateEvent,@PathVariable int numEvent){
+        events.set(numEvent-1,updateEvent);
+        return "eventTemplate";
+    }
+
+
 }
