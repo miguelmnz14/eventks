@@ -10,6 +10,10 @@
 <p>tickets disponibles::{{event.ticketsAvailable}}</p>
 <p>precio::::{{event.price}}</p>
 <p>los artistas son:: {{event.artists}}</p>
+{{#event.image}}
+<img class="img-thumbnail" src="/events/{{event.id}}/image">
+
+{{/event.image}}
 
 </body>
 </html>

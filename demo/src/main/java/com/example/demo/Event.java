@@ -1,11 +1,13 @@
 package com.example.demo;
 
 public class Event {
+    private Long id=null;
     private String name;
     private String description;
     private String artists;
     private double price;
     private int ticketsAvailable;
+    private String image;
     public Event(){
 
     }
@@ -16,6 +18,10 @@ public class Event {
         this.artists=artists;
         this.price=price;
         this.ticketsAvailable=ticketsAvailable;
+    }
+    public Long getId(){return id;}
+    public void setId(Long id){
+        this.id=id;
     }
     public String getName(){
         return name;
@@ -46,6 +52,13 @@ public class Event {
     }
     public void setTicketsAvailable(int ticketsAvailable){
         this.ticketsAvailable=ticketsAvailable;
+    }
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override

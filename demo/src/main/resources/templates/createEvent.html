@@ -6,9 +6,10 @@
 </head>
 <body>
 <h1>Crea un nuevo evento</h1>
-<form action="/events/new" method="post">
+<form action="/events/new" method="post" enctype="multipart/form-data">
 
     <p>Nombre: </p>
+
     <input type="text"  name="name"><br>
 
     <p>Descripcion: </p>
@@ -22,6 +23,8 @@
 
     <p>Ticktes disponibles: </p>
     <input type="number" name="ticketsAvailable"><br>
+    <p>Image file:</p>
+    <input type='file' name='imageField' accept=".jpg, .jpeg"/>
 
     <input type="submit" value="Crear Evento"/>
 </form>
