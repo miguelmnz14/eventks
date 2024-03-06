@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Modifica el evento</h1>
-<form action="/events/edit/{{numEvent}}" method="post">
+<form action="/events/{{id}}/edit" method="post" enctype="multipart/form-data">
 
     <p>Nombre: </p>
     <input type="text"  name="name" value="{{event.name}}"><br>
@@ -21,9 +21,11 @@
 
     <p>Ticktes disponibles: </p>
     <input type="number" name="ticketsAvailable" value="{{event.ticketsAvailable}}"><br>
-    <input type="hidden" name="numEvent" value="{{numEvent}}">
+    <input type='file' name='imageField' accept=".jpg, .jpeg" value="{{event.image}}"/>
+    <input type="hidden" name="numEvent" value="{{id}}">
 
     <input type="submit" value="Modificar"/>
 </form>
+
 </body>
 </html>

@@ -1,54 +1,100 @@
 package com.example.demo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.io.IOException;
 
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Controller
 public class EventController {
-    private List<Event> events = new ArrayList<>();
-    public EventController() {
-        events.add(new Event("Ejemplo", "Descripccion del ejemplo", "artista del ejemplo",20,30));
-        events.add(new Event("Esto es otro ej", "Descripccion del otroejemplo", "peter parker",10.3,30));
-    }
+    private static final String POSTS_FOLDER = "events";
+    @Autowired
+    private EventService eventService;
+    @Autowired
+    private ImageService imageService;
+
     @GetMapping("/events")
     public String listAllEvents(Model model){
-        model.addAttribute("events",events);
+        model.addAttribute("events",eventService.findAll());
         return "events";
     }
-    @GetMapping("/events/{numEvent}")
-    public String showEvent(Model model,@PathVariable int numEvent){
-        Event event = events.get(numEvent-1);
-        model.addAttribute("event",event);
-        return "eventTemplate";
 
+    @GetMapping("/events/{id}")
+    public String showEvent(Model model,@PathVariable long id){
+        Optional<Event> event = eventService.findById(id);
+        if (event.isPresent()) {
+            model.addAttribute("event", event.get());
+            return "eventTemplate";
+        } else {
+            return "events";
+        }
     }
     @GetMapping("/events/new")
     public String createEvent(Model model){
         return "createEvent";
     }
     @PostMapping("/events/new")
-    public String newEvent(Model model,Event event){
-        events.add(event);
+    public String newEvent(Model model,Event newevent,MultipartFile imageField)throws IOException{
+
+        Event event=eventService.save(newevent,imageField);
+
+
+
         return "eventSubmitted";
     }
-    @GetMapping("/events/delete/{numEvent}")
-    public String deleteEvent(Model model,@PathVariable int numEvent){
-        events.remove(numEvent-1);
-        return "eventDeleted";
+    @GetMapping("/events/{id}/image")
+    public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
+
+        Optional<Event> op = eventService.findById(id);
+
+        if(op.isPresent()) {
+            Event event = op.get();
+            Resource poster = imageService.getImage(event.getImage());
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").body(poster);
+        }else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Film not found");
+        }
     }
-    @GetMapping("/events/edit/{numEvent}")
-    public String modifyEvent(Model model,@PathVariable int numEvent){
-        Event event=events.get(numEvent-1);
-        model.addAttribute("event", event);
-        model.addAttribute("numEvent", numEvent);
-        return "modifyEvent";
+
+    @GetMapping("/events/{id}/delete")
+    public String deleteEvent(Model model,@PathVariable long id) {
+        Optional<Event> event = eventService.findById(id);
+        if (event.isPresent()) {
+            eventService.delete(id);
+            return "eventDeleted";
+        } else {
+            return "home";
+        }
     }
-    @PostMapping("/events/edit/{numEvent}")
-    public String changeEvent(Model model,Event updateEvent,@PathVariable int numEvent){
-        events.set(numEvent-1,updateEvent);
+
+
+    @GetMapping("/events/{id}/edit")
+    public String modifyEvent(Model model,@PathVariable long id){
+        Optional<Event> event = eventService.findById(id);
+        if (event.isPresent()) {
+            model.addAttribute("event", event.get());
+            model.addAttribute("id", id);
+            return "modifyEvent";
+        }else {
+            return "home";
+        }
+    }
+    @PostMapping("/events/{id}/edit")
+    public String changeEvent(Model model,Event updateEvent,MultipartFile imageField,@PathVariable long id){
+        eventService.edit(updateEvent,imageField);
         return "eventTemplate";
     }
 
