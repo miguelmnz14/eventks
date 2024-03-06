@@ -9,19 +9,18 @@
 <form action="/events/edit/{{numEvent}}" method="post">
 
     <p>Nombre: </p>
-    <input type="text"  name="name"><br>
+    <input type="text"  name="name" value="{{event.name}}"><br>
 
     <p>Descripcion: </p>
-    <textarea name="description"></textarea><br>
-
+    <textarea name="description">{{event.description}}</textarea><br>
     <p>artistas</p>
-    <input type="text" name="artists"><br>
+    <input type="text" name="artists" value="{{event.artists}}"><br>
 
     <p>Precio por entrada: </p>
-    <input type="number" name="price" step="0.1"><br>
+    <input type="number" name="price" step="0.1" value="{{event.price}}"><br>
 
     <p>Ticktes disponibles: </p>
-    <input type="number" name="ticketsAvailable"><br>
+    <input type="number" name="ticketsAvailable" value="{{event.ticketsAvailable}}"><br>
     <input type="hidden" name="numEvent" value="{{numEvent}}">
 
     <input type="submit" value="Modificar"/>
