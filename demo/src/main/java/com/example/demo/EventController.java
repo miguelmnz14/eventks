@@ -37,7 +37,7 @@ public class EventController {
     @PostConstruct
     public void init(){
         Event event= new Event("eajaj", "estoesunamierda", "peterparker", 20, 10);
-        event.setImage("image_ce49fb04-2fb4-4f4c-a4ee-c7377a32cd12_WhatsApp Image 2024-02-14 at 09.45.43.jpeg");
+        event.setImage("image_WhatsApp Image 2024-02-14 at 09.45.43.jpeg");
         eventService.save(event,null);
 
 
