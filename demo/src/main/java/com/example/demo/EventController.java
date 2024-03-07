@@ -1,4 +1,5 @@
 package com.example.demo;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.multipart.MultipartFile;
+
 
 import java.io.IOException;
 
@@ -30,6 +33,15 @@ public class EventController {
     public String listAllEvents(Model model){
         model.addAttribute("events",eventService.findAll());
         return "events";
+    }
+    @PostConstruct
+    public void init(){
+        Event event= new Event("eajaj", "estoesunamierda", "peterparker", 20, 10);
+        event.setImage("image_ce49fb04-2fb4-4f4c-a4ee-c7377a32cd12_WhatsApp Image 2024-02-14 at 09.45.43.jpeg");
+        eventService.save(event,null);
+
+
+
     }
 
     @GetMapping("/events/{id}")

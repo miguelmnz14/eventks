@@ -30,6 +30,7 @@ public class EventService {
         }
 
 
+
         long id = nextId.getAndIncrement();
         event.setId(id);
         events.put(id, event);
