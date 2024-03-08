@@ -62,9 +62,6 @@ body{
     padding-top: 100px;
 }
 
-.description p{
-}
-
 @font-face {
     font-family: font;
     src: url("subtitle-font.otf");
