@@ -54,6 +54,7 @@ public class EventService {
     }
     public Event edit1(Event event, Long id){
         events.put(id, event);
+        event.setId(id);
         return event;
     }
     public void delete(long id) {

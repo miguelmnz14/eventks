@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/events")
@@ -20,6 +21,11 @@ public class ApiController {
         return ResponseEntity.ok(events);
     }
 
+    @GetMapping("/{eventId}")
+    public ResponseEntity<Optional<Event>> getEvent(@PathVariable Long eventId){
+        Optional<Event> event = eventService.findById(eventId);
+        return ResponseEntity.ok(event);
+    }
     @PostMapping
     public ResponseEntity<Event> createEvent(@RequestBody Event event){
         Event createdEvent = eventService.save(event, null);
