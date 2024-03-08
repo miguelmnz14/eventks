@@ -35,6 +35,7 @@ public class EventService {
         events.put(id, event);
         return event;
     }
+
     public Event edit(Event event,MultipartFile imageField) {
         if (imageField != null && !imageField.isEmpty()){
             String path = imageService.createImage(imageField);
@@ -42,22 +43,23 @@ public class EventService {
         }else {
 
             Event existingEvent = events.get(event.getId());
-            if (existingEvent != null) {
+            if (existingEvent != null && existingEvent.getImage() != null) {
                 event.setImage(existingEvent.getImage());
             }
         }
-
-
         long id = event.getId();
+        events.put(id, event);
+        return event;
+    }
+    public Event edit1(Event event, Long id){
         events.put(id, event);
         return event;
     }
     public void delete(long id) {
         Event deletedEvent = this.events.get(id);
-        imageService.deleteImage(deletedEvent.getImage());
-
+        if (deletedEvent.getImage() != null){
+            imageService.deleteImage(deletedEvent.getImage());
+        }
         this.events.remove(id);
     }
-
-
 }

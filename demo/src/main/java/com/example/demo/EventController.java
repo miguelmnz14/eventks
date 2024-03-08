@@ -97,6 +97,4 @@ public class EventController {
         eventService.edit(updateEvent,imageField);
         return "eventTemplate";
     }
-
-
 }
