@@ -1,6 +1,7 @@
 package com.example.demo;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,8 @@ public class EventController {
     private EventService eventService;
     @Autowired
     private ImageService imageService;
+    @Autowired
+    private CommentService commentService;
 
     @GetMapping("/events")
     public String listAllEvents(Model model){
@@ -46,14 +49,11 @@ public class EventController {
 
     @GetMapping("/events/{id}")
     public String showEvent(Model model,@PathVariable long id){
-        Optional<Event> event = eventService.findById(id);
-        if (event.isPresent()) {
-            model.addAttribute("event", event.get());
+        Event event = eventService.findById(id);
+            model.addAttribute("event", event);
             return "eventTemplate";
-        } else {
-            return "events";
         }
-    }
+
     @GetMapping("/events/new")
     public String createEvent(Model model){
         return "createEvent";
@@ -69,41 +69,50 @@ public class EventController {
     }
     @GetMapping("/events/{id}/image")
     public ResponseEntity<Object> downloadImage(@PathVariable long id) throws SQLException {
-
-        Optional<Event> op = eventService.findById(id);
-
-        if(op.isPresent()) {
-            Event event = op.get();
+        Event event = eventService.findById(id);
+        if (event != null) {
             Resource poster = imageService.getImage(event.getImage());
             return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").body(poster);
-        }else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Film not found");
+        } else {
+
+            return ResponseEntity.notFound().build();
         }
     }
 
+
     @GetMapping("/events/{id}/delete")
-    public String deleteEvent(Model model,@PathVariable long id) {
-        Optional<Event> event = eventService.findById(id);
-        if (event.isPresent()) {
+    public String deleteEvent(Model model, @PathVariable long id) {
+        Event event = eventService.findById(id);
+        if (event != null) {
             eventService.delete(id);
             return "eventDeleted";
         } else {
             return "home";
         }
     }
+    @PostMapping("/events/{id}/comments")
+    public String submitComment(Model model, String username, String content, int valoration, @PathVariable long id) {
+        Comment comment = new Comment(username, content, valoration);
+        comment.setEventId(id);
+        Event event =eventService.findById(id);
+        eventService.addComment(event, comment);
+        return "redirect:/events/"+event.getId();
+    }
+
+
 
 
     @GetMapping("/events/{id}/edit")
-    public String modifyEvent(Model model,@PathVariable long id){
-        Optional<Event> event = eventService.findById(id);
-        if (event.isPresent()) {
-            model.addAttribute("event", event.get());
-            model.addAttribute("id", id);
+    public String modifyEvent(Model model, @PathVariable long id) {
+        Event event = eventService.findById(id);
+        if (event != null) {
+            model.addAttribute("event", event);
             return "modifyEvent";
-        }else {
+        } else {
             return "home";
         }
     }
+
     @PostMapping("/events/{id}/edit")
     public String changeEvent(Model model,Event updateEvent,MultipartFile imageField,@PathVariable long id){
         eventService.edit(updateEvent,imageField);

@@ -22,8 +22,8 @@ public class ApiController {
     }
 
     @GetMapping("/{eventId}")
-    public ResponseEntity<Optional<Event>> getEvent(@PathVariable Long eventId){
-        Optional<Event> event = eventService.findById(eventId);
+    public ResponseEntity<Event> getEvent(@PathVariable Long eventId){
+        Event event = eventService.findById(eventId);
         return ResponseEntity.ok(event);
     }
     @PostMapping
