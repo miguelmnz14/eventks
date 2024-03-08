@@ -1,19 +1,21 @@
 package com.example.demo;
 
 public class Comment {
-    private String name;
+    private long id;
+    private String username;
     private String content;
     private int valoration;
-    private int eventId;
+    private long eventId;
 
-    public Comment(){
+    public Comment() {
 
     }
-    public Comment(String name, String content, int valoration){
+
+    public Comment(String username, String content, int valoration) {
         super();
-        this.name=name;
-        this.content=content;
-        this.valoration=valoration;
+        this.username = username;
+        this.content = content;
+        this.valoration = valoration;
     }
 
     public int getValoration() {
@@ -23,27 +25,36 @@ public class Comment {
     public String getContent() {
         return content;
     }
-    public String getName(){
-        return name;
+
+    public String getUsername() {
+        return username;
     }
 
-    public int getEventId() {
+    public long getEventId() {
         return eventId;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public void setContent(String content) {
         this.content = content;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setValoration(int valoration) {
         this.valoration = valoration;
     }
 
-    public void setEventId(int eventId) {
+    public void setEventId(long eventId) {
         this.eventId = eventId;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

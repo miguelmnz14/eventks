@@ -1,5 +1,6 @@
 package com.example.demo;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -14,12 +15,10 @@ public class EventService {
     private ImageService imageService;
     private AtomicLong nextId = new AtomicLong(1L);
     private ConcurrentHashMap<Long, Event> events = new ConcurrentHashMap<>();
-    public Optional<Event> findById(long id) {
-        if(this.events.containsKey(id)) {
-            return Optional.of(this.events.get(id));
-        }
-        return Optional.empty();
+    public Event findById(long id) {
+        return this.events.get(id);
     }
+
     public List<Event> findAll() {
         return this.events.values().stream().toList();
     }
@@ -36,6 +35,17 @@ public class EventService {
         events.put(id, event);
         return event;
     }
+    public void addComment(Event event, Comment comment){
+        if (event.getComments() == null) {
+            event.setComments(new ArrayList<>());
+        }
+        List<Comment> comments = event.getComments();
+        comments.add(comment);
+        event.setComments(comments);
+
+    }
+
+
 
     public Event edit(Event event,MultipartFile imageField) {
         if (imageField != null && !imageField.isEmpty()){
@@ -47,6 +57,10 @@ public class EventService {
             if (existingEvent != null && existingEvent.getImage() != null) {
                 event.setImage(existingEvent.getImage());
             }
+        }
+        Event existingEvent = events.get(event.getId());
+        if (existingEvent != null) {
+            event.setComments(existingEvent.getComments());
         }
         long id = event.getId();
         events.put(id, event);

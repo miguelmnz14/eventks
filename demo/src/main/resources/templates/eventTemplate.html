@@ -62,5 +62,23 @@
     <button onclick="location.href='/events/{{event.id}}/edit'">Editar</button>
     <button onclick="location.href='/events/{{event.id}}/delete'">Eliminar</button>
 </div>
+<h3>Comentarios</h3>
+{{#event.comments}}
+<li>
+    <p>Usuario: {{this.username}}</p>
+    <p>Contenido: {{this.content}}</p>
+    <p>Valoración: {{this.valoration}}</p>
+</li>
+{{/event.comments}}
+
+
+<form action="/events/{{event.id}}/comments" method="post">
+    <input type="text" name="username" placeholder="Nombre de usuario"><br>
+    <textarea name="content" placeholder="Contenido del comentario"></textarea><br>
+    <input type="number" name="valoration" ><br>
+    <input type="hidden" name="id" value="{{event.id}}">
+    <input type="submit" value="Subir comentario">
+</form>
+
 </body>
 </html>

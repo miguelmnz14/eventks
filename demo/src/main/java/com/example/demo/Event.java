@@ -1,4 +1,6 @@
 package com.example.demo;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Event {
     private Long id=null;
@@ -8,6 +10,7 @@ public class Event {
     private double price;
     private int ticketsAvailable;
     private String image;
+    private List<Comment> comments;
     public Event(){
 
     }
@@ -18,6 +21,9 @@ public class Event {
         this.artists=artists;
         this.price=price;
         this.ticketsAvailable=ticketsAvailable;
+    }
+    public List<Comment> getComments(){
+        return comments;
     }
     public Long getId(){return id;}
     public void setId(Long id){
@@ -59,6 +65,10 @@ public class Event {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     @Override
