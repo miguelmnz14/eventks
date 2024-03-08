@@ -3,21 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/events.css">
 </head>
 <body>
 {{>header}}
-    <h1>Proximos Eventos</h1>
+    <h1 id="events-title">Próximos Eventos</h1>
 
-
-    {{#events}}
-    <a href="/events/{{-index}}">{{name}} </a><br>
-    <img src="/events/{{id}}/image">
-    {{/events}}
-
+    <div class="container">
+        {{#events}}
+        <a id="border" href="/events/{{-index}}">
+            <div class="event">
+                <h4>{{name}}</h4>
+                <img alt="no image" src="/events/{{id}}/image">
+            </div>
+        </a>
+        {{/events}}
+    </div>
     {{^events}}
     <p>Todavia no hay eventos.</p>
     {{/events}}
-<button onclick="location.href='/events/new'">Nuevo evento</button>
+
+<button id="button" onclick="location.href='/events/new'">Nuevo evento</button>
 {{>footer}}
 </body>
 </html>
