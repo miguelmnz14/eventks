@@ -8,8 +8,8 @@ public class TicketLog {
         return "home";
 
     }
-    @GetMapping("/artist")
-    public String artist(){ return "artists";}
+    @GetMapping("/about")
+    public String about(){ return "about";}
 }
 
 
