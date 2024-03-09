@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Elemento no encontrado</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        button {
+            font-family: font, sans-serif;
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: #333;
+            color: red;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        @font-face {
+            font-family: font;
+            src: url("/subtitle-font.otf");
+        }
+        h1 {
+            font-size: 40px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h1>Elemento no encontrado</h1>
+    <p>Lo sentimos, la página que estás buscando no se ha encontrado.</p>
+    <button onclick="location.href='/events'">Volver atras </button>
+</div>
+</body>
+</html>
