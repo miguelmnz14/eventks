@@ -10,6 +10,9 @@ public class TicketLog {
     }
     @GetMapping("/about")
     public String about(){ return "about";}
+
+    @GetMapping("/confirmations")
+    public String confirmations(){ return "confirmations";}
 }
 
 
