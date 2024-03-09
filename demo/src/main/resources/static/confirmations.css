@@ -1,0 +1,10 @@
+#main-txt{
+    background-color: black;
+    text-align: center;
+    font-family: font, sans-serif;
+}
+
+@font-face {
+    font-family: font;
+    src: url("aAnotherTag.ttf");
+}
