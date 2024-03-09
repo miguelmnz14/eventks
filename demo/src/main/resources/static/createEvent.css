@@ -9,13 +9,19 @@ body {
     height: 100vh;
 }
 
-p {
-    color: red;
-    font-family: font, sans-serif;
+#main-txt{
     text-align: center;
 }
 
-textarea{
+#title{
+    text-align: center;
+    color: red;
+    font-family: font, sans-serif;
+}
+
+p {
+    color: red;
+    font-family: font, sans-serif;
     text-align: center;
 }
 
