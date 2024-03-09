@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/createEvent.css">
 </head>
 <body>
-<h1>Modifica el evento</h1>
+<h1 id="title">Modifica el evento</h1>
 <form action="/events/{{id}}/edit" method="post" enctype="multipart/form-data">
 
+    <div id="main-txt">
     <p>Nombre: </p>
     <input type="text"  name="name" value="{{event.name}}"><br>
 
@@ -25,6 +27,7 @@
     <input type="hidden" name="numEvent" value="{{id}}">
 
     <input type="submit" value="Modificar"/>
+    </div>
 </form>
 
 </body>

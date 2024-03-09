@@ -6,28 +6,30 @@
     <link rel="stylesheet" href="/createEvent.css">
 </head>
 <body>
-<h1>Crea un nuevo evento</h1><br>
+<h1 id="title">Create a new event</h1>
 <form action="/events/new" method="post" enctype="multipart/form-data">
 
-    <p>Nombre: </p>
+    <div id="main-txt">
+    <p>Name: </p>
 
     <input type="text"  name="name"><br>
 
-    <p>Descripcion: </p>
+    <p>Description: </p>
     <textarea name="description"></textarea><br>
 
-    <p>artistas</p>
+    <p>Artists</p>
     <input type="text" name="artists"><br>
 
-    <p>Precio por entrada: </p>
+    <p>Price per ticket: </p>
     <input type="number" name="price" step="0.1"><br>
 
-    <p>Ticktes disponibles: </p>
+    <p>Tickets aviables: </p>
     <input type="number" name="ticketsAvailable"><br>
     <p>Image file:</p>
     <input type='file' name='imageField' accept=".jpg, .jpeg"/>
 
-    <input type="submit" value="Crear Evento"/>
+    <input type="submit" value="Create event"/>
+    </div>
 </form>
 </body>
 </html>
