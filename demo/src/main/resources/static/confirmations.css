@@ -1,10 +1,20 @@
-#main-txt{
+body {
     background-color: black;
+    color: red;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#main-txt{
     text-align: center;
     font-family: font, sans-serif;
 }
 
 @font-face {
     font-family: font;
-    src: url("aAnotherTag.ttf");
+    src: url("subtitle-font.otf");
 }
