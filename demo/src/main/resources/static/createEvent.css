@@ -1,0 +1,25 @@
+body {
+    background-color: black;
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+p {
+    color: red;
+    font-family: font, sans-serif;
+    text-align: center;
+}
+
+textarea{
+    text-align: center;
+}
+
+@font-face {
+    font-family: font;
+    src: url("subtitle-font.otf");
+}
