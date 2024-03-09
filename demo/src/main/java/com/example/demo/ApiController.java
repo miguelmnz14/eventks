@@ -35,7 +35,7 @@ public class ApiController {
     @DeleteMapping(("/{eventId}"))
     public String deleteEvent(@PathVariable Long eventId){
         eventService.delete(eventId);
-        return "lo borraste";
+        return "deleted";
     }
 
     @PutMapping("/{eventId}")
