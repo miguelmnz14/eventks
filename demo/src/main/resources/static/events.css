@@ -10,6 +10,14 @@ body{
     text-align: center;
 }
 
+#no-events{
+    margin: 50px auto 50px;
+    font-family: font1, sans-serif;
+    font-size: 35px;
+    display: block;
+    text-align: center;
+}
+
 a{
     text-decoration: none;
 }
