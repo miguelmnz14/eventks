@@ -11,24 +11,24 @@ import org.springframework.ui.Model;
 @Controller
 public class SesionController {
     private User user;
-    private String infoCompartida;
-    @PostMapping("/procesarFormulario")
-    public String procesarFormulario(@RequestParam String info) {
+    private String sharedInfo;
+    @PostMapping("/processForm")
+    public String processForm(@RequestParam String info) {
 
         this.user.setInfo(info);
-        this.infoCompartida = info;
+        this.sharedInfo = info;
 
-        return "resultado_formulario";
+        return "result_form";
     }
-    @GetMapping("/mostrarDatos")
-    public String mostrarDatos(Model model) {
+    @GetMapping("/showData")
+    public String showData(Model model) {
 
-        String infoUsuario = this.user.getInfo();
+        String infoUser = this.user.getInfo();
 
-        model.addAttribute("infoUsuario", infoUsuario);
-        model.addAttribute("infoCompartida", this.infoCompartida);
+        model.addAttribute("infoUser", infoUser);
+        model.addAttribute("sharedInfo", this.sharedInfo);
 
-        return "datos";
+        return "data";
     }
 }
 
