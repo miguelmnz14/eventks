@@ -67,5 +67,19 @@ public class ApiController {
             return ResponseEntity.notFound().build();
         }
     }
+    @PutMapping("/{eventID}/image")
+    public ResponseEntity<Object> editImage(@PathVariable Long eventID, @RequestParam MultipartFile imageFile) throws IOException {
+        Event event = eventService.findById(eventID);
+        if (event != null){
+            URI location = fromCurrentRequest().build().toUri();
 
+            event.setImage(location.toString());
+            eventService.edit(event,imageFile);
+            Path FILES_FOLDER= Paths.get(System.getProperty("user.dir"), "images");
+            imageService.saveImage(FILES_FOLDER.toString(),event.getId(),imageFile);
+            return ResponseEntity.created(location).build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
