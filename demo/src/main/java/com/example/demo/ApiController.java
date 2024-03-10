@@ -67,7 +67,6 @@ public class ApiController {
             return ResponseEntity.notFound().build();
         }
     }
-
     @PutMapping("/{eventID}/image")
     public ResponseEntity<Object> editImage(@PathVariable Long eventID, @RequestParam MultipartFile imageFile) throws IOException {
         Event event = eventService.findById(eventID);

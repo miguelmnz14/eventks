@@ -25,6 +25,25 @@ p {
     text-align: center;
 }
 
+.button-create{
+    height: 50px;
+    width: auto;
+    font-size: 25px;
+    display: block;
+    margin: 30px auto 50px;
+    font-family: font, sans-serif;
+    background-color: red;
+    color: black;
+}
+
+.button-create:hover{
+    border: solid 3px white;
+}
+
+#img-bt{
+    visibility: hidden;
+}
+
 @font-face {
     font-family: font;
     src: url("subtitle-font.otf");
