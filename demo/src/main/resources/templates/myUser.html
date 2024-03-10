@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/myUser.css">
+</head>
+<body>
+{{>header}}
+<h1 id="title">REGISTRATE Y QUE EMPIECE LA FIESTA...</h1>
+<div class="form">
+    <form action="/procesarFormulario" method="post">
+        <h4 id="subtitle">NOMBRE DE USUARIO</h4>
+        <br>
+        <input id="name" type='text' name="info"/>
+        <input id="userButton" type='submit' value='Registrarse'/>
+    </form>
+</div>
+{{>footer}}
+</body>
+</html>

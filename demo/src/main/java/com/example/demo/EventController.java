@@ -60,11 +60,7 @@ public class EventController {
     }
     @PostMapping("/events/new")
     public String newEvent(Model model,Event newevent,MultipartFile imageField)throws IOException{
-
         Event event=eventService.save(newevent,imageField);
-
-
-
         return "eventSubmitted";
     }
     @GetMapping("/events/{id}/image")
@@ -118,4 +114,7 @@ public class EventController {
         eventService.edit(updateEvent,imageField);
         return "eventTemplate";
     }
+
+    @GetMapping("/myuser")
+    public String myUser(Model model){ return "myUser";}
 }
