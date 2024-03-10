@@ -1,4 +1,5 @@
 package com.example.demo;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -74,5 +75,11 @@ public class ImageService{
         image.transferTo(newFile);
     }
 
-
+    public void deleteImage1(String folder, Long id) throws IOException {
+        String imagePath = folder + "/" + id + ".jpg";
+        File imageFile = new File(imagePath);
+        if (imageFile.exists()) {
+               imageFile.delete();
+        }
+    }
 }
