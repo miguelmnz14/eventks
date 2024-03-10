@@ -82,4 +82,18 @@ public class ApiController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @DeleteMapping("/{eventID}/image")
+    public ResponseEntity<Object> deleteImage(@PathVariable long eventID)
+        throws IOException {
+        Event event = eventService.findById(eventID);
+        if(event != null) {
+            event.setImage(null);
+            Path FILES_FOLDER= Paths.get(System.getProperty("user.dir"), "images");
+            imageService.deleteImage1(FILES_FOLDER.toString(),event.getId());
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
