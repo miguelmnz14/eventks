@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/eventSubmitted.css">
 </head>
 <body>
-<p>has subido el evento.</p>
-<a href="/events">Atras</a>
-
+{{>header}}
+<div class="submitted-container">
+    <h1>has subido el evento.</h1>
+    <button id="button" onclick="location.href='/events'">Atrás</button>
+</div>
+{{>footer}}
 </body>
 </html>

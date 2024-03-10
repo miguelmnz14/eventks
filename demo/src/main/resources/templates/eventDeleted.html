@@ -3,8 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/eventDeleted.css">
 </head>
 <body>
-<h1> has el borrado el evento</h1>
+{{>header}}
+<div class="deleted-container">
+    <h1>Has borrado el evento</h1>
+    <button id="button" onclick="location.href='/events'">Atrás</button>
+</div>
+{{>footer}}
 </body>
 </html>
