@@ -3,82 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style>
-        body {
-            background-color: black;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: row-reverse;
-            padding: 20px;
-        }
-        .image {
-            flex: 1;
-        }
-        .details {
-            flex: 1;
-            padding-left: 20px;
-        }
-        p {
-            margin: 5px 0;
-        }
-        .red-text {
-            color: red;
-        }
-        .buttons {
-            text-align: center;
-        }
-        button {
-            margin: 0 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="/eventTemplate.css">
 </head>
 <body>
 {{>header}}
 <div class="container">
-    <div class="details">
-        <h2>{{event.name}}</h2>
-        <p>{{event.description}}</p>
-        <p>Precio: <span class="red-text">{{event.price}}</span></p>
-        <p>Los artistas son: <span class="red-text">{{event.artists}}</span></p>
-        <p>Tickets disponibles: <span class="red-text">{{event.ticketsAvailable}}</span></p>
-    </div>
     <div class="image">
         {{#event.image}}
-        <img class="img-thumbnail" src="/events/{{event.id}}/image">
+        <div class="img">
+            <img id="img-tmp" alt="no image" class="img-thumbnail" src="/events/{{event.id}}/image">
+        </div>
         {{/event.image}}
     </div>
+    <div class="details">
+        <h2 id="title">{{event.name}}</h2>
+        <hr class="line">
+        <p class="normal-txt">{{event.description}}</p>
+        <p class="normal-txt">Precio: <span class="red-text">{{event.price}}</span></p>
+        <p class="normal-txt">Los artistas son: <span class="red-text">{{event.artists}}</span></p>
+        <p class="normal-txt">Tickets disponibles: <span class="red-text">{{event.ticketsAvailable}}</span></p>
+        <div class="buttons">
+            <button class="Tmpl-button" onclick="location.href='/events/{{event.id}}/edit'">Editar</button>
+            <button class="Tmpl-button" onclick="location.href='/events/{{event.id}}/delete'">Eliminar</button>
+            <button class="Tmpl-button" onclick="location.href='#'">Comprar</button>
+        </div>
+    </div>
 </div>
-<div class="buttons">
-    <button onclick="location.href='/events/{{event.id}}/edit'">Editar</button>
-    <button onclick="location.href='/events/{{event.id}}/delete'">Eliminar</button>
+
+<div class="addComment">
+    <h3>Añadir comentario</h3>
+    <form action="/events/{{event.id}}/comments" method="post">
+        <input class="input" type="text" name="username" placeholder="Nombre de usuario"><br>
+        <textarea class="input" name="content" placeholder="Contenido del comentario"></textarea><br>
+        <input class="input" type="number" name="valoration" ><br>
+        <input type="hidden" name="id" value="{{event.id}}">
+        <input id="commentButton" type="submit" value="Subir comentario">
+    </form>
 </div>
-<h3>Comentarios</h3>
-{{#event.comments}}
-<li>
-    <p>Usuario: {{this.username}}</p>
-    <p>Contenido: {{this.content}}</p>
-    <p>Valoración: {{this.valoration}}</p>
-</li>
-{{/event.comments}}
+<div class="comments">
+    <h3>Comentarios</h3>
+    <div class="submitted-com">
+        {{#event.comments}}
+        <hr>
+        <ul>
+            <li class="imp">Usuario:</li>
+            <li>{{this.username}}</li>
+            <li class="imp">Contenido:</li>
+            <li>{{this.content}}</li>
+            <li class="imp">Valoración:</li>
+            <li>{{this.valoration}}</li>
+        </ul>
+        {{/event.comments}}
+    </div>
+</div>
 
 
-<form action="/events/{{event.id}}/comments" method="post">
-    <input type="text" name="username" placeholder="Nombre de usuario"><br>
-    <textarea name="content" placeholder="Contenido del comentario"></textarea><br>
-    <input type="number" name="valoration" ><br>
-    <input type="hidden" name="id" value="{{event.id}}">
-    <input type="submit" value="Subir comentario">
-</form>
+
 
 </body>
 </html>
