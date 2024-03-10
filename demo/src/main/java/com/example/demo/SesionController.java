@@ -16,17 +16,17 @@ public class SesionController {
     public String procesarFormulario(@RequestParam String info) {
 
         this.user.setInfo(info);
-        infoCompartida = info;
+        this.infoCompartida = info;
 
         return "resultado_formulario";
     }
     @GetMapping("/mostrarDatos")
     public String mostrarDatos(Model model) {
 
-        String infoUsuario = user.getInfo();
+        String infoUsuario = this.user.getInfo();
 
         model.addAttribute("infoUsuario", infoUsuario);
-        model.addAttribute("infoCompartida", infoCompartida);
+        model.addAttribute("infoCompartida", this.infoCompartida);
 
         return "datos";
     }
