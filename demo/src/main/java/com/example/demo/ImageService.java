@@ -40,6 +40,9 @@ public class ImageService{
 
         return fileName;
     }
+    private Path createFilePath(long imageId, Path folder) {
+        return folder.resolve("image_" + imageId + ".jpeg");
+    }
 
     public Resource getImage(String imageName) {
         Path imagePath = IMAGES_FOLDER.resolve(imageName);
@@ -60,5 +63,16 @@ public class ImageService{
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Can't delete local image");
         }
     }
+    public void saveImage(String folderName, long imageId, MultipartFile image) throws IOException {
+
+        Path folder = IMAGES_FOLDER.resolve(folderName);
+
+        Files.createDirectories(folder);
+
+        Path newFile = createFilePath(imageId, folder);
+
+        image.transferTo(newFile);
+    }
+
 
 }

@@ -66,7 +66,9 @@ public class EventService {
         events.put(id, event);
         return event;
     }
-    public Event edit1(Event event, Long id){
+    public Event edit1(Event event, Long id, Event aux){
+        String image = aux.getImage();
+        event.setImage(image);
         events.put(id, event);
         event.setId(id);
         return event;

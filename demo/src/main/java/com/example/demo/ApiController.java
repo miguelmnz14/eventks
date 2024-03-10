@@ -5,8 +5,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
 @RequestMapping("/api/events")
@@ -14,6 +20,8 @@ public class ApiController {
 
     @Autowired
     private EventService eventService;
+    @Autowired
+    private ImageService imageService;
 
     @GetMapping
     public ResponseEntity<List<Event>> getAllEvents(){
@@ -40,7 +48,23 @@ public class ApiController {
 
     @PutMapping("/{eventId}")
     public ResponseEntity<Event> editEvent(@PathVariable Long eventId, @RequestBody Event event){
-        Event eventEdited = eventService.edit1(event, eventId);
+        Event aux = eventService.findById(eventId);
+        Event eventEdited = eventService.edit1(event, eventId, aux);
         return ResponseEntity.ok(eventEdited);
+    }
+    @PostMapping("/{eventID}/image")
+    public ResponseEntity<Object> uploadImage(@PathVariable Long eventID, @RequestParam MultipartFile imageFile) throws IOException {
+        Event event = eventService.findById(eventID);
+        if (event != null){
+            URI location = fromCurrentRequest().build().toUri();
+
+            event.setImage(location.toString());
+            eventService.edit(event,imageFile);
+            Path FILES_FOLDER= Paths.get(System.getProperty("user.dir"), "images");
+            imageService.saveImage(FILES_FOLDER.toString(),event.getId(),imageFile);
+            return ResponseEntity.created(location).build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
