@@ -124,6 +124,17 @@ public class EventService {
             }
         }
     }
+    public Comment findCommentById(Event event, Long id) {
+        List<Comment> comments = event.getComments();
+        if (comments != null) {
+            for (Comment comment : comments) {
+                if (comment.getId()==id) {
+                    return comment;
+                }
+            }
+        }
+        return null; // Si no se encuentra el comentario con el ID dado
+    }
 
 
 }
