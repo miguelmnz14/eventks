@@ -140,12 +140,7 @@ public class ApiController {
             return ResponseEntity.notFound().build();
         }
     }
-    @GetMapping("/{eventId}/user")
-    public ResponseEntity<Event> buyevent(Model model,@PathVariable long eventId){
-        model.addAttribute("user",user);
-        eventService.buy(eventId);
 
-        return ResponseEntity.ok().build();
-    }
+
 
 }
