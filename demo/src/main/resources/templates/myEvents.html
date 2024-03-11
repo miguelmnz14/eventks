@@ -10,8 +10,8 @@
 {{>header}}
 <p>Hola {{user.username}}</p>
 
-{{#user.myEvents}}
 <p>Tus eventos son:</p>
+{{#user.myEvents}}
 {{this.name}}
 {{/user.myEvents}}
 {{^user.myEvents}}
