@@ -3,8 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/userRegistered.css">
 </head>
 <body>
-<p>Bienvenido, {{info}}</p>
+{{>header}}
+<div class="reg-container">
+    <h1>Bienvenido</h1>
+    <h1>{{info}}</h1>
+</div>
+{{>footer}}
 </body>
 </html>

@@ -16,8 +16,9 @@ public class SessionController {
     private User user;
     private String sharedInfo;
     @PostMapping("/procesarFormulario")
-    public String procesarFormulario(@RequestParam String info, HttpSession session, Model model) {
-        session.setAttribute("info", info);
+    public String procesarFormulario(@RequestParam String info, Model model) {
+        this.user.setInfo(info);
+        model.addAttribute("info", info);
         return "userRegistered";
     }
     @GetMapping("/mostrarDatos")
