@@ -25,9 +25,9 @@
         <div class="buttons">
             <button class="Tmpl-button" onclick="location.href='/events/{{event.id}}/edit'">Editar</button>
             <button class="Tmpl-button" onclick="location.href='/events/{{event.id}}/delete'">Eliminar</button>
-            <form method="post" action="/buy/{{event.id}}">
-                <button class="Tmpl-button" type="submit" >Comprar</button>
-            </form>
+
+            <button class="Tmpl-button" onclick="location.href='/buy/{{event.id}}'" >Comprar</button>
+
 
         </div>
     </div>
