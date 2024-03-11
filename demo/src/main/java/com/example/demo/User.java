@@ -10,15 +10,18 @@ import java.util.List;
 @SessionScope
 public class User {
     private String username;
+
     private List<Event> myEvents;
     public User(){
 
     }
+
     public User(String username,List<Event> myEvents){
         this.username=username;
         this.myEvents=myEvents;
 
     }
+
 
     public String getUsername() {
         return username;

@@ -47,14 +47,20 @@ public class EventController {
         Event event= new Event("eajaj", "estoesunamierda", "peterparker", 20, 10);
         event.setImage("image_WhatsApp Image 2024-02-14 at 09.45.43.jpeg");
         eventService.save(event,null);
-        user=new User("peter parker",null);
-        user.setMyEvents(new ArrayList<>());
+        if (user==null){
+            user=new User("peter parker",null);
+            user.setMyEvents(new ArrayList<>());
+        }
+
+
+
     }
 
     @GetMapping("/events/{id}")
     public String showEvent(Model model,@PathVariable long id){
         Event event = eventService.findById(id);
             model.addAttribute("event", event);
+            model.addAttribute("user",user);
             return "eventTemplate";
         }
 
@@ -126,9 +132,9 @@ public class EventController {
     public String myUser(Model model){
         model.addAttribute("user",user);
         return "myUser";}
-    @PostMapping("/buy/{id}")
+    @GetMapping("/buy/{id}")
     public String buyEvent(Model model,@PathVariable long id){
-
+        model.addAttribute("user",user);
         eventService.buy(id);
         return "redirect:/events/{id}";
     }

@@ -96,6 +96,7 @@ public class EventService {
                 event.setUsers(new ArrayList<>());
             }
 
+
             List<User> users = event.getUsers();
             users.add(user);
             event.setUsers(users);

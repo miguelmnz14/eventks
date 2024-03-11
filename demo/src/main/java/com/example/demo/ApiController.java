@@ -2,6 +2,7 @@ package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
+import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 
 @RestController
 @RequestMapping("/api/events")
@@ -23,6 +25,8 @@ public class ApiController {
     private EventService eventService;
     @Autowired
     private ImageService imageService;
+    @Autowired
+    private User user;
 
     @GetMapping
     public ResponseEntity<List<Event>> getAllEvents(){
@@ -135,6 +139,13 @@ public class ApiController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+    @GetMapping("/{eventId}/user")
+    public ResponseEntity<Event> buyevent(Model model,@PathVariable long eventId){
+        model.addAttribute("user",user);
+        eventService.buy(eventId);
+
+        return ResponseEntity.ok().build();
     }
 
 }
