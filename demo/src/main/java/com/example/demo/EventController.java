@@ -94,7 +94,7 @@ public class EventController {
     }
     @PostMapping("/events/{id}/comments")
     public String submitComment(Model model, String username, String content, int valoration, @PathVariable long id) {
-        Comment comment = new Comment(username, content, valoration);
+        Comment comment = new Comment(this.user.getUsername(), content, valoration);
         comment.setEventId(id);
         Event event =eventService.findById(id);
         eventService.addComment(event, comment);

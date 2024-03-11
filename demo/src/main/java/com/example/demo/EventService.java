@@ -74,6 +74,7 @@ public class EventService {
     public Event edit1(Event event, Long id, Event aux){
         String image = aux.getImage();
         event.setImage(image);
+        event.setComments(aux.getComments());
         events.put(id, event);
         event.setId(id);
         return event;
