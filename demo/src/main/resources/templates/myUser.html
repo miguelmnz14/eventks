@@ -7,6 +7,7 @@
 </head>
 <body>
 {{>header}}
+{{^user}}
 <h1 id="title">REGISTRATE Y QUE EMPIECE LA FIESTA...</h1>
 <div class="form">
     <form action="/procesarFormulario" method="post">
@@ -16,6 +17,7 @@
         <input id="userButton" type='submit' value='Registrarse'/>
     </form>
 </div>
+{{/user}}
 {{>footer}}
 </body>
 </html>

@@ -3,23 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Mis eventos</title>
-    <link rel="stylesheet" href="/eventTemplate.css">
+    <link rel="stylesheet" href="/myEvents.css">
 </head>
 <body>
-{{#user}}
 {{>header}}
-<p>Hola {{user.username}}</p>
-
-<p>Tus eventos son:</p>
-{{#user.myEvents}}
-{{this.name}}
-{{/user.myEvents}}
-{{^user.myEvents}}
-<p>Todavia no has agregado ningun evento</p>
-{{/user.myEvents}}
-{{/user}}
+<!--
 {{^user}}
 <p>Debes iniciar sesión para ver tus eventos</p>
+{{/user}}-->
+{{#user}}
+<h1 id="events-title">TUS EVENTOS</h1>
+<div class="myEvents">
+    {{#user.myEvents}}
+    <div class="container">
+        <a id="border" href="/events/{{id}}">
+            <div class="event">
+                <h4>{{this.name}}</h4>
+                <img alt="no image" src="/events/{{id}}/image">
+            </div>
+        </a>
+    </div>
+    {{/user.myEvents}}
+</div>
+{{^user.myEvents}}
+<p id="no-events">Todavía no has agregado ningún evento</p>
+{{/user.myEvents}}
 {{/user}}
+{{>footer}}
 </body>
 </html>
