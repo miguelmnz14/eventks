@@ -35,6 +35,8 @@ public class EventController {
     private User user;
 
 
+
+
     @GetMapping("/events")
     public String listAllEvents(Model model){
         model.addAttribute("events",eventService.findAll());
@@ -123,13 +125,21 @@ public class EventController {
     public String myUser(Model model){ return "myUser";}
     @PostMapping("/buy/{id}")
     public String buyEvent(Model model,@PathVariable long id){
+
         eventService.buy(id);
-        return "home";
+        return "redirect:/events/{id}";
     }
     @GetMapping("/tickets")
     public String seeMyevents(Model model){
         model.addAttribute("user",user);
         return "myEvents";
+    }
+    @GetMapping("/events/{id}/delete/{commentId}")
+    public String deleteComment(Model model,@PathVariable long id,@PathVariable long commentId){
+        Event event=eventService.findById(id);
+        eventService.deleteCommentById(event,commentId);
+        return "redirect:/events/{id}";
+
     }
 
 }

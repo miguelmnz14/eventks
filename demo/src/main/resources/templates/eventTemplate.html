@@ -54,11 +54,12 @@
         <hr>
         <ul>
             <li class="imp">Usuario:</li>
-            <li>{{this.username}}</li>
+            <li>{{this.id}}</li>
             <li class="imp">Contenido:</li>
             <li>{{this.content}}</li>
             <li class="imp">Valoración:</li>
             <li>{{this.valoration}}</li>
+            <li><button  onclick="location.href='/events/{{event.id}}/delete/{{this.id}}'"> Eliminalo</button></li>
         </ul>
         {{/event.comments}}
     </div>
