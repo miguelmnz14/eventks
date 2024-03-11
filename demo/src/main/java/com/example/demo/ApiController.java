@@ -42,9 +42,17 @@ public class ApiController {
     }
 
     @DeleteMapping(("/{eventId}"))
-    public String deleteEvent(@PathVariable Long eventId){
-        eventService.delete(eventId);
-        return "deleted";
+    public ResponseEntity<Event> deleteEvent(@PathVariable Long eventId){
+
+        Event event = eventService.findById(eventId);
+
+        if (event != null) {
+            eventService.delete(eventId);
+            return ResponseEntity.ok(event);
+        } else {
+
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("/{eventId}")

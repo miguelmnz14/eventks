@@ -47,7 +47,8 @@ public class EventController {
         Event event= new Event("eajaj", "estoesunamierda", "peterparker", 20, 10);
         event.setImage("image_WhatsApp Image 2024-02-14 at 09.45.43.jpeg");
         eventService.save(event,null);
-
+        user=new User("peter parker",null);
+        user.setMyEvents(new ArrayList<>());
     }
 
     @GetMapping("/events/{id}")
@@ -94,7 +95,7 @@ public class EventController {
     }
     @PostMapping("/events/{id}/comments")
     public String submitComment(Model model, String username, String content, int valoration, @PathVariable long id) {
-        Comment comment = new Comment(username, content, valoration);
+        Comment comment = new Comment(this.user.getUsername(), content, valoration);
         comment.setEventId(id);
         Event event =eventService.findById(id);
         eventService.addComment(event, comment);
@@ -122,7 +123,9 @@ public class EventController {
     }
 
     @GetMapping("/myuser")
-    public String myUser(Model model){ return "myUser";}
+    public String myUser(Model model){
+        model.addAttribute("user",user);
+        return "myUser";}
     @PostMapping("/buy/{id}")
     public String buyEvent(Model model,@PathVariable long id){
 

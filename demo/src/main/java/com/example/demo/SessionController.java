@@ -22,12 +22,6 @@ public class SessionController {
         model.addAttribute("username", username);
         return "userRegistered";
     }
-    @GetMapping("/mostrarDatos")
-    public String mostrarDatos(Model model, HttpSession session) {
-        String userinfo = (String) session.getAttribute("info");
-        model.addAttribute("info", userinfo);
-        model.addAttribute("infoCompartida", sharedInfo);
-        return "userRegistered";
-    }
+
 }
 
