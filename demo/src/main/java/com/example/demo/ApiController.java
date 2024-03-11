@@ -58,7 +58,6 @@ public class ApiController {
         Event event = eventService.findById(eventID);
         if (event != null){
             URI location = fromCurrentRequest().build().toUri();
-
             event.setImage(location.toString());
             eventService.edit(event,imageFile);
             Path FILES_FOLDER= Paths.get(System.getProperty("user.dir"), "images");
