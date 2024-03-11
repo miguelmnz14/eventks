@@ -36,16 +36,15 @@
 <div class="addComment">
     <h3>Añadir comentario</h3>
     <form action="/events/{{event.id}}/comments" method="post">
-        <input class="input" type="text" name="username" placeholder="Nombre de usuario"><br>
+
+        <input id="username" class="input" type="text" name="username" placeholder="Nombre de usuario"><br>
         <textarea class="input" name="content" placeholder="Contenido del comentario"></textarea><br>
         <input class="input" type="number" name="valoration" ><br>
         <input type="hidden" name="id" value="{{event.id}}">
         <input id="commentButton" type="submit" value="Subir comentario">
     </form>
 </div>
-{{#event.users}}
-{{this.username}}
-{{/event.users}}
+
 
 <div class="comments">
     <h3>Comentarios</h3>
@@ -54,11 +53,12 @@
         <hr>
         <ul>
             <li class="imp">Usuario:</li>
-            <li>{{this.username}}</li>
+            <li>{{this.id}}</li>
             <li class="imp">Contenido:</li>
             <li>{{this.content}}</li>
             <li class="imp">Valoración:</li>
             <li>{{this.valoration}}</li>
+            <li><button  onclick="location.href='/events/{{event.id}}/delete/{{this.id}}'"> Eliminalo</button></li>
         </ul>
         {{/event.comments}}
     </div>

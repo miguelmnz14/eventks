@@ -128,6 +128,10 @@ body {
     font-weight: bold;
 }
 
+#username{
+    visibility: hidden;
+}
+
 @font-face {
     font-family: font;
     src: url("fontheader.otf");
@@ -137,3 +141,4 @@ body {
     font-family: font2;
     src: url("subtitle-font.otf");
 }
+

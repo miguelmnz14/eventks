@@ -53,6 +53,38 @@ public class ApiController {
         Event eventEdited = eventService.edit1(event, eventId, aux);
         return ResponseEntity.ok(eventEdited);
     }
+    @GetMapping("/{eventId}/comments")
+    public ResponseEntity<List<Comment>> seeComments(@PathVariable Long eventId){
+        Event event = eventService.findById(eventId);
+
+        if (event != null) {
+            List<Comment> comments = event.getComments();
+            return ResponseEntity.ok(comments);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+    @PostMapping("/{eventId}/comments")
+    public ResponseEntity<Comment> createcomment(@PathVariable Long eventId,@RequestBody Comment comment){
+        Event event=eventService.findById(eventId);
+        eventService.addComment(event,comment);
+        URI location = fromCurrentRequest().build().toUri();
+        return ResponseEntity.created(location).build();
+    }
+    @DeleteMapping("/{eventId}/comments/{id}")
+    public ResponseEntity<Comment> deletecomment(@PathVariable Long eventId,@PathVariable Long id){
+        Event event=eventService.findById(eventId);
+        Comment comment=eventService.findCommentById(event,id);
+        if (event != null && comment != null){
+            eventService.deleteCommentById(event,id);
+            return ResponseEntity.ok(comment);
+        }else {
+            return ResponseEntity.notFound().build();
+        }
+
+
+    }
     @PostMapping("/{eventID}/image")
     public ResponseEntity<Object> uploadImage(@PathVariable Long eventID, @RequestParam MultipartFile imageFile) throws IOException {
         Event event = eventService.findById(eventID);
@@ -96,4 +128,5 @@ public class ApiController {
             return ResponseEntity.notFound().build();
         }
     }
+
 }

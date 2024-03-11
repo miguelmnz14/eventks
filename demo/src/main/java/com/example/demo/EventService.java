@@ -1,4 +1,5 @@
 package com.example.demo;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -42,6 +43,8 @@ public class EventService {
             event.setComments(new ArrayList<>());
         }
         List<Comment> comments = event.getComments();
+        int size=comments.size()-1;
+        comment.setId(size+1);
         comments.add(comment);
         event.setComments(comments);
 
@@ -84,7 +87,10 @@ public class EventService {
     }
     public void buy(long id){
         Event event=findById(id);
-        if (event.getTicketsAvailable()>0){
+        if (user.getMyEvents() == null) {
+            user.setMyEvents(new ArrayList<>());
+        }
+        if (event.getTicketsAvailable()>0 && !user.getMyEvents().contains(event)){
             if (event.getUsers() == null) {
                 event.setUsers(new ArrayList<>());
             }
@@ -92,9 +98,7 @@ public class EventService {
             List<User> users = event.getUsers();
             users.add(user);
             event.setUsers(users);
-            if (user.getMyEvents() == null) {
-                user.setMyEvents(new ArrayList<>());
-            }
+
             List<Event> events1=user.getMyEvents();
             events1.add(event);
             user.setMyEvents(events1);
@@ -102,6 +106,35 @@ public class EventService {
 
         }
 
-
     }
+    public void deleteCommentById(Event event, long commentId) {
+        List<Comment> comments = event.getComments();
+        if (comments != null) {
+            Iterator<Comment> iterator = comments.iterator();
+            while (iterator.hasNext()) {
+                Comment comment = iterator.next();
+                if (comment.getId() == commentId) {
+                    iterator.remove();
+                    return;
+                }
+            }
+            int newId = 0;
+            for (Comment comment : comments) {
+                comment.setId(newId++);
+            }
+        }
+    }
+    public Comment findCommentById(Event event, Long id) {
+        List<Comment> comments = event.getComments();
+        if (comments != null) {
+            for (Comment comment : comments) {
+                if (comment.getId()==id) {
+                    return comment;
+                }
+            }
+        }
+        return null; // Si no se encuentra el comentario con el ID dado
+    }
+
+
 }
