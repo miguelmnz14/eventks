@@ -135,7 +135,11 @@ public class EventService {
                 }
             }
         }
-        return null; // Si no se encuentra el comentario con el ID dado
+        return null;
+    }
+    public List<Event> findMyevents(){
+        List<Event> events1= user.getMyEvents();
+        return events1;
     }
 
 

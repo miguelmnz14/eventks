@@ -44,11 +44,11 @@ public class EventController {
     }
     @PostConstruct
     public void init(){
-        Event event= new Event("eajaj", "estoesunamierda", "peterparker", 20, 10);
-        event.setImage("image_WhatsApp Image 2024-02-14 at 09.45.43.jpeg");
+        Event event= new Event("Gran evento", "un gran evento", "Hoke", 20, 10);
+        event.setImage("image_imagenDWS.jpeg");
         eventService.save(event,null);
         if (user==null){
-            user=new User("peter parker",null);
+            user=new User("peterparker",null);
             user.setMyEvents(new ArrayList<>());
         }
 
