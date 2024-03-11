@@ -11,6 +11,7 @@ public class Event {
     private int ticketsAvailable;
     private String image;
     private List<Comment> comments;
+    private List<User> users;
     public Event(){
 
     }
@@ -69,6 +70,14 @@ public class Event {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     @Override

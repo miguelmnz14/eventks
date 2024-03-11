@@ -25,7 +25,10 @@
         <div class="buttons">
             <button class="Tmpl-button" onclick="location.href='/events/{{event.id}}/edit'">Editar</button>
             <button class="Tmpl-button" onclick="location.href='/events/{{event.id}}/delete'">Eliminar</button>
-            <button class="Tmpl-button" onclick="location.href='#'">Comprar</button>
+            <form method="post" action="/buy/{{event.id}}">
+                <button class="Tmpl-button" type="submit" >Comprar</button>
+            </form>
+
         </div>
     </div>
 </div>
@@ -40,6 +43,10 @@
         <input id="commentButton" type="submit" value="Subir comentario">
     </form>
 </div>
+{{#event.users}}
+{{this.username}}
+{{/event.users}}
+
 <div class="comments">
     <h3>Comentarios</h3>
     <div class="submitted-com">

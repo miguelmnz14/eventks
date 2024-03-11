@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class EventService {
     @Autowired
     private ImageService imageService;
+    @Autowired
+    private User user;
     private AtomicLong nextId = new AtomicLong(1L);
     private ConcurrentHashMap<Long, Event> events = new ConcurrentHashMap<>();
     public Event findById(long id) {
@@ -79,5 +81,27 @@ public class EventService {
             imageService.deleteImage(deletedEvent.getImage());
         }
         this.events.remove(id);
+    }
+    public void buy(long id){
+        Event event=findById(id);
+        if (event.getTicketsAvailable()>0){
+            if (event.getUsers() == null) {
+                event.setUsers(new ArrayList<>());
+            }
+
+            List<User> users = event.getUsers();
+            users.add(user);
+            event.setUsers(users);
+            if (user.getMyEvents() == null) {
+                user.setMyEvents(new ArrayList<>());
+            }
+            List<Event> events1=user.getMyEvents();
+            events1.add(event);
+            user.setMyEvents(events1);
+            event.setTicketsAvailable(event.getTicketsAvailable()-1);
+
+        }
+
+
     }
 }

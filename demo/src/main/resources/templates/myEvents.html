@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis eventos</title>
+    <link rel="stylesheet" href="/eventTemplate.css">
+</head>
+<body>
+{{#user}}
+{{>header}}
+<p>Hola {{user.username}}</p>
+
+{{#user.myEvents}}
+<p>Tus eventos son:</p>
+{{this.name}}
+{{/user.myEvents}}
+{{^user.myEvents}}
+<p>Todavia no has agregado ningun evento</p>
+{{/user.myEvents}}
+{{/user}}
+{{^user}}
+<p>Debes iniciar sesión para ver tus eventos</p>
+{{/user}}
+</body>
+</html>

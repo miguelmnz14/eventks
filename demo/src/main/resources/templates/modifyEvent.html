@@ -23,11 +23,10 @@
 
     <p>Ticktes disponibles: </p>
     <input type="number" name="ticketsAvailable" value="{{event.ticketsAvailable}}"><br>
-    <label for="img-bt" class="button-create">Selecciona una imagen</label>
-    <input id="img-bt" type='file' name='imageField' accept=".jpg, .jpeg" value="Selecciona una imagen"/>
+    <input type='file' name='imageField' accept=".jpg, .jpeg" value="{{event.image}}"/>
     <input type="hidden" name="numEvent" value="{{id}}">
 
-    <input class="button-create" type="submit" value="Modificar"/>
+    <input type="submit" value="Modificar"/>
     </div>
 </form>
 

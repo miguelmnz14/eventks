@@ -31,6 +31,9 @@ public class EventController {
     private ImageService imageService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private User user;
+
 
     @GetMapping("/events")
     public String listAllEvents(Model model){
@@ -43,8 +46,6 @@ public class EventController {
         event.setImage("image_WhatsApp Image 2024-02-14 at 09.45.43.jpeg");
         eventService.save(event,null);
 
-
-
     }
 
     @GetMapping("/events/{id}")
@@ -56,6 +57,9 @@ public class EventController {
 
     @GetMapping("/events/new")
     public String createEvent(Model model){
+
+        model.addAttribute("user",user);
+
         return "createEvent";
     }
     @PostMapping("/events/new")
@@ -117,4 +121,15 @@ public class EventController {
 
     @GetMapping("/myuser")
     public String myUser(Model model){ return "myUser";}
+    @PostMapping("/buy/{id}")
+    public String buyEvent(Model model,@PathVariable long id){
+        eventService.buy(id);
+        return "home";
+    }
+    @GetMapping("/tickets")
+    public String seeMyevents(Model model){
+        model.addAttribute("user",user);
+        return "myEvents";
+    }
+
 }
