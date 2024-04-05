@@ -1,7 +1,7 @@
 package com.example.demo;
+
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 @Entity
 public class Event {
