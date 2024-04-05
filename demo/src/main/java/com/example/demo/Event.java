@@ -1,16 +1,23 @@
 package com.example.demo;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
-
+@Entity
 public class Event {
-    private Long id=null;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id = null;
     private String name;
     private String description;
     private String artists;
     private double price;
     private int ticketsAvailable;
     private String image;
+    @OneToMany
     private List<Comment> comments;
+    @ManyToMany
     private List<User> users;
     public Event(){
 

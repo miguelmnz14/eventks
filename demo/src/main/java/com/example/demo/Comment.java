@@ -1,11 +1,17 @@
 package com.example.demo;
+import jakarta.persistence.*;
 
+@Entity
 public class Comment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String username;
     private String content;
     private int valoration;
     private long eventId;
+    //@ManyToOne(mappedBy= 'comments')
+    //private Event event
 
     public Comment() {
 
