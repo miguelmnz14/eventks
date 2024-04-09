@@ -30,7 +30,10 @@ public class EventService {
             String path = imageService.createImage(imageField);
             event.setImage(path);
         }
-
+        double price = event.getPrice();
+        if (price <= 0){
+            throw new InvalidPriceException("El precio del evento debe ser mayor que cero.");
+        }
 
 
         long id = nextId.getAndIncrement();
