@@ -33,13 +33,15 @@ public class EventController {
     private CommentService commentService;
     @Autowired
     private User user;
+    @Autowired
+    private EventRepository eventRepository;
 
 
 
 
     @GetMapping("/events")
     public String listAllEvents(Model model){
-        model.addAttribute("events",eventService.findAll());
+        model.addAttribute("events",eventRepository.findAll());
         return "events";
     }
     @PostConstruct
