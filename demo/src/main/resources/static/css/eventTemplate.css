@@ -15,7 +15,7 @@ body {
     width: 50%;
     align-items: center;
     justify-content: center;
-    background-image: url("IMGtemplate.jpg");
+    background-image: url("../IMGtemplate.jpg");
     display: flex;
 }
 
@@ -134,11 +134,11 @@ body {
 
 @font-face {
     font-family: font;
-    src: url("fontheader.otf");
+    src: url("../fontheader.otf");
 }
 
 @font-face {
     font-family: font2;
-    src: url("subtitle-font.otf");
+    src: url("../subtitle-font.otf");
 }
 

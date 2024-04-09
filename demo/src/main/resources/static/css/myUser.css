@@ -37,7 +37,7 @@ body{
 
 @font-face {
     font-family: font;
-    src: url("fontheader.otf");
+    src: url("../fontheader.otf");
 }
 
 .form{
@@ -75,5 +75,5 @@ body{
 
 @font-face {
     font-family: font;
-    src: url("subtitle-font.otf");
+    src: url("../subtitle-font.otf");
 }

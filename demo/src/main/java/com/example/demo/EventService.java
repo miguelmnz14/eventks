@@ -141,6 +141,4 @@ public class EventService {
         List<Event> events1= user.getMyEvents();
         return events1;
     }
-
-
 }

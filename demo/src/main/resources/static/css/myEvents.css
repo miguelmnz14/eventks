@@ -18,17 +18,30 @@ body{
     text-align: center;
 }
 
+.myEvents{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.container-h{
+    width: 100%;
+}
+
+.container-f{
+    width: 100%;
+}
+
 a{
     text-decoration: none;
 }
 
-#border:hover .event{
+#border:hover.event{
     border: solid 3px white;
 }
 
-.container{
-    display: flex;
-    flex-wrap: wrap;
+.container {
+    width: calc(33.33% - 40px);
+    margin: 0 20px;
 }
 
 .event{
@@ -81,15 +94,15 @@ a{
 
 @font-face {
     font-family: font;
-    src: url("fuente.otf");
+    src: url("../fuente.otf");
 }
 
 @font-face {
     font-family: font1;
-    src: url("fontheader.otf");
+    src: url("../fontheader.otf");
 }
 
 @font-face {
     font-family: font2;
-    src: url("subtitle-font.otf");
+    src: url("../subtitle-font.otf");
 }
