@@ -16,6 +16,8 @@ public class EventService {
     private ImageService imageService;
     @Autowired
     private User user;
+    @Autowired
+    private EventRepository eventRepository;
     private AtomicLong nextId = new AtomicLong(1L);
     private ConcurrentHashMap<Long, Event> events = new ConcurrentHashMap<>();
     public Event findById(long id) {
@@ -35,11 +37,7 @@ public class EventService {
             throw new InvalidPriceException("El precio del evento debe ser mayor que cero.");
         }
 
-
-        long id = nextId.getAndIncrement();
-        event.setId(id);
-        events.put(id, event);
-        return event;
+        return eventRepository.save(event);
     }
     public void addComment(Event event, Comment comment){
         if (event.getComments() == null) {

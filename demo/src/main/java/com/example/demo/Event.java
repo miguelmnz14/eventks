@@ -11,12 +11,13 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id = null;
     private String name;
+    @Column(length = 1000)
     private String description;
     private String artists;
     private double price;
     private int ticketsAvailable;
     private String image;
-    @OneToMany
+    @OneToMany (cascade = CascadeType.ALL)
     private List<Comment> comments;
     @ManyToMany
     private List<User> users;

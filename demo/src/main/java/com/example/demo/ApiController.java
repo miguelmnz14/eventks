@@ -27,6 +27,12 @@ public class ApiController {
     private ImageService imageService;
     @Autowired
     private User user;
+    @Autowired
+    EventRepository eventRepository;
+    @Autowired
+    CommentRepository commentRepository;
+    @Autowired
+    UserRepository userRepository;
 
     @GetMapping
     public ResponseEntity<List<Event>> getAllEvents(){
