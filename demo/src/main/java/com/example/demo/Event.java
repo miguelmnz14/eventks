@@ -1,8 +1,10 @@
 package com.example.demo;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.sql.Blob;
 import java.util.List;
 @Entity
 public class Event {
@@ -21,6 +23,9 @@ public class Event {
     private List<Comment> comments;
     @ManyToMany
     private List<User> users;
+    @Lob
+    @JsonIgnore
+    private Blob imageFile;
     public Event(){
 
     }
@@ -87,6 +92,13 @@ public class Event {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+    public Blob getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(Blob image) {
+        this.imageFile = image;
     }
 
     @Override

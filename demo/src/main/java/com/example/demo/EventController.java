@@ -2,6 +2,7 @@ package com.example.demo;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -45,7 +46,7 @@ public class EventController {
         return "events";
     }
     @PostConstruct
-    public void init(){
+    public void init() throws IOException {
         Event event= new Event("Gran evento", "La pareja valenciana ha logrado ser la nueva sensación del hip-hop sin sello, sin publicidad, sin mánager, sin contacto con la prensa y con una discretísima presencia en redes gracias a 'BBO', un disco mimado al detalle y repleto de talento, una obra generacional ", "Hoke", 20, 10);
         event.setImage("image_imagenDWS.jpeg");
         eventService.save(event,null);
@@ -92,6 +93,21 @@ public class EventController {
             return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "image/jpeg").body(poster);
         } else {
 
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/{id}/image")
+    public ResponseEntity<Object> downloadImagess(@PathVariable long id)
+            throws SQLException {
+        Event post = eventRepository.findById(id).orElseThrow();
+        if (post.getImageFile() != null) {
+            Resource file = new InputStreamResource(
+                    post.getImageFile().getBinaryStream());
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_TYPE, "image/jpeg")
+                    .contentLength(post.getImageFile().length())
+                    .body(file);
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
