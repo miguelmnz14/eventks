@@ -1,4 +1,5 @@
 package com.example.demo;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
@@ -6,6 +7,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,10 +30,11 @@ public class EventService {
     public List<Event> findAll() {
         return eventRepository.findAll();
     }
-    public Event save(Event event, MultipartFile imageField) {
+    public Event save(Event event, MultipartFile imageField) throws IOException {
         if (imageField != null && !imageField.isEmpty()){
             String path = imageService.createImage(imageField);
             event.setImage(path);
+            event.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
         }
         double price = event.getPrice();
         if (price <= 0){
@@ -104,7 +107,12 @@ public class EventService {
         eventRepository.delete(event);
     }
     public void buy(long id){
-        Event event=findById(id);
+        Optional <Event> optionalEvent = eventRepository.findById(id);
+        if (optionalEvent.isPresent()) {
+            Event event = optionalEvent.get();
+
+
+
         if (user.getMyEvents() == null) {
             user.setMyEvents(new ArrayList<>());
         }
@@ -120,10 +128,12 @@ public class EventService {
 
             List<Event> events1=user.getMyEvents();
             events1.add(event);
+
             user.setMyEvents(events1);
             event.setTicketsAvailable(event.getTicketsAvailable()-1);
 
-        }
+
+        }}
 
     }
     public void deleteCommentById(Event event, long commentId) {

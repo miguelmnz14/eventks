@@ -46,7 +46,7 @@ public class ApiController {
         return ResponseEntity.ok(event);
     }
     @PostMapping
-    public ResponseEntity<Event> createEvent(@RequestBody Event event){
+    public ResponseEntity<Event> createEvent(@RequestBody Event event) throws IOException {
         Event createdEvent = eventService.save(event, null);
         return ResponseEntity.ok(createdEvent);
     }
