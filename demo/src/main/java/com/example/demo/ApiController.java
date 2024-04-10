@@ -138,8 +138,8 @@ public class ApiController {
         Event event = eventService.findById(eventID);
         if(event != null) {
             event.setImage(null);
-            Path FILES_FOLDER= Paths.get(System.getProperty("user.dir"), "images");
-            imageService.deleteImage1(FILES_FOLDER.toString(),event.getId());
+            event.setImageFile(null);
+            eventService.save(event,null);
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
