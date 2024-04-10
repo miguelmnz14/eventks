@@ -36,12 +36,13 @@ public class EventService {
             String path = imageService.createImage(imageField);
             event.setImage(path);
             event.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
+        } else {
+            event.setImage("null");
         }
         double price = event.getPrice();
         if (price <= 0){
             throw new InvalidPriceException("El precio del evento debe ser mayor que cero.");
         }
-
         return eventRepository.save(event);
     }
     public void addComment(Event event, Comment comment){
