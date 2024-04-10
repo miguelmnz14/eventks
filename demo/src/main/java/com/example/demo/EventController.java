@@ -36,6 +36,9 @@ public class EventController {
     private User user;
     @Autowired
     private EventRepository eventRepository;
+    @Autowired
+    private UserRepository userRepository;
+
 
 
 
@@ -164,7 +167,10 @@ public class EventController {
     }
     @GetMapping("/tickets")
     public String seeMyevents(Model model){
-        model.addAttribute("user",user);
+        long newid=1;
+        Optional<User> optionalUser = userRepository.findById(newid);
+        User usuario =optionalUser.get();
+        model.addAttribute("user",usuario);
         return "myEvents";
     }
     @GetMapping("/events/{id}/delete/{commentId}")
