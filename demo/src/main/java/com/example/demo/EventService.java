@@ -21,11 +21,12 @@ public class EventService {
     private AtomicLong nextId = new AtomicLong(1L);
     private ConcurrentHashMap<Long, Event> events = new ConcurrentHashMap<>();
     public Event findById(long id) {
-        return this.events.get(id);
+        Optional <Event> event = eventRepository.findById(id);
+        return event.orElse(null);
     }
 
     public List<Event> findAll() {
-        return this.events.values().stream().toList();
+        return eventRepository.findAll();
     }
     public Event save(Event event, MultipartFile imageField) {
         if (imageField != null && !imageField.isEmpty()){
@@ -58,34 +59,49 @@ public class EventService {
             String path = imageService.createImage(imageField);
             event.setImage(path);
         }else {
-
             Event existingEvent = events.get(event.getId());
             if (existingEvent != null && existingEvent.getImage() != null) {
                 event.setImage(existingEvent.getImage());
             }
         }
-        Event existingEvent = events.get(event.getId());
-        if (existingEvent != null) {
+        Optional <Event> optionalEvent = eventRepository.findById(event.getId());
+        if (optionalEvent.isPresent()) {
+            Event existingEvent = optionalEvent.get();
             event.setComments(existingEvent.getComments());
         }
-        long id = event.getId();
-        events.put(id, event);
+        if (optionalEvent.isPresent()){
+            Event existingEvent = optionalEvent.get();
+            existingEvent.setName(event.getName());
+            existingEvent.setId(event.getId());
+            existingEvent.setArtists(event.getArtists());
+            existingEvent.setUsers(event.getUsers());
+            existingEvent.setDescription(event.getDescription());
+            existingEvent.setTicketsAvailable(event.getTicketsAvailable());
+            existingEvent.setPrice(event.getPrice());
+            eventRepository.save(existingEvent);
+        }
         return event;
     }
     public Event edit1(Event event, Long id, Event aux){
         String image = aux.getImage();
-        event.setImage(image);
-        event.setComments(aux.getComments());
-        events.put(id, event);
-        event.setId(id);
-        return event;
-    }
-    public void delete(long id) {
-        Event deletedEvent = this.events.get(id);
-        if (deletedEvent.getImage() != null){
-            imageService.deleteImage(deletedEvent.getImage());
+        Optional <Event> optionalEvent = eventRepository.findById(id);
+        if (optionalEvent.isPresent()){
+            Event existingEvent = optionalEvent.get();
+            existingEvent.setImage(image);
+            existingEvent.setComments(aux.getComments());
+            existingEvent.setName(event.getName());
+            existingEvent.setArtists(event.getArtists());
+            existingEvent.setUsers(event.getUsers());
+            existingEvent.setDescription(event.getDescription());
+            existingEvent.setTicketsAvailable(event.getTicketsAvailable());
+            existingEvent.setPrice(event.getPrice());
+            Event savedEvent = eventRepository.save(existingEvent);
+            return savedEvent;
         }
-        this.events.remove(id);
+        return null;
+    }
+    public void delete(Event event) {
+        eventRepository.delete(event);
     }
     public void buy(long id){
         Event event=findById(id);

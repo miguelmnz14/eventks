@@ -101,7 +101,7 @@ public class EventController {
     public String deleteEvent(Model model, @PathVariable long id) {
         Event event = eventService.findById(id);
         if (event != null) {
-            eventService.delete(id);
+            eventService.delete(event);
             return "eventDeleted";
         } else {
             return "home";
