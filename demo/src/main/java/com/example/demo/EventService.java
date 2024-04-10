@@ -21,6 +21,8 @@ public class EventService {
     private User user;
     @Autowired
     private EventRepository eventRepository;
+    @Autowired
+    private UserRepository userRepository;
     private AtomicLong nextId = new AtomicLong(1L);
     private ConcurrentHashMap<Long, Event> events = new ConcurrentHashMap<>();
     public Event findById(long id) {
@@ -111,10 +113,12 @@ public class EventService {
 
 
 
-        if (user.getMyEvents() == null) {
-            user.setMyEvents(new ArrayList<>());
-        }
-        if (event.getTicketsAvailable()>0 && !user.getMyEvents().contains(event)){
+            if (user.getMyEvents() == null) {
+                user.setMyEvents(new ArrayList<>());
+            }
+        List <Event> mysevents=user.getMyEvents();
+
+        if (event.getTicketsAvailable()>0 && !mysevents.contains(event)){
             if (event.getUsers() == null) {
                 event.setUsers(new ArrayList<>());
             }
@@ -129,7 +133,8 @@ public class EventService {
 
             user.setMyEvents(events1);
             event.setTicketsAvailable(event.getTicketsAvailable()-1);
-
+            userRepository.save(user);
+            eventRepository.save(event);
 
         }}
 

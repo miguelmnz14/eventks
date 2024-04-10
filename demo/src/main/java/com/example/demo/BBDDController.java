@@ -19,12 +19,20 @@ public class BBDDController {
     private UserRepository userRepository;
     @PostConstruct
     public void init(){
-        Event event=new Event("pet","jajaj","kka",1,3);
+        Event event = new Event("pet", "jajaj", "kka", 1, 3);
         event.setImage("null");
+
+        // Guardar el evento en la base de datos
         eventRepository.save(event);
-        List <Event> eventi=new ArrayList<>();
-        User user=new User("peter",eventi);
+
+        // Crear un usuario y asignarle el evento
+        List<Event> events = new ArrayList<>();
+        events.add(event);
+        User user = new User("peter", events);
+
+        // Guardar el usuario en la base de datos
         userRepository.save(user);
+
     }
 
 

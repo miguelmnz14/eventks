@@ -1,4 +1,7 @@
 package com.example.demo;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+
 import jakarta.persistence.*;
 
 
@@ -11,13 +14,14 @@ import java.util.List;
 @Component
 @SessionScope
 @Entity
+@Scope(proxyMode = ScopedProxyMode.NO)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id = null;
+    private Long id ;
     private String username;
 
-    @ManyToMany
+    @ManyToMany//(mappedBy="users")
     private List<Event> myEvents;
     public User(){
 

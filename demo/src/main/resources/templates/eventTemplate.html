@@ -38,7 +38,7 @@
     <h3>Añadir comentario</h3>
     <form action="/events/{{event.id}}/comments" method="post">
 
-        <input id="username" class="input" type="text" name="username" placeholder="Nombre de usuario"><br>
+        <input  class="input" type="text" name="username" placeholder="Nombre de usuario" ><br>
         <textarea class="input" name="content" placeholder="Contenido del comentario"></textarea><br>
         <input class="input" type="number" name="valoration" ><br>
         <input type="hidden" name="id" value="{{event.id}}">
