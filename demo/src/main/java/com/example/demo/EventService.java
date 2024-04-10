@@ -36,12 +36,13 @@ public class EventService {
             String path = imageService.createImage(imageField);
             event.setImage(path);
             event.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
+        } else {
+            event.setImage("null");
         }
         double price = event.getPrice();
         if (price <= 0){
             throw new InvalidPriceException("El precio del evento debe ser mayor que cero.");
         }
-
         return eventRepository.save(event);
     }
     public void addComment(Event event, Comment comment){
@@ -57,17 +58,14 @@ public class EventService {
 
 
     public Event edit(Event event,MultipartFile imageField) {
-        Optional <Event> optionalEvent = eventRepository.findById(event.getId());
-        if(optionalEvent.isPresent()){
-            Event existingEvent = optionalEvent.get();
+        Optional <Event> optionnalEvent = eventRepository.findById(event.getId());
+        if(optionnalEvent.isPresent()){
+            Event existingEvent = optionnalEvent.get();
             if (imageField != null && !imageField.isEmpty()) {
                 String path = imageService.createImage(imageField);
                 Blob blob = imageService.convertMultiparttoBlob(imageField);
                 existingEvent.setImageFile(blob);
                 existingEvent.setImage(path);
-            } else {
-                existingEvent.setImageFile(event.getImageFile());
-                existingEvent.setImage(event.getImage());
             }
             event.setComments(existingEvent.getComments());
             existingEvent.setName(event.getName());
@@ -89,9 +87,7 @@ public class EventService {
         Optional <Event> optionalEvent = eventRepository.findById(id);
         if (optionalEvent.isPresent()){
             Event existingEvent = optionalEvent.get();
-            //Blob blob = imageService.convertMultiparttoBlob();
             existingEvent.setImage(image);
-            //existingEvent.setImageFile(blob);
             existingEvent.setComments(aux.getComments());
             existingEvent.setName(event.getName());
             existingEvent.setArtists(event.getArtists());
@@ -99,6 +95,7 @@ public class EventService {
             existingEvent.setDescription(event.getDescription());
             existingEvent.setTicketsAvailable(event.getTicketsAvailable());
             existingEvent.setPrice(event.getPrice());
+            existingEvent.setImageFile(aux.getImageFile());
             Event savedEvent = eventRepository.save(existingEvent);
             return savedEvent;
         }
