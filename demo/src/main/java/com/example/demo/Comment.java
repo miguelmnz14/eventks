@@ -9,6 +9,7 @@ public class Comment {
     private String username;
     private String content;
     private int valoration;
+
     private long eventId;
 
     public Comment() {
