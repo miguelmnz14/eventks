@@ -149,7 +149,7 @@ public class EventController {
     @PostMapping("/events/{id}/edit")
     public String changeEvent(Model model,Event updateEvent,MultipartFile imageField,@PathVariable long id){
         eventService.edit(updateEvent,imageField);
-        return "eventTemplate";
+        return "home";
     }
 
     @GetMapping("/myuser")

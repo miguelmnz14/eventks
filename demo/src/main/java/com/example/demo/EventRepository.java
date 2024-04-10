@@ -5,5 +5,4 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface EventRepository extends JpaRepository<Event, Long> {
-
 }

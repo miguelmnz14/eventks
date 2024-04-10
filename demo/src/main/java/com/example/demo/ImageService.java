@@ -5,6 +5,8 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.UUID;
 
 import org.springframework.core.io.Resource;
@@ -81,6 +83,15 @@ public class ImageService{
         File imageFile = new File(imagePath);
         if (imageFile.exists()) {
                imageFile.delete();
+        }
+    }
+    public Blob convertMultiparttoBlob (MultipartFile multipartFile){
+        try{
+            byte[] bytes = multipartFile.getBytes();
+            return new javax.sql.rowset.serial.SerialBlob(bytes);
+        } catch (IOException | SQLException e){
+            e.printStackTrace();
+            return null;
         }
     }
 }
