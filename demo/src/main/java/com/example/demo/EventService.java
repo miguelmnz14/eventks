@@ -66,9 +66,6 @@ public class EventService {
                 Blob blob = imageService.convertMultiparttoBlob(imageField);
                 existingEvent.setImageFile(blob);
                 existingEvent.setImage(path);
-            } else {
-                existingEvent.setImageFile(event.getImageFile());
-                existingEvent.setImage(event.getImage());
             }
             event.setComments(existingEvent.getComments());
             existingEvent.setName(event.getName());
@@ -90,9 +87,7 @@ public class EventService {
         Optional <Event> optionalEvent = eventRepository.findById(id);
         if (optionalEvent.isPresent()){
             Event existingEvent = optionalEvent.get();
-            //Blob blob = imageService.convertMultiparttoBlob();
             existingEvent.setImage(image);
-            //existingEvent.setImageFile(blob);
             existingEvent.setComments(aux.getComments());
             existingEvent.setName(event.getName());
             existingEvent.setArtists(event.getArtists());
@@ -100,6 +95,7 @@ public class EventService {
             existingEvent.setDescription(event.getDescription());
             existingEvent.setTicketsAvailable(event.getTicketsAvailable());
             existingEvent.setPrice(event.getPrice());
+            existingEvent.setImageFile(aux.getImageFile());
             Event savedEvent = eventRepository.save(existingEvent);
             return savedEvent;
         }
