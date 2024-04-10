@@ -16,10 +16,17 @@ var quill = new Quill('#editor', {
 var contenido = quill.root.innerHTML;
 console.log(contenido);
 
-function actualizarTexto() {
-    var texto = quill.root.innerHTML; // Obtiene el contenido HTML del editor
-    document.getElementById('texto-actualizado').innerHTML = texto; // Actualiza el contenido del elemento en la página
+function addText() {
+    var textEditor = quill.root.innerHTML;
+    var textInserted = document.getElementById("text-inserted");
+
+
+    var newDiv = document.createElement("div");
+    newDiv.innerHTML = textEditor;
+    newDiv.classList.add("text-inserted-div");
+    textInserted.appendChild(newDiv);
 }
+
 
 
 

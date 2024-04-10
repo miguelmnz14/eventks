@@ -6,10 +6,17 @@ body{
     width: 100%;
     display: flex;
 }
+
+.text-inserted-div{
+    width: 100%;
+    display: flex;
+    background-color: black;
+    color: white;
+}
+
 #editor{
     width: 100%;
     display: flex;
-    color: white;
 }
 
 #texto-actualizado{
