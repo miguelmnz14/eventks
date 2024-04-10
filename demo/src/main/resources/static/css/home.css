@@ -6,7 +6,18 @@ body{
     width: 100%;
     display: flex;
 }
+#editor{
+    width: 100%;
+    display: flex;
+    color: white;
+}
 
+#texto-actualizado{
+    width: 100%;
+    display: flex;
+    background-color: black;
+    color: white;
+}
 .main-pic-c, .main-txt{
     width: 50%;
     height: auto;
