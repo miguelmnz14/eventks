@@ -49,10 +49,9 @@ public class EventService {
             event.setComments(new ArrayList<>());
         }
         List<Comment> comments = event.getComments();
-        int size=comments.size()-1;
-        comment.setId(size+1);
         comments.add(comment);
         event.setComments(comments);
+        eventRepository.save(event);
     }
 
 
@@ -140,19 +139,22 @@ public class EventService {
     }
     public void deleteCommentById(Event event, long commentId) {
         List<Comment> comments = event.getComments();
+        int len = comments.size();
+        List<Comment> newComments = new ArrayList<>();
         if (comments != null) {
             Iterator<Comment> iterator = comments.iterator();
             while (iterator.hasNext()) {
                 Comment comment = iterator.next();
-                if (comment.getId() == commentId) {
-                    iterator.remove();
-                    return;
+                if (comment.getId() != commentId) {
+                    newComments.add(comment);
+
                 }
+
+
             }
-            int newId = 0;
-            for (Comment comment : comments) {
-                comment.setId(newId++);
-            }
+
+            event.setComments(newComments);
+            eventRepository.save(event);
         }
     }
     public Comment findCommentById(Event event, Long id) {
