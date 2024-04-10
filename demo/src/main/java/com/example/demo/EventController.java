@@ -56,10 +56,10 @@ public class EventController {
         Event event2=new Event("Kid Keo","Algunos de tus temas superan los diez millones de reproducciones en Spotify, como Kikiki o Ma Vie. Por no hablar de Dracukeo, tu single más célebre, cuyo vídeo supera las noventa millones de visitas en YouTube.","Padua Keoma",30,250);
         event2.setImage("image_WhatsApp Image 2024-03-12 at 09.19.15.jpeg");
         eventService.save(event2,null);
-        if (user==null){
+        /*if (user==null){
             user=new User("peterparker",null);
             user.setMyEvents(new ArrayList<>());
-        }
+        }*/
 
 
 

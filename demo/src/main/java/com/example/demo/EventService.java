@@ -107,16 +107,19 @@ public class EventService {
         eventRepository.delete(event);
     }
     public void buy(long id){
+        long newid=1;
+        Optional<User> optionalUser = userRepository.findById(newid);
+        User usuario =optionalUser.get();
         Optional <Event> optionalEvent = eventRepository.findById(id);
         if (optionalEvent.isPresent()) {
             Event event = optionalEvent.get();
 
 
 
-            if (user.getMyEvents() == null) {
+           /* if (user.getMyEvents() == null) {
                 user.setMyEvents(new ArrayList<>());
-            }
-        List <Event> mysevents=user.getMyEvents();
+            }*/
+        List <Event> mysevents=usuario.getMyEvents();
 
         if (event.getTicketsAvailable()>0 && !mysevents.contains(event)){
             if (event.getUsers() == null) {
@@ -125,15 +128,15 @@ public class EventService {
 
 
             List<User> users = event.getUsers();
-            users.add(user);
+            users.add(usuario);
             event.setUsers(users);
 
-            List<Event> events1=user.getMyEvents();
+            List<Event> events1=usuario.getMyEvents();
             events1.add(event);
 
-            user.setMyEvents(events1);
+            usuario.setMyEvents(events1);
             event.setTicketsAvailable(event.getTicketsAvailable()-1);
-            userRepository.save(user);
+            userRepository.save(usuario);
             eventRepository.save(event);
 
         }}
