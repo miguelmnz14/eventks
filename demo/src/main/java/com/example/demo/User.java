@@ -21,7 +21,7 @@ public class User {
     private Long id ;
     private String username;
 
-    @ManyToMany//(mappedBy="users")
+    @ManyToMany(mappedBy="users")
     private List<Event> myEvents;
     public User(){
 
