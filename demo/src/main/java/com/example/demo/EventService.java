@@ -58,9 +58,9 @@ public class EventService {
 
 
     public Event edit(Event event,MultipartFile imageField) {
-        Optional <Event> optionalEvent = eventRepository.findById(event.getId());
-        if(optionalEvent.isPresent()){
-            Event existingEvent = optionalEvent.get();
+        Optional <Event> optionnalEvent = eventRepository.findById(event.getId());
+        if(optionnalEvent.isPresent()){
+            Event existingEvent = optionnalEvent.get();
             if (imageField != null && !imageField.isEmpty()) {
                 String path = imageService.createImage(imageField);
                 Blob blob = imageService.convertMultiparttoBlob(imageField);
