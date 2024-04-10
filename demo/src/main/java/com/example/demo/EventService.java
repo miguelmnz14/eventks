@@ -1,5 +1,6 @@
 package com.example.demo;
 import java.io.IOException;
+import java.sql.Blob;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
@@ -52,28 +53,24 @@ public class EventService {
         comment.setId(size+1);
         comments.add(comment);
         event.setComments(comments);
-
     }
 
 
 
     public Event edit(Event event,MultipartFile imageField) {
-        if (imageField != null && !imageField.isEmpty()){
-            String path = imageService.createImage(imageField);
-            event.setImage(path);
-        }else {
-            Event existingEvent = events.get(event.getId());
-            if (existingEvent != null && existingEvent.getImage() != null) {
-                event.setImage(existingEvent.getImage());
-            }
-        }
         Optional <Event> optionalEvent = eventRepository.findById(event.getId());
-        if (optionalEvent.isPresent()) {
+        if(optionalEvent.isPresent()){
             Event existingEvent = optionalEvent.get();
+            if (imageField != null && !imageField.isEmpty()) {
+                String path = imageService.createImage(imageField);
+                Blob blob = imageService.convertMultiparttoBlob(imageField);
+                existingEvent.setImageFile(blob);
+                existingEvent.setImage(path);
+            } else {
+                existingEvent.setImageFile(event.getImageFile());
+                existingEvent.setImage(event.getImage());
+            }
             event.setComments(existingEvent.getComments());
-        }
-        if (optionalEvent.isPresent()){
-            Event existingEvent = optionalEvent.get();
             existingEvent.setName(event.getName());
             existingEvent.setId(event.getId());
             existingEvent.setArtists(event.getArtists());
@@ -82,15 +79,20 @@ public class EventService {
             existingEvent.setTicketsAvailable(event.getTicketsAvailable());
             existingEvent.setPrice(event.getPrice());
             eventRepository.save(existingEvent);
+            existingEvent.setImageFile(event.getImageFile());
+            return event;
+        } else {
+            return null;
         }
-        return event;
     }
     public Event edit1(Event event, Long id, Event aux){
         String image = aux.getImage();
         Optional <Event> optionalEvent = eventRepository.findById(id);
         if (optionalEvent.isPresent()){
             Event existingEvent = optionalEvent.get();
+            //Blob blob = imageService.convertMultiparttoBlob();
             existingEvent.setImage(image);
+            //existingEvent.setImageFile(blob);
             existingEvent.setComments(aux.getComments());
             existingEvent.setName(event.getName());
             existingEvent.setArtists(event.getArtists());
