@@ -21,7 +21,7 @@ public class Event_dinService {
             query += " WHERE e.artists = :artist";
         }
 
-        query += " AND e.price < :price";
+            query += " AND e.price < :price";
 
         TypedQuery<Event> typedQuery = entityManager.createQuery(query, Event.class);
         if (!artist.isEmpty()) {
