@@ -17,14 +17,14 @@ public class Event_dinService {
     }
     public List<Event> findAll(String artist,Double price) {
         String query = "SELECT e FROM Event e";
-        boolean whereAdded = false;
+        boolean added = false;
         if (!artist.isEmpty()) {
             query += " WHERE e.artists = :artist";
-            whereAdded = true;
+            added = true;
         }
 
         if (price != null){
-            if (whereAdded){
+            if (added){
                 query += " AND e.price <= :price";
             } else {
                 query += " WHERE e.price <= :price";
