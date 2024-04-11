@@ -1,14 +1,20 @@
 package com.example.demo.service;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
+import com.example.demo.model.Event;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -22,13 +28,17 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class ImageService{
 
-    private static final Path IMAGES_FOLDER = Paths.get(System.getProperty("user.dir"), "images");
+    private static final Path IMAGES_FOLDER = Paths.get(System.getProperty("user.dir"), "static");
+    @Value("/src/main/resources/static")
+    private String uploadDir;
+    private ConcurrentHashMap<Long, String> filess = new ConcurrentHashMap<>();
+
 
     public String createImage(MultipartFile multiPartFile) {
 
         String originalName = multiPartFile.getOriginalFilename();
 
-        if(!originalName.matches(".*\\.(jpg|jpeg|gif|png)")){
+        if(!originalName.matches(".*\\.(jpg|jpeg|gif|png|pdf)")){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The url is not an image resource");
         }
 
@@ -44,8 +54,8 @@ public class ImageService{
 
         return fileName;
     }
-    private Path createFilePath(long imageId, Path folder) {
-        return folder.resolve("image_" + imageId + ".jpeg");
+    public Path createFilePath(long imageId, Path folder) {
+        return folder.resolve(  imageId + ".pdf");
     }
 
     public Resource getImage(String imageName) {
@@ -93,5 +103,31 @@ public class ImageService{
             e.printStackTrace();
             return null;
         }
+    }
+    public void savefile(String foldername,MultipartFile file,String filemame) throws IOException {
+        Path folder = Paths.get(uploadDir,foldername);
+        if (!Files.exists(folder)){
+            Files.createDirectories(folder);
+        }
+        Path newfile=folder.resolve(filemame);
+        Files.copy(file.getInputStream(),newfile);
+    }
+    public void savePdf(MultipartFile pdfFile, Long id) throws IOException {
+        String originalName = pdfFile.getOriginalFilename();
+        Path folder = IMAGES_FOLDER.resolve(id.toString());
+        Files.createDirectories(folder);
+
+        // Crear un archivo en el directorio con el nombre original del archivo
+        Path filePath = folder.resolve(originalName);
+
+        try (InputStream inputStream = pdfFile.getInputStream()) {
+            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+        }
+        filess.put(id,originalName);
+    }
+    public String getHashMap(long id) {
+        String mine=filess.get(id);
+
+        return mine;
     }
 }
