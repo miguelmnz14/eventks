@@ -1,5 +1,6 @@
 package com.example.demo.model;
 import com.example.demo.model.Event;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 
@@ -22,6 +23,7 @@ public class User {
     private String username;
 
     @ManyToMany(mappedBy="users")
+    @JsonIgnore
     private List<Event> myEvents;
     public User(){
 

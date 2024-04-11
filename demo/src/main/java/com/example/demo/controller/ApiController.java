@@ -7,6 +7,7 @@ import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.EventRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.EventService;
+import com.example.demo.service.Event_dinService;
 import com.example.demo.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,8 @@ public class ApiController {
     CommentRepository commentRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    Event_dinService eventDinService;
 
     @GetMapping
     public ResponseEntity<List<Event>> getAllEvents(){
@@ -167,6 +170,11 @@ public class ApiController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+    @GetMapping("/din")
+    public ResponseEntity<List<Event>> findDin (String artist, Double price){
+
+        return ResponseEntity.ok(eventDinService.findAll(artist, price));
     }
 
 
