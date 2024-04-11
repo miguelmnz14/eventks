@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.service;
 import java.io.IOException;
 import java.sql.Blob;
 import java.util.Iterator;
@@ -8,6 +8,13 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
+import com.example.demo.InvalidPriceException;
+import com.example.demo.model.Comment;
+import com.example.demo.model.Event;
+import com.example.demo.model.User;
+import com.example.demo.repository.CommentRepository;
+import com.example.demo.repository.EventRepository;
+import com.example.demo.repository.UserRepository;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

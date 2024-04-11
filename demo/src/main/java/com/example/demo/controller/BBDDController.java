@@ -1,10 +1,13 @@
-package com.example.demo;
+package com.example.demo.controller;
 
-import ch.qos.logback.classic.spi.ConfiguratorRank;
+import com.example.demo.service.CommentService;
+import com.example.demo.repository.EventRepository;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.model.Event;
+import com.example.demo.model.User;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.List;
