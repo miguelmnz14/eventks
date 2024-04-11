@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.model;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 
@@ -8,7 +8,6 @@ import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component

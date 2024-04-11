@@ -64,10 +64,10 @@ body{
 
 @font-face {
     font-family: font;
-    src: url("../subtitle-font.otf");
+    src: url("font/subtitle-font.otf");
 }
 
 @font-face {
     font-family: font1;
-    src: url("../aAnotherTag.ttf");
+    src: url("font/aAnotherTag.ttf");
 }
