@@ -38,7 +38,8 @@ public class EventController {
     private EventRepository eventRepository;
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private Event_dinService eventDinService;
 
 
 
@@ -46,6 +47,11 @@ public class EventController {
     @GetMapping("/events")
     public String listAllEvents(Model model){
         model.addAttribute("events",eventRepository.findAll());
+        return "events";
+    }
+    @PostMapping("/events")
+    public String listAllEventsDin(Model model, String artist){
+        model.addAttribute("events",eventDinService.findAll(artist));
         return "events";
     }
     @PostConstruct

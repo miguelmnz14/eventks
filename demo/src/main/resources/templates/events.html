@@ -22,7 +22,10 @@
     {{^events}}
     <p id="no-events">Todavía no hay eventos.</p>
     {{/events}}
-
+    <form action="/events" method="post" enctype="multipart/form-data">
+        <input type="text" name="artist">
+        <input type="submit" value="Crear" placeholder="artista"/>
+    </form>
 <button id="button" onclick="location.href='/events/new'">Nuevo evento</button>
 {{>footer}}
 </body>
