@@ -20,6 +20,7 @@ public class BBDDController {
     private CommentService commentService;
     @Autowired
     private UserRepository userRepository;
+    /*
     @PostConstruct
     public void init(){
         Event event = new Event("pet", "jajaj", "kka", 1, 3);
@@ -38,5 +39,5 @@ public class BBDDController {
 
     }
 
-
+*/
 }

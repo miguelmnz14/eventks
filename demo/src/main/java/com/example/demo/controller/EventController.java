@@ -57,6 +57,7 @@ public class EventController {
         model.addAttribute("events",eventDinService.findAll(artist,price));
         return "events";
     }
+    /*
     @PostConstruct
     public void init() throws IOException {
         Event event= new Event("Gran evento", "La pareja valenciana ha logrado ser la nueva sensación del hip-hop sin sello, sin publicidad, sin mánager, sin contacto con la prensa y con una discretísima presencia en redes gracias a 'BBO', un disco mimado al detalle y repleto de talento, una obra generacional ", "Hoke", 20, 10);
@@ -71,11 +72,11 @@ public class EventController {
         /*if (user==null){
             user=new User("peterparker",null);
             user.setMyEvents(new ArrayList<>());
-        }*/
+        }
 
 
 
-    }
+    }*/
 
     @GetMapping("/events/{id}")
     public String showEvent(Model model,@PathVariable long id){
@@ -137,7 +138,8 @@ public class EventController {
     }
     @PostMapping("/events/{id}/comments")
     public String submitComment(Model model, String username, String content, int valoration, @PathVariable long id) {
-        Comment comment = new Comment(username, content, valoration);
+        String sanitizeContent=eventService.sanitizexss(content);
+        Comment comment = new Comment(username, sanitizeContent, valoration);
         Event event1=eventService.findById(id);
         comment.setEventId(event1);
         Event event =eventService.findById(id);

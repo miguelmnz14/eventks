@@ -19,7 +19,8 @@ import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 @Service
 public class EventService {
     @Autowired
@@ -125,9 +126,7 @@ public class EventService {
 
 
 
-           /* if (user.getMyEvents() == null) {
-                user.setMyEvents(new ArrayList<>());
-            }*/
+
         List <Event> mysevents=usuario.getMyEvents();
 
         if (event.getTicketsAvailable()>0 && !mysevents.contains(event)){
@@ -187,5 +186,9 @@ public class EventService {
     public List<Event> findMyevents(){
         List<Event> events1= user.getMyEvents();
         return events1;
+    }
+    public String sanitizexss(String content){
+        String cleanedHTML = Jsoup.clean(content, Whitelist.basicWithImages());
+        return cleanedHTML;
     }
 }
