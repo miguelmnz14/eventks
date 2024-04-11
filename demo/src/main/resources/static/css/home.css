@@ -92,10 +92,10 @@ body{
 
 @font-face {
     font-family: tag1;
-    src: url("../fontheader.otf");
+    src: url("font/fontheader.otf");
 }
 
 @font-face {
     font-family: subtitle;
-    src: url("../subtitle-font.otf");
+    src: url("font/subtitle-font.otf");
 }

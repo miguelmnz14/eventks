@@ -1,21 +1,25 @@
-package com.example.demo;
+package com.example.demo.controllers;
 
+import com.example.demo.model.Comment;
+import com.example.demo.model.Event;
+import com.example.demo.model.User;
+import com.example.demo.repository.CommentRepository;
+import com.example.demo.repository.EventRepository;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.EventService;
+import com.example.demo.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Optional;
 
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
-import static org.springframework.web.util.UriComponentsBuilder.fromUriString;
 
 @RestController
 @RequestMapping("/api/events")

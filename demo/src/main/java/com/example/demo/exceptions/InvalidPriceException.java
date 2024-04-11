@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.exceptions;
 
 public class InvalidPriceException extends RuntimeException{
     public InvalidPriceException(String message) {

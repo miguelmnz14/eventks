@@ -94,15 +94,15 @@ a{
 
 @font-face {
     font-family: font;
-    src: url("../fuente.otf");
+    src: url("font/fuente.otf");
 }
 
 @font-face {
     font-family: font1;
-    src: url("../fontheader.otf");
+    src: url("font/fontheader.otf");
 }
 
 @font-face {
     font-family: font2;
-    src: url("../subtitle-font.otf");
+    src: url("font/subtitle-font.otf");
 }

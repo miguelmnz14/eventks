@@ -1,17 +1,21 @@
-package com.example.demo;
+package com.example.demo.controllers;
+import com.example.demo.model.Comment;
+import com.example.demo.model.Event;
+import com.example.demo.model.User;
+import com.example.demo.repository.EventRepository;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.CommentService;
+import com.example.demo.service.EventService;
+import com.example.demo.service.ImageService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -19,8 +23,6 @@ import java.io.IOException;
 
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -71,10 +73,10 @@ public class EventController {
     @GetMapping("/events/{id}")
     public String showEvent(Model model,@PathVariable long id){
         Event event = eventService.findById(id);
-            model.addAttribute("event", event);
-            model.addAttribute("user",user);
-            return "eventTemplate";
-        }
+        model.addAttribute("event", event);
+        model.addAttribute("user",user);
+        return "eventTemplate";
+    }
 
     @GetMapping("/events/new")
     public String createEvent(Model model){
