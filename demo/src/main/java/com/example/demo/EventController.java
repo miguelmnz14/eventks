@@ -50,7 +50,7 @@ public class EventController {
         return "events";
     }
     @PostMapping("/events")
-    public String listAllEventsDin(Model model, String artist,double price){
+    public String listAllEventsDin(Model model, String artist,Double price){
         model.addAttribute("events",eventDinService.findAll(artist,price));
         return "events";
     }

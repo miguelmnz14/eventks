@@ -15,19 +15,29 @@ public class Event_dinService {
     public List<Event> findAll(){
         return eventRepository.findAll();
     }
-    public List<Event> findAll(String artist,double price) {
+    public List<Event> findAll(String artist,Double price) {
         String query = "SELECT e FROM Event e";
+        boolean whereAdded = false;
         if (!artist.isEmpty()) {
             query += " WHERE e.artists = :artist";
+            whereAdded = true;
         }
 
-        query += " AND e.price < :price";
+        if (price != null){
+            if (whereAdded){
+                query += " AND e.price <= :price";
+            } else {
+                query += " WHERE e.price <= :price";
+            }
+        }
 
         TypedQuery<Event> typedQuery = entityManager.createQuery(query, Event.class);
         if (!artist.isEmpty()) {
             typedQuery.setParameter("artist", artist);
         }
-        typedQuery.setParameter("price",price);
+        if (price != null){
+            typedQuery.setParameter("price", price);
+        }
         return typedQuery.getResultList();
     }
 
