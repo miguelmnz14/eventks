@@ -83,6 +83,8 @@ public class EventController {
         Event event = eventService.findById(id);
             model.addAttribute("event", event);
             model.addAttribute("user",user);
+
+            model.addAttribute("filename",imageService.getHashMap(id));
             return "eventTemplate";
         }
 
@@ -94,8 +96,11 @@ public class EventController {
         return "createEvent";
     }
     @PostMapping("/events/new")
-    public String newEvent(Model model,Event newevent,MultipartFile imageField)throws IOException{
+    public String newEvent(Model model,Event newevent,MultipartFile imageField,MultipartFile pdffile)throws IOException{
         Event event=eventService.save(newevent,imageField);
+        Long eid= newevent.getId();
+        String neweid=eid.toString();
+        imageService.savePdf(pdffile,eid);
         return "eventSubmitted";
     }
     @GetMapping("/events/{id}/image")
