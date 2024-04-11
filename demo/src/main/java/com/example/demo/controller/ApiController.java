@@ -89,6 +89,9 @@ public class ApiController {
     }
     @PostMapping("/{eventId}/comments")
     public ResponseEntity<Comment> createcomment(@PathVariable Long eventId,@RequestBody Comment comment){
+        String cont= comment.getContent();
+        String newcont=eventService.sanitizexss(cont);
+        comment.setContent(newcont);
         Event event=eventService.findById(eventId);
         comment.setEventId(event);
         eventService.addComment(event,comment);
