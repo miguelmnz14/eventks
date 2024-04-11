@@ -30,7 +30,6 @@ public class User {
     public User(String username,List<Event> myEvents){
         this.username=username;
         this.myEvents=myEvents;
-
     }
 
 
