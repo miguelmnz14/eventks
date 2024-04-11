@@ -135,7 +135,8 @@ public class EventController {
     @PostMapping("/events/{id}/comments")
     public String submitComment(Model model, String username, String content, int valoration, @PathVariable long id) {
         Comment comment = new Comment(username, content, valoration);
-        comment.setEventId(id);
+        Event event1=eventService.findById(id);
+        comment.setEventId(event1);
         Event event =eventService.findById(id);
         eventService.addComment(event, comment);
         return "redirect:/events/"+event.getId();
@@ -181,8 +182,17 @@ public class EventController {
     }
     @GetMapping("/events/{id}/delete/{commentId}")
     public String deleteComment(Model model,@PathVariable long id,@PathVariable long commentId){
-        Event event=eventService.findById(id);
-        eventService.deleteCommentById(event,commentId);
+        Optional<Event> optionalEvent = eventRepository.findById(id);
+        if (optionalEvent.isPresent()) {
+            Event event = optionalEvent.get();
+            for (Comment comment : event.getComments()) {
+                if (comment.getId() == commentId) {
+                    event.getComments().remove(comment);
+                    eventRepository.save(event);
+                    break;
+                }
+            }
+        }
         return "redirect:/events/{id}";
 
     }

@@ -1,4 +1,5 @@
 package com.example.demo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -9,7 +10,9 @@ public class Comment {
     private String username;
     private String content;
     private int valoration;
-    private long eventId;
+    @JsonIgnore
+    @ManyToOne
+    private Event event;
 
     public Comment() {
 
@@ -34,8 +37,8 @@ public class Comment {
         return username;
     }
 
-    public long getEventId() {
-        return eventId;
+    public Event getEventId() {
+        return event;
     }
 
     public long getId() {
@@ -54,8 +57,8 @@ public class Comment {
         this.valoration = valoration;
     }
 
-    public void setEventId(long eventId) {
-        this.eventId = eventId;
+    public void setEventId(Event event) {
+        this.event = event;
     }
 
     public void setId(long id) {

@@ -85,23 +85,38 @@ public class ApiController {
     @PostMapping("/{eventId}/comments")
     public ResponseEntity<Comment> createcomment(@PathVariable Long eventId,@RequestBody Comment comment){
         Event event=eventService.findById(eventId);
+        comment.setEventId(event);
         eventService.addComment(event,comment);
         URI location = fromCurrentRequest().build().toUri();
         return ResponseEntity.created(location).build();
     }
     @DeleteMapping("/{eventId}/comments/{id}")
-    public ResponseEntity<Comment> deletecomment(@PathVariable Long eventId,@PathVariable Long id){
-        Event event=eventService.findById(eventId);
-        Comment comment=eventService.findCommentById(event,id);
-        if (event != null && comment != null){
-            eventService.deleteCommentById(event,id);
-            return ResponseEntity.ok(comment);
-        }else {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<Void> deleteComment(@PathVariable Long eventId, @PathVariable Long id) {
+        Optional<Event> optionalEvent = eventRepository.findById(eventId);
+        int i = 0;
+        if (optionalEvent.isPresent()) {
+            Event event = optionalEvent.get();
+            List<Comment> comments = event.getComments();
+            for (Comment comment : comments) {
+                if (comment.getId()==id) {
+                    comments.remove(comment);
+                    event.setComments(comments);
+                    eventRepository.save(event);
+                    i = 1;
+                    break;
+                }
+            }
+            if (i == 0) {
+                return ResponseEntity.notFound().build(); // El comentario no existe
+            } else {
+                return ResponseEntity.ok().build();
+            }
+        } else {
+            return ResponseEntity.notFound().build(); // El evento no existe
         }
-
-
     }
+
+
     @PostMapping("/{eventID}/image")
     public ResponseEntity<Object> uploadImage(@PathVariable Long eventID, @RequestParam MultipartFile imageFile) throws IOException {
         Event event = eventService.findById(eventID);
@@ -145,4 +160,6 @@ public class ApiController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
 }

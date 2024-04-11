@@ -23,6 +23,8 @@ public class EventService {
     private EventRepository eventRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CommentRepository commentRepository;
     private AtomicLong nextId = new AtomicLong(1L);
     private ConcurrentHashMap<Long, Event> events = new ConcurrentHashMap<>();
     public Event findById(long id) {
@@ -144,22 +146,24 @@ public class EventService {
     }
     public void deleteCommentById(Event event, long commentId) {
         List<Comment> comments = event.getComments();
-        int len = comments.size();
-        List<Comment> newComments = new ArrayList<>();
+
+
         if (comments != null) {
             Iterator<Comment> iterator = comments.iterator();
             while (iterator.hasNext()) {
                 Comment comment = iterator.next();
                 if (comment.getId() != commentId) {
-                    newComments.add(comment);
+
 
                 }
-
+                else {
+                    event.removeComment(comment);
+                }
 
             }
 
-            event.setComments(newComments);
-            eventRepository.save(event);
+
+
         }
     }
     public Comment findCommentById(Event event, Long id) {

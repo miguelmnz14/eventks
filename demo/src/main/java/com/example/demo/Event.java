@@ -20,7 +20,8 @@ public class Event {
     private double price;
     private int ticketsAvailable;
     private String image;
-    @OneToMany (cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "event",cascade = CascadeType.ALL ,orphanRemoval = true)
+    @JsonIgnore
     private List<Comment> comments;
     @ManyToMany
     private List<User> users;
@@ -100,6 +101,14 @@ public class Event {
 
     public void setImageFile(Blob image) {
         this.imageFile = image;
+    }
+    public void addComment(Comment comment) {
+        comments.add(comment);
+        comment.setEventId(this);
+    }
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
+        comment.setEventId(null);
     }
 
     @Override
