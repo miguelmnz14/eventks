@@ -10,7 +10,14 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 var quill = new Quill('#editor', {
-    theme: 'snow'  // Tema de estilo del editor (puedes cambiarlo a 'bubble' si prefieres un estilo de burbuja)
+    theme: 'snow',
+    modules: {
+        toolbar: [
+            [{ 'header': [1, 2, false] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            ['image']
+        ]
+    }
 });
 
 var contenido = quill.root.innerHTML;
