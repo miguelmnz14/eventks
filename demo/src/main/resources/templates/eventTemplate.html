@@ -39,7 +39,9 @@
     <form action="/events/{{event.id}}/comments" method="post">
 
         <input  class="input" type="text" name="username" placeholder="Nombre de usuario" ><br>
-        <textarea class="input" name="content" placeholder="Contenido del comentario"></textarea><br>
+        <label for="description-textarea"></label>
+        <textarea style="display: none;" id="description-textarea" name="content"></textarea>
+        <div id="editor"></div>
         <input class="input" type="number" name="valoration" ><br>
         <input type="hidden" name="id" value="{{event.id}}">
         <input id="commentButton" type="submit" value="Subir comentario">
@@ -56,7 +58,7 @@
             <li class="imp">Usuario:</li>
             <li>{{this.username}}</li>
             <li class="imp">Contenido:</li>
-            <li>{{this.content}}</li>
+            <li>{{{this.content}}}</li>
             <li class="imp">Valoración:</li>
             <li>{{this.valoration}}</li>
             <li><button  onclick="location.href='/events/{{event.id}}/delete/{{this.id}}'"> Eliminalo</button></li>
@@ -69,4 +71,17 @@
 
 
 </body>
+
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+<script>
+    var quill = new Quill('#editor', {
+        theme: 'snow'
+    });
+    quill.on('text-change', function () {
+        document.getElementById('description-textarea').value = quill.root.innerHTML;
+    });
+
+</script>
 </html>

@@ -9,30 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-var quill = new Quill('#editor', {
-    theme: 'snow',
-    modules: {
-        toolbar: [
-            [{ 'header': [1, 2, false] }],
-            ['bold', 'italic', 'underline', 'strike'],
-            ['image']
-        ]
-    }
-});
 
-var contenido = quill.root.innerHTML;
-console.log(contenido);
-
-function addText() {
-    var textEditor = quill.root.innerHTML;
-    var textInserted = document.getElementById("text-inserted");
-
-
-    var newDiv = document.createElement("div");
-    newDiv.innerHTML = textEditor;
-    newDiv.classList.add("text-inserted-div");
-    textInserted.appendChild(newDiv);
-}
 
 
 
