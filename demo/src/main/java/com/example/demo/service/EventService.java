@@ -1,4 +1,5 @@
 package com.example.demo.service;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -124,8 +125,11 @@ public class EventService {
         return null;
     }
 
-    public void delete(Event event) {
+    public void delete(Event event) throws IOException {
         eventRepository.delete(event);
+        Path directoryPath = Path.of("/src/main/resources/static").resolve(event.getId().toString());
+        String username = System.getProperty("user.name");
+        imageService.deleteImage1("C:\\Users\\dmrbu\\IdeaProjects\\eventks1\\demo\\static\\", event.getId());
     }
 
     public void buy(long id) {

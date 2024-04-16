@@ -60,7 +60,7 @@ public class ApiController {
     }
 
     @DeleteMapping(("/{eventId}"))
-    public ResponseEntity deleteEvent(@PathVariable Long eventId){
+    public ResponseEntity deleteEvent(@PathVariable Long eventId) throws IOException {
         Event event = eventService.findById(eventId);
         Event aux = event;
         if (event != null) {

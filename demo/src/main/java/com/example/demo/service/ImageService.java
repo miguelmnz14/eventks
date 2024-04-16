@@ -88,13 +88,29 @@ public class ImageService{
         image.transferTo(newFile);
     }
 
-    public void deleteImage1(String folder, Long id) throws IOException {
-        String imagePath = folder + "/" + id + ".jpg";
+    public void deleteImage1(String folder, Long id) {
+        String imagePath = folder + "\\" + id + "\\" + filess.get(id);
         File imageFile = new File(imagePath);
-        if (imageFile.exists()) {
-               imageFile.delete();
+        try {
+            if (imageFile.exists()) {
+                if (imageFile.delete()) {
+                    System.out.println("Archivo borrado exitosamente: " + imagePath);
+                    String file = folder + "\\" + id;
+                    File folderfile = new File(file);
+                    folderfile.delete();
+                } else {
+                    System.out.println("No se pudo borrar el archivo: " + imagePath);
+                }
+            } else {
+                System.out.println("El archivo no existe: " + imagePath);
+            }
+        } catch (SecurityException e) {
+            System.err.println("Error de seguridad al intentar borrar el archivo: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Error al intentar borrar el archivo: " + e.getMessage());
         }
     }
+
     public Blob convertMultiparttoBlob (MultipartFile multipartFile){
         try{
             byte[] bytes = multipartFile.getBytes();

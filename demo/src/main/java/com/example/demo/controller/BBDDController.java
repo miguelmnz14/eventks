@@ -20,8 +20,7 @@ public class BBDDController {
     private CommentService commentService;
     @Autowired
     private UserRepository userRepository;
-    /*
-    @PostConstruct
+    /*@PostConstruct
     public void init(){
         Event event = new Event("pet", "jajaj", "kka", 1, 3);
         event.setImage("null");
@@ -37,7 +36,6 @@ public class BBDDController {
         // Guardar el usuario en la base de datos
         userRepository.save(user);
 
-    }
+    }*/
 
-*/
 }
