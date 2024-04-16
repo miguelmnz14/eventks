@@ -42,7 +42,7 @@ public class ImageService{
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The url is not an image resource");
         }
 
-        String fileName = "image_" +originalName;
+        String fileName = originalName;
 
         Path imagePath = IMAGES_FOLDER.resolve(fileName);
         try {

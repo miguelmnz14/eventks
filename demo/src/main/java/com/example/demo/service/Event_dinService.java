@@ -20,7 +20,7 @@ public class Event_dinService {
     public List<Event> findAll(String artist,Double price) {
         String query = "SELECT e FROM Event e";
         boolean added = false;
-        if (artist!=null) {
+        if (artist!=null && !artist.isEmpty()) {
             query += " WHERE e.artists = :artist";
             added = true;
         }
@@ -34,7 +34,7 @@ public class Event_dinService {
         }
 
         TypedQuery<Event> typedQuery = entityManager.createQuery(query, Event.class);
-        if (artist!=null) {
+        if (artist!=null && !artist.isEmpty()) {
             typedQuery.setParameter("artist", artist);
         }
         if (price != null){
