@@ -6,7 +6,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: auto;
 }
 
 #main-txt{
@@ -41,6 +41,10 @@ p {
 }
 
 #img-bt{
+    visibility: hidden;
+}
+
+#file-bt{
     visibility: hidden;
 }
 
