@@ -79,6 +79,30 @@ a{
     border: solid 3px white;
 }
 
+#dinamic{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#dinamic-button{
+    height: 50px;
+    width: auto;
+    font-size: 40px;
+    display: block;
+    margin: 30px auto 50px;
+    font-family: font1, sans-serif;
+    background-color: black;
+    color: red;
+}
+
+#dinamic-button:hover{
+    border: solid 3px white;
+}
+
+
+
 @font-face {
     font-family: font;
     src: url("../fuente.otf");

@@ -129,7 +129,7 @@ public class EventService {
         eventRepository.delete(event);
         Path directoryPath = Path.of("/src/main/resources/static").resolve(event.getId().toString());
         String username = System.getProperty("user.name");
-        imageService.deleteImage1("C:\\Users\\dmrbu\\IdeaProjects\\eventks1\\demo\\static\\", event.getId());
+        imageService.deleteImage1(IMAGES_FOLDER.toString(), event.getId());
     }
 
     public void buy(long id) {

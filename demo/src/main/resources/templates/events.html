@@ -8,7 +8,13 @@
 <body>
 {{>header}}
     <h1 id="events-title">Próximos Eventos</h1>
-
+    <div id="dinamic">
+        <form action="/events" method="post" enctype="multipart/form-data">
+            <input type="text" name="artist" placeholder="Nombre del artista">
+            <input type="number" name="price"  placeholder="Precio maximo">
+            <input id="dinamic-button" type="submit" value="Buscar" placeholder="artista"/>
+        </form>
+    </div>
     <div class="container">
         {{#events}}
         <a id="border" href="/events/{{id}}">
@@ -22,11 +28,6 @@
     {{^events}}
     <p id="no-events">Todavía no hay eventos.</p>
     {{/events}}
-    <form action="/events" method="post" enctype="multipart/form-data">
-        <input type="text" name="artist" placeholder="Nombre del artista">
-        <input type="number" name="price"  placeholder="Precio maximo">
-        <input type="submit" value="Buscar" placeholder="artista"/>
-    </form>
 <button id="button" onclick="location.href='/events/new'">Nuevo evento</button>
 {{>footer}}
 </body>
