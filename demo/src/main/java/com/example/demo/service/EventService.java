@@ -231,6 +231,10 @@ public class EventService {
 
         pdfFile.transferTo(folder);
     }
+
+    public void saveSimple(Event event){
+        eventRepository.save(event);
+    }
 }
 
 
