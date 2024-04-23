@@ -112,7 +112,7 @@ public class ApiController {
                 if (comment.getId()==id) {
                     comments.remove(comment);
                     event.setComments(comments);
-                    eventRepository.save(event);
+                    eventService.saveSimple(event);
                     i = 1;
                     break;
                 }
