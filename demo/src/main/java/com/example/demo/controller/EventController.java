@@ -54,6 +54,9 @@ public class EventController {
     }
     @PostMapping("/events")
     public String listAllEventsDin(Model model, String artist,Double price){
+        /*if (artist.isEmpty()){
+            artist = null;
+        }*/
         model.addAttribute("events",eventDinService.findAll(artist,price));
         return "events";
     }
@@ -132,7 +135,7 @@ public class EventController {
 
 
     @GetMapping("/events/{id}/delete")
-    public String deleteEvent(Model model, @PathVariable long id) {
+    public String deleteEvent(Model model, @PathVariable long id) throws IOException {
         Event event = eventService.findById(id);
         if (event != null) {
             eventService.delete(event);
@@ -198,7 +201,7 @@ public class EventController {
             for (Comment comment : event.getComments()) {
                 if (comment.getId() == commentId) {
                     event.getComments().remove(comment);
-                    eventRepository.save(event);
+                    eventService.saveSimple(event);
                     break;
                 }
             }
