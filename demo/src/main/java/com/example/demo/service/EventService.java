@@ -220,7 +220,6 @@ public class EventService {
 
         pdfFile.transferTo(folder);
 
-
     }
 
     public void savePdfs(MultipartFile pdfFile, Long id) throws IOException {

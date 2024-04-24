@@ -46,7 +46,6 @@ public class EventController {
 
 
 
-
     @GetMapping("/events")
     public String listAllEvents(Model model){
         model.addAttribute("events",eventRepository.findAll());
