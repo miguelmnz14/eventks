@@ -19,6 +19,7 @@ import com.example.demo.model.User;
 import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.EventRepository;
 import com.example.demo.repository.UserRepository;
+import org.apache.commons.io.FileUtils;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.springframework.web.server.ResponseStatusException;
-
+import org.apache.commons.io.FileUtils;
 @Service
 public class EventService {
     @Autowired
@@ -55,7 +56,8 @@ public class EventService {
 
     public Event save(Event event, MultipartFile imageField) throws IOException {
         if (imageField != null && !imageField.isEmpty()) {
-            String path = imageService.createImage(imageField);
+            String originalName = imageField.getOriginalFilename();
+            String path = originalName;
             event.setImage(path);
             event.setImageFile(BlobProxy.generateProxy(imageField.getInputStream(), imageField.getSize()));
         } else {
@@ -84,7 +86,7 @@ public class EventService {
         if (optionnalEvent.isPresent()) {
             Event existingEvent = optionnalEvent.get();
             if (imageField != null && !imageField.isEmpty()) {
-                String path = imageService.createImage(imageField);
+                String path = imageField.getOriginalFilename();
                 Blob blob = imageService.convertMultiparttoBlob(imageField);
                 existingEvent.setImageFile(blob);
                 existingEvent.setImage(path);
@@ -231,7 +233,9 @@ public class EventService {
 
         pdfFile.transferTo(folder);
     }
-
+    public void cleandirectory() throws IOException {
+        FileUtils.cleanDirectory(IMAGES_FOLDER.toFile());
+    }
     public void saveSimple(Event event){
         eventRepository.save(event);
     }

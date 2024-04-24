@@ -77,6 +77,10 @@ public class EventController {
 
 
     }*/
+    @PostConstruct
+    public void init() throws IOException {
+        eventService.cleandirectory();
+    }
 
     @GetMapping("/events/{id}")
     public String showEvent(Model model,@PathVariable long id){
@@ -100,7 +104,10 @@ public class EventController {
         Event event=eventService.save(newevent,imageField);
         Long eid= newevent.getId();
         String neweid=eid.toString();
-        imageService.savePdf(pdffile,eid);
+        if (!pdffile.isEmpty()){
+            imageService.savePdf(pdffile,eid);
+        }
+
         return "eventSubmitted";
     }
     @GetMapping("/events/{id}/image")
