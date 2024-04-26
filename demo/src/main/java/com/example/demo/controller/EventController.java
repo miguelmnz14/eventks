@@ -2,12 +2,7 @@ package com.example.demo.controller;
 import com.example.demo.model.Comment;
 import com.example.demo.model.Event;
 import com.example.demo.model.User;
-import com.example.demo.repository.EventRepository;
-import com.example.demo.repository.UserRepository;
-import com.example.demo.service.CommentService;
-import com.example.demo.service.EventService;
-import com.example.demo.service.Event_dinService;
-import com.example.demo.service.ImageService;
+import com.example.demo.service.*;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -36,11 +31,9 @@ public class EventController {
     @Autowired
     private CommentService commentService;
     @Autowired
+    private UserService userService;
+    @Autowired
     private User user;
-    @Autowired
-    private EventRepository eventRepository;
-    @Autowired
-    private UserRepository userRepository;
     @Autowired
     private Event_dinService eventDinService;
 
@@ -48,7 +41,7 @@ public class EventController {
 
     @GetMapping("/events")
     public String listAllEvents(Model model){
-        model.addAttribute("events",eventRepository.findAll());
+        model.addAttribute("events",eventService.findAll());
         return "events";
     }
     @PostMapping("/events")
@@ -123,7 +116,7 @@ public class EventController {
     @GetMapping("/{id}/image")
     public ResponseEntity<Object> downloadImagess(@PathVariable long id)
             throws SQLException {
-        Event post = eventRepository.findById(id).orElseThrow();
+        Event post = eventService.findById(id);
         if (post.getImageFile() != null) {
             Resource file = new InputStreamResource(
                     post.getImageFile().getBinaryStream());
@@ -191,16 +184,14 @@ public class EventController {
     @GetMapping("/tickets")
     public String seeMyevents(Model model){
         long newid=1;
-        Optional<User> optionalUser = userRepository.findById(newid);
-        User usuario =optionalUser.get();
-        model.addAttribute("user",usuario);
+        User user = userService.findbyId(newid);
+        model.addAttribute("user",user);
         return "myEvents";
     }
     @GetMapping("/events/{id}/delete/{commentId}")
     public String deleteComment(Model model,@PathVariable long id,@PathVariable long commentId){
-        Optional<Event> optionalEvent = eventRepository.findById(id);
-        if (optionalEvent.isPresent()) {
-            Event event = optionalEvent.get();
+        Event event = eventService.findById(id);
+        if (event != null) {
             for (Comment comment : event.getComments()) {
                 if (comment.getId() == commentId) {
                     event.getComments().remove(comment);
@@ -210,7 +201,6 @@ public class EventController {
             }
         }
         return "redirect:/events/{id}";
-
     }
 
 }

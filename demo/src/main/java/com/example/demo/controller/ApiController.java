@@ -3,9 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.model.Comment;
 import com.example.demo.model.Event;
 import com.example.demo.model.User;
-import com.example.demo.repository.CommentRepository;
-import com.example.demo.repository.EventRepository;
-import com.example.demo.repository.UserRepository;
 import com.example.demo.service.EventService;
 import com.example.demo.service.Event_dinService;
 import com.example.demo.service.ImageService;
@@ -20,7 +17,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
-
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 @RestController
@@ -33,12 +29,6 @@ public class ApiController {
     private ImageService imageService;
     @Autowired
     private User user;
-    @Autowired
-    EventRepository eventRepository;
-    @Autowired
-    CommentRepository commentRepository;
-    @Autowired
-    UserRepository userRepository;
     @Autowired
     Event_dinService eventDinService;
 
@@ -103,10 +93,9 @@ public class ApiController {
     }
     @DeleteMapping("/{eventId}/comments/{id}")
     public ResponseEntity<Void> deleteComment(@PathVariable Long eventId, @PathVariable Long id) {
-        Optional<Event> optionalEvent = eventRepository.findById(eventId);
+        Event event = eventService.findById(eventId);
         int i = 0;
-        if (optionalEvent.isPresent()) {
-            Event event = optionalEvent.get();
+        if (event != null) {
             List<Comment> comments = event.getComments();
             for (Comment comment : comments) {
                 if (comment.getId()==id) {
