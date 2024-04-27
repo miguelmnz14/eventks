@@ -14,6 +14,9 @@ public class Comment {
     @ManyToOne
     private Event event;
 
+    /*@ManyToOne
+    private User user;*/
+
     public Comment() {
 
     }

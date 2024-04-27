@@ -25,6 +25,9 @@ public class User {
     @ManyToMany(mappedBy="users")
     @JsonIgnore
     private List<Event> myEvents;
+
+    /*@OneToMany(cascade = CascadeType.ALL)
+    private List<Comment> comments;*/
     public User(){
 
     }
