@@ -14,7 +14,7 @@ import java.util.List;
 
 @Component
 @SessionScope
-@Entity
+@Entity(name = "USERS")
 @Scope(proxyMode = ScopedProxyMode.NO)
 public class User {
     @Id
@@ -26,15 +26,21 @@ public class User {
     @JsonIgnore
     private List<Event> myEvents;
 
-    /*@OneToMany(cascade = CascadeType.ALL)
-    private List<Comment> comments;*/
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Comment> comments;
+    @JsonIgnore
+    private String encodedPassword;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles;
     public User(){
 
     }
 
-    public User(String username,List<Event> myEvents){
+    public User(String username,String encodedPassword,String... roles){
         this.username=username;
-        this.myEvents=myEvents;
+        this.encodedPassword=encodedPassword;
+        this.roles=List.of(roles);
     }
 
 
@@ -53,4 +59,29 @@ public class User {
     public void setMyEvents(List<Event> myEvents) {
         this.myEvents = myEvents;
     }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public void setEncodedPassword(String encodedPassword) {
+        this.encodedPassword = encodedPassword;
+    }
+
+    public String getEncodedPassword() {
+        return encodedPassword;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
 }
+

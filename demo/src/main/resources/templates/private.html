@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>Hello {{username}}. This is a private page</p>
+
+{{#admin}}
+<a href="/admin">Admin Page</a>
+{{/admin}}
+
+<br>
+<br>
+
+<form action="/logout" method="post">
+    <input type="submit" value="Sign Out" />
+</form>
+</body>
+</html>
