@@ -2,6 +2,7 @@ package com.example.demo.controller;
 import com.example.demo.model.Comment;
 import com.example.demo.model.Event;
 import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.*;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import java.io.IOException;
 
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -32,6 +35,8 @@ public class EventController {
     private CommentService commentService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private User user;
     @Autowired
@@ -72,6 +77,15 @@ public class EventController {
     @PostConstruct
     public void init() throws IOException {
         eventService.cleandirectory();
+        User user1=new User();
+        user1.setUsername("hola");
+        user1.setEncodedPassword("1");
+        List<String> roles=new ArrayList<>();
+        roles.add("ADMIN");
+        roles.add("USER");
+        user1.setRoles(roles);
+        userRepository.save(user1);
+        
     }
 
     @GetMapping("/events/{id}")
