@@ -5,11 +5,14 @@ import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.*;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
+import org.h2.engine.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
@@ -41,6 +44,8 @@ public class EventController {
     private User user;
     @Autowired
     private Event_dinService eventDinService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
 
@@ -77,15 +82,7 @@ public class EventController {
     @PostConstruct
     public void init() throws IOException {
         eventService.cleandirectory();
-        User user1=new User();
-        user1.setUsername("hola");
-        user1.setEncodedPassword("1");
-        List<String> roles=new ArrayList<>();
-        roles.add("ADMIN");
-        roles.add("USER");
-        user1.setRoles(roles);
-        userRepository.save(user1);
-        
+
     }
 
     @GetMapping("/events/{id}")
@@ -185,20 +182,19 @@ public class EventController {
         return "home";
     }
 
-    @GetMapping("/myuser")
-    public String myUser(Model model){
-        model.addAttribute("user",user);
-        return "myUser";}
+
     @GetMapping("/buy/{id}")
-    public String buyEvent(Model model,@PathVariable long id){
+    public String buyEvent(Model model,@PathVariable long id, HttpServletRequest request){
         model.addAttribute("user",user);
-        eventService.buy(id);
+        eventService.buy(id,request);
         return "redirect:/events/{id}";
     }
     @GetMapping("/tickets")
-    public String seeMyevents(Model model){
-        long newid=1;
-        User user = userService.findbyId(newid);
+    public String seeMyevents(Model model,HttpServletRequest request){
+
+        String name = request.getUserPrincipal().getName();
+        User user=userService.findbyusername(name);
+
         model.addAttribute("user",user);
         return "myEvents";
     }
@@ -215,6 +211,16 @@ public class EventController {
             }
         }
         return "redirect:/events/{id}";
+    }
+    @GetMapping("/signup")
+    public String signUp(Model model){
+        return "signup";
+    }
+    @PostMapping("/signup")
+    public String newuser(Model model,String username,String password){
+        User newUser=new User(username,passwordEncoder.encode(password),"USER");
+        userService.saveUserinDB(newUser);
+        return "redirect:/login";
     }
 
 }

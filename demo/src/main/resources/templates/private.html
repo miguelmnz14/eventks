@@ -5,17 +5,20 @@
     <title>Title</title>
 </head>
 <body>
+{{>header}}
 <p>Hello {{username}}. This is a private page</p>
 
 {{#admin}}
-<a href="/admin">Admin Page</a>
+<a href="/admin">Admin Page</a><br>
 {{/admin}}
 
 <br>
+<a href="/events" methods="GET">Atras</a>
 <br>
-
+<a href="/private/myuser">Mi usuario</a>
 <form action="/logout" method="post">
     <input type="submit" value="Sign Out" />
 </form>
+{{>footer}}
 </body>
 </html>

@@ -2,13 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Login</title>
 </head>
 <body>
+{{>header}}
 <form action="/login" method="post">
     <label>Username:</label><input type="text" name="username" /><br/>
     <label>Password:</label><input type="password" name="password" /><br/>
     <input type="submit" value="Sign In"/>
 </form>
+<h2>Si no tienes cuenta registrate con el siguiente link</h2>
+<a href="/signup" methods="GET" >Registrate</a>
+{{>footer}}
 </body>
 </html>
