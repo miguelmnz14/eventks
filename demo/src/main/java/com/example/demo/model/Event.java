@@ -23,7 +23,7 @@ public class Event {
     @OneToMany (mappedBy = "event",cascade = CascadeType.ALL ,orphanRemoval = true)
     @JsonIgnore
     private List<Comment> comments;
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<User> users;
     @Lob
     @JsonIgnore

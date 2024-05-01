@@ -1,6 +1,7 @@
 package com.example.demo.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -51,7 +52,13 @@ public class SecurityConfig {
                         // PUBLIC PAGES
 
                         // PRIVATE PAGES
+                        .requestMatchers("/events").permitAll()
+                        .requestMatchers("/events/**").authenticated()
+                        .requestMatchers("/tickets").authenticated()
                         .requestMatchers("/events/new").hasAnyRole("ADMIN")
+                        .requestMatchers("/events/edit").hasAnyRole("ADMIN")
+                        .requestMatchers("/events/delete").hasAnyRole("ADMIN")
+                        .requestMatchers("/private").authenticated()
                         .requestMatchers("/**").permitAll()
                         .requestMatchers("/events/**").permitAll()
                 )
@@ -64,6 +71,9 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
+                        .addLogoutHandler((request, response, authentication) -> {
+                            Session.Cookie cookie = new Session.Cookie();
+                        })
                         .permitAll()
                 );
         http.csrf(csrf -> csrf.disable());

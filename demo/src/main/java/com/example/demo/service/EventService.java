@@ -19,6 +19,7 @@ import com.example.demo.model.User;
 import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.EventRepository;
 import com.example.demo.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FileUtils;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,10 +135,11 @@ public class EventService {
         imageService.deleteImage1(IMAGES_FOLDER.toString(), event.getId());
     }
 
-    public void buy(long id) {
-        long newid = 1;
-        Optional<User> optionalUser = userRepository.findById(newid);
-        User usuario = optionalUser.get();
+    public void buy(long id, HttpServletRequest request) {
+
+        String name=request.getUserPrincipal().getName();
+        Optional<User> usuari= userRepository.findByUsername(name);
+        User usuario =usuari.get();
         Optional<Event> optionalEvent = eventRepository.findById(id);
         if (optionalEvent.isPresent()) {
             Event event = optionalEvent.get();

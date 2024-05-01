@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Users</title>
+</head>
+<body>
+{{>header}}
+<h2>Lista de Usuarios:</h2>
+{{#allusers}}
+<a href="/admin/users/{{username}}">{{username}}</a><br>
+{{/allusers}}
+<a href="/admin">Admin Panel</a>
+{{>footer}}
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+</head>
+<body>
+{{>header}}
+<h1>Registrate</h1>
+<h3>Introduce los siguientes datos para completar su registro</h3>
+<form method="POST" action="/signup">
+    <input type="text" name="username" placeholder="Nombre de usuario">
+    <input type="password" name="password" placeholder="Contraseña">
+    <input type="submit" value="Registrate">
+</form>
+{{>footer}}
+</body>
+</html>

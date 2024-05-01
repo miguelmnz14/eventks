@@ -68,6 +68,24 @@ body{
     background-color: red;
     color: black;
 }
+#mostrarFormulario{
+    height: 35px;
+    width: auto;
+    font-size: 20px;
+    margin: 30px;
+    font-family: font, sans-serif;
+    background-color: red;
+    color: black;
+}
+.link{
+    height: 35px;
+    width: auto;
+    font-size: 25px;
+    margin: 35px;
+    font-family: font, sans-serif;
+    background-color: red;
+    color: black;
+}
 
 #userButton:hover{
     border: solid 2px white;

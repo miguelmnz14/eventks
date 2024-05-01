@@ -4,26 +4,39 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="/css/myUser.css">
+    <style>
+        /* Estilos opcionales para ocultar inicialmente el formulario */
+        #formulario {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 {{>header}}
-{{^user}}
-<h1 id="title">REGISTRATE Y QUE EMPIECE LA FIESTA...</h1>
-<div class="form">
-    <form action="/procesarFormulario" method="post">
-        <h4 id="subtitle">NOMBRE DE USUARIO</h4>
-        <br>
-        <input id="name" type='text' name="username"/>
-        <input id="userButton" type='submit' value='Registrarse'/>
+<br>
+<a class="link" href="/tickets">Mis entradas</a><br>
+<button id="mostrarFormulario">Editar Informacion</button><br>
+<div id="formulario">
+    <form action="/private/myuser/edit/{{username}}" method="POST">
+        <h3>Introduzca su nuevo nombre de usuario y su nueva contraseña</h3>
+        <input type="text" name="newUser" placeholder="{{username}}">
+        <input type="password" name="password" placeholder="">
+        <button id="userButton" type="submit">Editar</button>
     </form>
 </div>
-{{/user}}
-{{#user}}
-<div class="reg-container">
-    <h1 class="hello">Bienvenido</h1>
-    <h1 class="hello">{{username}}</h1>
-</div>
-{{/user}}
+<script>
+
+    const botonMostrarFormulario = document.getElementById('mostrarFormulario');
+    const formulario = document.getElementById('formulario');
+
+    // Agregar un evento de clic al botón para mostrar u ocultar el formulario
+    botonMostrarFormulario.addEventListener('click', function() {
+        // Alternar la visibilidad del formulario
+        formulario.style.display = formulario.style.display === 'none' ? 'block' : 'none';
+    });
+</script>
+<a class="link" href="/private/myuser/delete/{{username}}">Borrar Usuario</a><br>
+
 {{>footer}}
 </body>
 </html>
