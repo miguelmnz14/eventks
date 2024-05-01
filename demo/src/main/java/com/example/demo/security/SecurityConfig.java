@@ -50,7 +50,6 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         // PUBLIC PAGES
-
                         // PRIVATE PAGES
                         .requestMatchers("/events").permitAll()
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN")

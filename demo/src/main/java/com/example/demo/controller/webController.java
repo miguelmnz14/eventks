@@ -93,5 +93,4 @@ public class webController {
         userService.editUser(username,newUser,password);
         return "redirect:/logout";
     }
-
 }
