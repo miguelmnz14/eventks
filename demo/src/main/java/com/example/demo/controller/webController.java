@@ -80,13 +80,16 @@ public class webController {
         model.addAttribute("username", user.getUsername());
         return "myUser";
     }
-    @GetMapping("/private/myuser/delete/{username}")
-    public String deletemyUser(Model model,@PathVariable String username){
+    @GetMapping("/private/myuser/delete")
+    public String deletemyUser(Model model,HttpServletRequest request){
+        String username=request.getUserPrincipal().getName();
+
         userService.deleteUser(username);
         return "redirect:/logout";
     }
-    @PostMapping("/private/myuser/edit/{username}")
-    public String editMyUser(Model model,@PathVariable String username,String newUser,String password){
+    @PostMapping("/private/myuser/edit")
+    public String editMyUser(Model model,HttpServletRequest request,String newUser,String password){
+        String username=request.getUserPrincipal().getName();
         userService.editUser(username,newUser,password);
         return "redirect:/logout";
     }

@@ -53,14 +53,14 @@ public class SecurityConfig {
 
                         // PRIVATE PAGES
                         .requestMatchers("/events").permitAll()
-                        .requestMatchers("/events/**").authenticated()
+                        .requestMatchers("/admin/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/private/**").authenticated()
                         .requestMatchers("/tickets").authenticated()
                         .requestMatchers("/events/new").hasAnyRole("ADMIN")
-                        .requestMatchers("/events/edit").hasAnyRole("ADMIN")
-                        .requestMatchers("/events/delete").hasAnyRole("ADMIN")
-                        .requestMatchers("/private").authenticated()
+                        .requestMatchers("/events/*/edit").hasAnyRole("ADMIN")
+                        .requestMatchers("/events/*/delete").hasAnyRole("ADMIN")
+                        .requestMatchers("/events/**").authenticated()
                         .requestMatchers("/**").permitAll()
-                        .requestMatchers("/events/**").permitAll()
                 )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
