@@ -61,4 +61,13 @@ public class UserService {
         user.setEncodedPassword(passwordEncoder.encode(password));
         userRepository.save(user);
     }
+
+    public boolean existname(String username){
+        Optional <User> user = userRepository.findByUsername(username);
+        if (user.isPresent()){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

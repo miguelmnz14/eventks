@@ -1,0 +1,26 @@
+body{
+    background-color: red;
+}
+
+#link-admin{
+    margin: 40px;
+    text-align: center;
+    font-family: font,sans-serif;
+    display: block;
+    font-size: 35px;
+}
+
+#link-admin a{
+    text-decoration: none;
+    margin: 10px;
+    color: black;
+}
+
+#link-admin a:hover{
+    color: white;
+}
+
+@font-face {
+    font-family: font;
+    src: url("../subtitle-font.otf");
+}
