@@ -1,0 +1,33 @@
+body {
+    background-color: black;
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+button {
+    font-family: font, sans-serif;
+    font-size: 16px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: red;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+@font-face {
+    font-family: font;
+    src: url("../subtitle-font.otf");
+}
+h1 {
+    font-size: 40px;
+}

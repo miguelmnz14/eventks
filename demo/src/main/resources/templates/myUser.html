@@ -10,9 +10,9 @@
 {{>header}}
 <br>
 <div id="myuser-cont">
-    <p>{{username}}</p>
+    <p id="user">{{username}}</p>
     <button class="link-button" onclick="location.href='/tickets'">Mis entradas</button><br>
-    <button id="mostrarFormulario">Editar Informacion</button><br>
+    <button class="link-button" id="mostrarFormulario">Editar Informacion</button><br>
     <div id="formulario">
         <form action="/private/myuser/edit" method="POST">
             <h3>Introduzca su nuevo nombre de usuario y su nueva contraseña</h3>

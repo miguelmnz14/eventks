@@ -10,6 +10,14 @@ body{
     margin: 50px;
 }
 
+#myuser-cont{
+    text-align: center;
+}
+
+#user{
+    font-size: 70px;
+}
+
 body{
     background-color: black;
     color: red;
@@ -56,15 +64,7 @@ body{
     background-color: red;
     color: black;
 }
-#mostrarFormulario{
-    height: 35px;
-    width: auto;
-    font-size: 20px;
-    margin: 30px;
-    font-family: font, sans-serif;
-    background-color: red;
-    color: black;
-}
+
 .link{
     height: 35px;
     width: auto;

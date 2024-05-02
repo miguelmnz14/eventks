@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.User;
-import com.example.demo.repository.UserRepository;
 
 import com.example.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,7 +41,7 @@ public class webController {
 
     @GetMapping("/loginerror")
     public String loginerror() {
-        return "loginerror";
+        return "/error/loginerror";
     }
 
     @GetMapping("/private")
