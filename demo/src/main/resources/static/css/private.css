@@ -1,0 +1,53 @@
+body{
+    background-color: red;
+}
+
+#text-div{
+    text-align: center;
+    font-family: font,sans-serif;
+    font-size: 60px;
+}
+
+#link-private{
+    margin: 40px;
+    text-align: center;
+    font-family: font,sans-serif;
+    display: block;
+    font-size: 35px;
+}
+
+#link-private a{
+    text-decoration: none;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: black;
+}
+
+#link-private a:hover{
+    color: white;
+}
+
+#so-button{
+    height: 50px;
+    width: auto;
+    font-size: 40px;
+    display: block;
+    margin: 30px auto 50px;
+    font-family: font1, sans-serif;
+    background-color: black;
+    color: red;
+}
+
+#so-button:hover{
+    border: solid 3px white;
+}
+
+@font-face {
+    font-family: font;
+    src: url("../subtitle-font.otf");
+}
+
+@font-face {
+    font-family: font1;
+    src: url("../fontheader.otf");
+}

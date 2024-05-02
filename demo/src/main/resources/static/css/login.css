@@ -1,0 +1,59 @@
+body {
+    background-color: red;
+}
+
+#form-container{
+    margin: 10px;
+    text-align: center;
+    font-family: font, sans-serif;
+    font-size: 50px;
+}
+
+#form-container input{
+    margin: 5px;
+}
+
+#form-container label{
+    margin-bottom: 1px;
+}
+
+#button-si{
+    height: 40px;
+    width: auto;
+    font-size: 30px;
+    margin: 30px auto 50px;
+    font-family: font1, sans-serif;
+    background-color: black;
+    color: red;
+    text-align: center;
+}
+
+#button-si:hover{
+    border: solid 3px white;
+}
+
+#register{
+    font-family: font, sans-serif;
+    text-align: center;
+    margin: 30px;
+    font-size: 15px;
+}
+
+#register a{
+    color: black;
+    text-decoration: none;
+}
+
+#register a:hover{
+    color: white;
+}
+
+@font-face {
+    font-family: font;
+    src: url("../subtitle-font.otf");
+}
+
+@font-face {
+    font-family: font1;
+    src: url("../fontheader.otf");
+}

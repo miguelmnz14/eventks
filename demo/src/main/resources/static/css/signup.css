@@ -1,0 +1,52 @@
+body{
+    background-color: red;
+}
+
+#su-txt{
+    font-family: font,sans-serif;
+    text-align: center;
+    margin: 50px;
+}
+
+#su-form{
+    text-align: center;
+}
+
+.in{
+    margin: 10px;
+    background-color: rgb(18, 17, 17);
+    color: white;
+    font-family: sans-serif;
+    height: auto;
+    width: 250px;
+}
+
+.in::placeholder{
+    color: white;
+    text-align: center;
+    font-family: font,sans-serif;
+}
+
+#button-su{
+    height: 50px;
+    width: auto;
+    font-size: 40px;
+    margin: 30px auto 50px;
+    font-family: font1, sans-serif;
+    background-color: black;
+    color: red;
+}
+
+#button-su:hover{
+    border: solid 3px white;
+}
+
+@font-face {
+    font-family: font;
+    src: url("../subtitle-font.otf");
+}
+
+@font-face {
+    font-family: font1;
+    src: url("../fontheader.otf");
+}

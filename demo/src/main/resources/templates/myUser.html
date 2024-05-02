@@ -4,39 +4,27 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="/css/myUser.css">
-    <style>
-        /* Estilos opcionales para ocultar inicialmente el formulario */
-        #formulario {
-            display: none;
-        }
-    </style>
+    <script src="/myuser.js"></script>
 </head>
 <body>
 {{>header}}
 <br>
-<a class="link" href="/tickets">Mis entradas</a><br>
-<button id="mostrarFormulario">Editar Informacion</button><br>
-<div id="formulario">
-    <form action="/private/myuser/edit" method="POST">
-        <h3>Introduzca su nuevo nombre de usuario y su nueva contraseña</h3>
-        <input type="text" name="newUser" placeholder="{{username}}">
-        <input type="password" name="password" placeholder="">
-        <button id="userButton" type="submit">Editar</button>
-    </form>
+<div id="myuser-cont">
+    <p>{{username}}</p>
+    <button class="link-button" onclick="location.href='/tickets'">Mis entradas</button><br>
+    <button id="mostrarFormulario">Editar Informacion</button><br>
+    <div id="formulario">
+        <form action="/private/myuser/edit" method="POST">
+            <h3>Introduzca su nuevo nombre de usuario y su nueva contraseña</h3>
+            <input type="text" name="newUser" placeholder="{{username}}">
+            <input type="password" name="password" placeholder="">
+            <button id="userButton" type="submit">Editar</button>
+        </form>
+    </div>
+    <button class="link-button" onclick="location.href='/private/myuser/delete'">Borrar Usuario</button><br>
 </div>
-<script>
-
-    const botonMostrarFormulario = document.getElementById('mostrarFormulario');
-    const formulario = document.getElementById('formulario');
-
-    // Agregar un evento de clic al botón para mostrar u ocultar el formulario
-    botonMostrarFormulario.addEventListener('click', function() {
-        // Alternar la visibilidad del formulario
-        formulario.style.display = formulario.style.display === 'none' ? 'block' : 'none';
-    });
-</script>
-<a class="link" href="/private/myuser/delete">Borrar Usuario</a><br>
 
 {{>footer}}
 </body>
+
 </html>

@@ -3,16 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Sign Up</title>
+    <link rel="stylesheet" href="/css/signup.css">
 </head>
 <body>
 {{>header}}
-<h1>Registrate</h1>
-<h3>Introduce los siguientes datos para completar su registro</h3>
-<form method="POST" action="/signup">
-    <input type="text" name="username" placeholder="Nombre de usuario">
-    <input type="password" name="password" placeholder="Contraseña">
-    <input type="submit" value="Registrate">
-</form>
+<div id="su-txt">
+    <h1>Registrate</h1>
+    <h3>Introduce los siguientes datos para completar su registro</h3>
+</div>
+<div id="su-form">
+    <form method="POST" action="/signup">
+        <input class="in" type="text" name="username" placeholder="Nombre de usuario">
+        <br>
+        <input class="in" type="password" name="password" placeholder="Contraseña">
+        <br>
+        <input id="button-su" type="submit" value="Registrate">
+    </form>
+</div>
 {{>footer}}
 </body>
 </html>

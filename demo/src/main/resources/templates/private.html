@@ -3,21 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/css/private.css">
 </head>
 <body>
 {{>header}}
-<p>Hello {{username}}. This is a private page</p>
+<div id="text-div">
+    <p>Bienvenido <br>{{username}}</p>
+</div>
 
 {{#admin}}
 <a href="/admin">Admin Page</a><br>
 {{/admin}}
 
-<br>
-<a href="/events" methods="GET">Atras</a>
-<br>
-<a href="/private/myuser">Mi usuario</a>
+<div id="link-private">
+    <p>¿Qué deseas hacer?</p>
+    <a href="/events" methods="GET">Atrás</a>
+    <a href="/private/myuser">Mi usuario</a>
+</div>
 <form action="/logout" method="post">
-    <input type="submit" value="Sign Out" />
+    <input id="so-button" type="submit" value="Sign Out" />
 </form>
 {{>footer}}
 </body>
