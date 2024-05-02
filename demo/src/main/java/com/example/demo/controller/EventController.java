@@ -82,7 +82,6 @@ public class EventController {
     @PostConstruct
     public void init() throws IOException {
         eventService.cleandirectory();
-
     }
 
     @GetMapping("/events/{id}")
@@ -218,9 +217,13 @@ public class EventController {
     }
     @PostMapping("/signup")
     public String newuser(Model model,String username,String password){
-        User newUser=new User(username,passwordEncoder.encode(password),"USER");
-        userService.saveUserinDB(newUser);
-        return "redirect:/login";
+        if (!userService.existname(username)){
+            User newUser = new User(username, passwordEncoder.encode(password), "USER");
+            userService.saveUserinDB(newUser);
+            return "redirect:/login";
+        } else {
+            return "redirect:/signuperror";
+        }
     }
 
 }

@@ -44,6 +44,9 @@ public class webController {
         return "/error/loginerror";
     }
 
+    @GetMapping("/signuperror")
+    public String signuperror() { return "/error/signuperror"; }
+
     @GetMapping("/private")
     public String privatePage(Model model, HttpServletRequest request) {
 
