@@ -12,6 +12,9 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -151,11 +154,13 @@ public class EventController {
         }
     }
     @PostMapping("/events/{id}/comments")
-    public String submitComment(Model model, String username, String content, int valoration, @PathVariable long id) {
+    public String submitComment(Model model, String content, int valoration, @PathVariable long id, HttpServletRequest request) {
         String sanitizeContent=eventService.sanitizexss(content);
+        String username = request.getUserPrincipal().getName();
         Comment comment = new Comment(username, sanitizeContent, valoration);
         Event event1=eventService.findById(id);
         comment.setEventId(event1);
+        comment.setUser(userService.findbyusername(username));
         Event event =eventService.findById(id);
         eventService.addComment(event, comment);
         return "redirect:/events/"+event.getId();
@@ -198,11 +203,14 @@ public class EventController {
         return "myEvents";
     }
     @GetMapping("/events/{id}/delete/{commentId}")
-    public String deleteComment(Model model,@PathVariable long id,@PathVariable long commentId){
+    public String deleteComment(Model model,@PathVariable long id,@PathVariable long commentId, HttpServletRequest request){
         Event event = eventService.findById(id);
+        String username = request.getUserPrincipal().getName();
+        boolean isAdmin = request.isUserInRole("ADMIN");
+        User user = userService.findbyusername(username);
         if (event != null) {
             for (Comment comment : event.getComments()) {
-                if (comment.getId() == commentId) {
+                if (comment.getId() == commentId && (comment.getUser() == user || isAdmin)) {
                     event.getComments().remove(comment);
                     eventService.saveSimple(event);
                     break;

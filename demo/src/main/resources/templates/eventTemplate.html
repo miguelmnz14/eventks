@@ -39,8 +39,6 @@
 <div class="addComment">
     <h3>Añadir comentario</h3>
     <form action="/events/{{event.id}}/comments" method="post">
-
-        <input  class="input" type="text" name="username" placeholder="Nombre de usuario" ><br>
         <label for="description-textarea"></label>
         <textarea style="display: none;" id="description-textarea" name="content"></textarea>
         <div id="editor"></div>

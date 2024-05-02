@@ -14,6 +14,14 @@ public class Comment {
     @ManyToOne
     private Event event;
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @ManyToOne
     private User user;
 
