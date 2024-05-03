@@ -24,10 +24,16 @@
         <p class="normal-txt">Tickets disponibles: <span class="red-text">{{event.ticketsAvailable}}</span></p>
 
         <div class="buttons">
-            <button class="Tmpl-button" onclick="location.href='/events/{{event.id}}/edit'">Editar</button>
-            <button class="Tmpl-button" onclick="location.href='/events/{{event.id}}/delete'">Eliminar</button>
 
-            <button class="Tmpl-button" onclick="location.href='/buy/{{event.id}}'" >Comprar</button>
+            <button class="Tmpl-button" onclick="location.href='/events/{{event.id}}/edit'">Editar</button>
+            <form method="POST" action="/events/{{event.id}}/delete">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+                <button class="Tmpl-button" type="submit">Eliminar  </button>
+            </form>
+            <form method="POST" action="/buy/{{event.id}}">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+                <button class="Tmpl-button" type="submit">Comprar  </button>
+            </form>
 
 
         </div>
@@ -44,6 +50,7 @@
         <div id="editor"></div>
         <input class="input" type="number" name="valoration" ><br>
         <input type="hidden" name="id" value="{{event.id}}">
+        <input type="hidden" name="_csrf" value="{{token}}"/>
         <input id="commentButton" type="submit" value="Subir comentario">
     </form>
 </div>
@@ -61,7 +68,11 @@
             <li>{{{this.content}}}</li>
             <li class="imp">Valoración:</li>
             <li>{{this.valoration}}</li>
-            <li><button  onclick="location.href='/events/{{event.id}}/delete/{{this.id}}'"> Eliminalo</button></li>
+            <form method="POST" action="/events/{{event.id}}/delete/{{this.id}}">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+                <li> <button    type="submit">Eliminar  </button></li>
+            </form>
+
         </ul>
         {{/event.comments}}
     </div>

@@ -12,6 +12,7 @@
         <form action="/events" method="post" enctype="multipart/form-data">
             <input type="text" name="artist" placeholder="Nombre del artista">
             <input type="number" name="price"  placeholder="Precio maximo">
+            <input type="hidden" name="_csrf" value="{{token}}"/>
             <input id="dinamic-button" type="submit" value="Buscar" placeholder="artista"/>
         </form>
     </div>

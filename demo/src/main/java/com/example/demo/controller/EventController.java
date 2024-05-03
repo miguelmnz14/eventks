@@ -88,10 +88,11 @@ public class EventController {
     }
 
     @GetMapping("/events/{id}")
-    public String showEvent(Model model,@PathVariable long id){
+    public String showEvent(Model model,@PathVariable long id,HttpServletRequest request){
         Event event = eventService.findById(id);
             model.addAttribute("event", event);
-            model.addAttribute("user",user);
+
+            model.addAttribute("commentUser",request.getUserPrincipal().getName());
 
             model.addAttribute("filename",imageService.getHashMap(id));
             return "eventTemplate";
@@ -143,7 +144,7 @@ public class EventController {
     }
 
 
-    @GetMapping("/events/{id}/delete")
+    @PostMapping("/events/{id}/delete")
     public String deleteEvent(Model model, @PathVariable long id) throws IOException{
         Event event = eventService.findById(id);
         if (event != null) {
@@ -187,7 +188,7 @@ public class EventController {
     }
 
 
-    @GetMapping("/buy/{id}")
+    @PostMapping("/buy/{id}")
     public String buyEvent(Model model,@PathVariable long id, HttpServletRequest request){
         model.addAttribute("user",user);
         eventService.buy(id,request);
@@ -202,7 +203,7 @@ public class EventController {
         model.addAttribute("user",user);
         return "myEvents";
     }
-    @GetMapping("/events/{id}/delete/{commentId}")
+    @PostMapping("/events/{id}/delete/{commentId}")
     public String deleteComment(Model model,@PathVariable long id,@PathVariable long commentId, HttpServletRequest request){
         Event event = eventService.findById(id);
         String username = request.getUserPrincipal().getName();

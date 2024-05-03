@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.User;
 
 import com.example.demo.service.UserService;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.csrf.CsrfToken;
@@ -94,13 +95,14 @@ public class webController {
         return "redirect:/logout";
     }
     @PostMapping("/private/myuser/edit")
-    public String editMyUser(Model model,HttpServletRequest request,String newUser,String password){
+    public String editMyUser(Model model,HttpServletRequest request,String newUser,String password) throws ServletException {
        if(userService.existname(newUser)){
            return "error/changeNameError";
        }
         String username=request.getUserPrincipal().getName();
         userService.editUser(username,newUser,password);
-        return "redirect:/logout";
+        request.logout();
+        return "redirect:/login";
     }
 }
 

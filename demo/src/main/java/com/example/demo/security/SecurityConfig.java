@@ -70,9 +70,6 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
-                        .addLogoutHandler((request, response, authentication) -> {
-                            Session.Cookie cookie = new Session.Cookie();
-                        })
                         .permitAll()
                 );
 
