@@ -91,6 +91,9 @@ public class webController {
     }
     @PostMapping("/private/myuser/edit")
     public String editMyUser(Model model,HttpServletRequest request,String newUser,String password){
+       if(userService.existname(newUser)){
+           return "error/changeNameError";
+       }
         String username=request.getUserPrincipal().getName();
         userService.editUser(username,newUser,password);
         return "redirect:/logout";
