@@ -18,6 +18,7 @@
         <input class="in" type="password" name="password" placeholder="Contraseña">
         <br>
         <input id="button-su" type="submit" value="Registrate">
+        <input type="hidden" name="_csrf" value="{{token}}"/>
     </form>
 </div>
 {{>footer}}

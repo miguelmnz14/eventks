@@ -18,6 +18,7 @@
             <h3>Introduzca su nuevo nombre de usuario y su nueva contraseña</h3>
             <input type="text" name="newUser" placeholder="{{username}}">
             <input type="password" name="password" placeholder="">
+            <input type="hidden" name="_csrf" value="{{token}}"/>
             <button id="userButton" type="submit">Editar</button>
         </form>
     </div>

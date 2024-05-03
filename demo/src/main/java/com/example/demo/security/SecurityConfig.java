@@ -75,7 +75,6 @@ public class SecurityConfig {
                         })
                         .permitAll()
                 );
-        http.csrf(csrf -> csrf.disable());
 
         return http.build();
     }
