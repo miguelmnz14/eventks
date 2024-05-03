@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Comment;
 import com.example.demo.model.Event;
 import com.example.demo.model.User;
+import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.EventRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class UserService {
     private EventRepository eventRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private CommentRepository commentRepository;
     public User findbyId (Long id){
         Optional <User> user = userRepository.findById(id);
         return user.orElse(null);
@@ -51,6 +55,12 @@ public class UserService {
                 List<User> users1=event.getUsers();
                 users1.remove(userToDelete);
                 eventRepository.save(event);
+            }
+            List<Comment> comments=commentRepository.findAll();
+            for (Comment comment:comments){
+                if (comment.getUser().getUsername().equals(username)){
+                    commentRepository.delete(comment);
+                }
             }
             userRepository.delete(userToDelete);
         }
