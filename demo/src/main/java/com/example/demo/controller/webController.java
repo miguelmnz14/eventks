@@ -88,11 +88,12 @@ public class webController {
         return "myUser";
     }
     @GetMapping("/private/myuser/delete")
-    public String deletemyUser(Model model,HttpServletRequest request){
+    public String deletemyUser(Model model,HttpServletRequest request) throws ServletException {
         String username=request.getUserPrincipal().getName();
 
         userService.deleteUser(username);
-        return "redirect:/logout";
+        request.logout();
+        return "redirect:/";
     }
     @PostMapping("/private/myuser/edit")
     public String editMyUser(Model model,HttpServletRequest request,String newUser,String password) throws ServletException {
