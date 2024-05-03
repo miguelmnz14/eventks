@@ -23,7 +23,7 @@ public class DatabaseUsersLoader {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private EventService eventService;
-/*
+
     @PostConstruct
     private void initDatabase() throws IOException {
         userRepository.save(new User("user", passwordEncoder.encode("pass"), "USER"));
@@ -38,5 +38,5 @@ public class DatabaseUsersLoader {
 
         eventService.save(event2,null);
 
-    }*/
+    }
 }

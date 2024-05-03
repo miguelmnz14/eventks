@@ -7,21 +7,12 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String username;
+
     private String content;
     private int valoration;
     @JsonIgnore
     @ManyToOne
     private Event event;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @ManyToOne
     private User user;
 
@@ -29,9 +20,9 @@ public class Comment {
 
     }
 
-    public Comment(String username, String content, int valoration) {
+    public Comment(User user, String content, int valoration) {
         super();
-        this.username = username;
+        this.user=user;
         this.content = content;
         this.valoration = valoration;
     }
@@ -44,9 +35,7 @@ public class Comment {
         return content;
     }
 
-    public String getUsername() {
-        return username;
-    }
+
 
     public Event getEventId() {
         return event;
@@ -60,9 +49,7 @@ public class Comment {
         this.content = content;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+
 
     public void setValoration(int valoration) {
         this.valoration = valoration;
@@ -74,5 +61,12 @@ public class Comment {
 
     public void setId(long id) {
         this.id = id;
+    }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -106,14 +106,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         // PUBLIC PAGES
                         // PRIVATE PAGES
-                        .requestMatchers("/events").permitAll()
-                        .requestMatchers("/admin/**").hasAnyRole("ADMIN")
-                        .requestMatchers("/private/**").authenticated()
-                        .requestMatchers("/tickets").authenticated()
-                        .requestMatchers("/events/new").hasAnyRole("ADMIN")
-                        .requestMatchers("/events/*/edit").hasAnyRole("ADMIN")
-                        .requestMatchers("/events/*/delete").hasAnyRole("ADMIN")
-                        .requestMatchers("/events/**").authenticated()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/events/new").hasRole("ADMIN")
+                        .requestMatchers("/events/*/edit").hasRole("ADMIN")
+                        .requestMatchers("/events/*/delete").hasRole("ADMIN")
+                        .requestMatchers("/events/*/delete/*").hasRole("USER")
+                        .requestMatchers("/private/**").hasRole("USER")
+                        .requestMatchers("/tickets").hasRole("USER")
+                        .requestMatchers("/buy/*").hasRole("USER")
                         .requestMatchers("/**").permitAll()
                 )
                 .formLogin(formLogin -> formLogin

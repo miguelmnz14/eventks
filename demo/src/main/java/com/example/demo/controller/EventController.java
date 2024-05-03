@@ -92,7 +92,7 @@ public class EventController {
         Event event = eventService.findById(id);
             model.addAttribute("event", event);
 
-            model.addAttribute("commentUser",request.getUserPrincipal().getName());
+            //model.addAttribute("commentUser",request.getUserPrincipal().getName());
 
             model.addAttribute("filename",imageService.getHashMap(id));
             return "eventTemplate";
@@ -158,10 +158,10 @@ public class EventController {
     public String submitComment(Model model, String content, int valoration, @PathVariable long id, HttpServletRequest request) {
         String sanitizeContent=eventService.sanitizexss(content);
         String username = request.getUserPrincipal().getName();
-        Comment comment = new Comment(username, sanitizeContent, valoration);
+        User myUser=userService.findbyusername(username);
+        Comment comment = new Comment(myUser, sanitizeContent, valoration);
         Event event1=eventService.findById(id);
         comment.setEventId(event1);
-        comment.setUser(userService.findbyusername(username));
         Event event =eventService.findById(id);
         eventService.addComment(event, comment);
         return "redirect:/events/"+event.getId();
