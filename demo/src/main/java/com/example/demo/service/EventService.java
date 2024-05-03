@@ -128,6 +128,8 @@ public class EventService {
         return null;
     }
 
+
+
     public void delete(Event event) throws IOException {
         eventRepository.delete(event);
         Path directoryPath = Path.of("/src/main/resources/static").resolve(event.getId().toString());

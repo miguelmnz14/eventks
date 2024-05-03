@@ -30,6 +30,7 @@ public class Event {
     private Blob imageFile;
     public Event(){
 
+
     }
     public Event(String name,String description,String artists,double price,int ticketsAvailable){
         super();

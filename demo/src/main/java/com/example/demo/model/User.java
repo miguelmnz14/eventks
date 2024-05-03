@@ -36,7 +36,6 @@ public class User {
     public User(){
 
     }
-
     public User(String username,String encodedPassword,String... roles){
         this.username=username;
         this.encodedPassword=encodedPassword;
