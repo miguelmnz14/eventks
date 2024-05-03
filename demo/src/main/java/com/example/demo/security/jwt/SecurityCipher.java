@@ -11,7 +11,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class SecurityCipher {
 
-    private static final String KEYVALUE = "secureCDCKey";
+    private static final String KEYVALUE = "k3b4b_m1xto-$";
     private static SecretKeySpec secretKey;
     private static byte[] key;
 

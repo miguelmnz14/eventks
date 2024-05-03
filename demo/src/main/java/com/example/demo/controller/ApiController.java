@@ -3,9 +3,12 @@ package com.example.demo.controller;
 import com.example.demo.model.Comment;
 import com.example.demo.model.Event;
 import com.example.demo.model.User;
+import com.example.demo.security.jwt.JwtTokenProvider;
 import com.example.demo.service.EventService;
 import com.example.demo.service.Event_dinService;
 import com.example.demo.service.ImageService;
+import com.example.demo.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +18,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
@@ -31,6 +35,10 @@ public class ApiController {
     private User user;
     @Autowired
     Event_dinService eventDinService;
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public ResponseEntity<List<Event>> getAllEvents(){
@@ -92,13 +100,20 @@ public class ApiController {
         return ResponseEntity.created(location).build();
     }
     @DeleteMapping("/{eventId}/comments/{id}")
-    public ResponseEntity<Void> deleteComment(@PathVariable Long eventId, @PathVariable Long id) {
+    public ResponseEntity<Void> deleteComment(@PathVariable Long eventId, @PathVariable Long id, HttpServletRequest request) {
         Event event = eventService.findById(eventId);
+        Principal principal = request.getUserPrincipal();
+        User user;
+        if(principal != null){
+            user = userService.findbyusername(principal.getName());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
         int i = 0;
         if (event != null) {
             List<Comment> comments = event.getComments();
             for (Comment comment : comments) {
-                if (comment.getId()==id) {
+                if (comment.getId()==id && (comment.getUser().equals(user) || request.isUserInRole("ADMIN"))) {
                     comments.remove(comment);
                     event.setComments(comments);
                     eventService.saveSimple(event);
@@ -162,7 +177,6 @@ public class ApiController {
     }
     @GetMapping("/din")
     public ResponseEntity<List<Event>> findDin (String artist, Double price){
-
         return ResponseEntity.ok(eventDinService.findAll(artist, price));
     }
 
