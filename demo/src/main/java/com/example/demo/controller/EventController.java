@@ -103,6 +103,8 @@ public class EventController {
         model.addAttribute("isAdmin", isAdmin);
         boolean isUser = request.isUserInRole("USER");
         model.addAttribute("isUser", isUser);
+        boolean ticketsLeft = event.getTicketsAvailable() > 0;
+        model.addAttribute("ticketsLeft", ticketsLeft);
         return "eventTemplate";
     }
 
