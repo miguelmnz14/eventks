@@ -92,10 +92,10 @@ public class EventController {
     public String showEvent(Model model,@PathVariable long id,HttpServletRequest request){
         Event event = eventService.findById(id);
         model.addAttribute("event", event);
+        boolean isAdmin = request.isUserInRole("ADMIN");
         if (request.getUserPrincipal() != null){
             String currentUser = request.getUserPrincipal().getName();
             User user = userService.findbyusername(currentUser);
-            boolean isAdmin = request.isUserInRole("ADMIN");
             //model.addAttribute("commentUser",request.getUserPrincipal().getName());
             for (Comment comment : event.getComments()) {
                 User commentUser = comment.getUser();
@@ -103,6 +103,7 @@ public class EventController {
             }
         }
         model.addAttribute("filename",imageService.getHashMap(id));
+        model.addAttribute("isAdmin", isAdmin);
         return "eventTemplate";
     }
 
