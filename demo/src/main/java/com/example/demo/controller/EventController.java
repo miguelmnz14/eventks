@@ -2,7 +2,6 @@ package com.example.demo.controller;
 import com.example.demo.model.Comment;
 import com.example.demo.model.Event;
 import com.example.demo.model.User;
-import com.example.demo.repository.UserRepository;
 import com.example.demo.service.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,8 +40,6 @@ public class EventController {
     private CommentService commentService;
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserRepository userRepository;
     @Autowired
     private User user;
     @Autowired
@@ -104,6 +101,8 @@ public class EventController {
         }
         model.addAttribute("filename",imageService.getHashMap(id));
         model.addAttribute("isAdmin", isAdmin);
+        boolean isUser = request.isUserInRole("USER");
+        model.addAttribute("isUser", isUser);
         return "eventTemplate";
     }
 

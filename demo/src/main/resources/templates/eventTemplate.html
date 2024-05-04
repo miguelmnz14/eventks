@@ -42,6 +42,7 @@
 <a href="/{{event.id}}/{{filename}}" target="_blank">Enlace al PDF</a>
 {{/filename}}
 <div class="addComment">
+    {{#isUser}}
     <h3>Añadir comentario</h3>
     <form action="/events/{{event.id}}/comments" method="post">
         <label for="description-textarea"></label>
@@ -52,6 +53,7 @@
         <input type="hidden" name="_csrf" value="{{token}}"/>
         <input id="commentButton" type="submit" value="Subir comentario">
     </form>
+    {{/isUser}}
 </div>
 
 
