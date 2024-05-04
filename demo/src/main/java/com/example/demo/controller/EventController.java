@@ -53,8 +53,9 @@ public class EventController {
 
 
     @GetMapping("/events")
-    public String listAllEvents(Model model){
+    public String listAllEvents(Model model, HttpServletRequest request){
         model.addAttribute("events",eventService.findAll());
+        model.addAttribute("isAdmin", request.isUserInRole("ADMIN"));
         return "events";
     }
     @PostMapping("/events")
