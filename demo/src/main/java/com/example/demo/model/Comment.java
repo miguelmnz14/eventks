@@ -16,6 +16,18 @@ public class Comment {
     @ManyToOne
     private User user;
 
+    @Transient
+    @JsonIgnore
+    private boolean BelongsToCurrentUser;
+
+    public boolean isBelongsToCurrentUser() {
+        return BelongsToCurrentUser;
+    }
+
+    public void setBelongsToCurrentUser(boolean belongsToCurrentUser) {
+        BelongsToCurrentUser = belongsToCurrentUser;
+    }
+
     public Comment() {
 
     }

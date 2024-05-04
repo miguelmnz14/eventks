@@ -68,11 +68,12 @@
             <li>{{{this.content}}}</li>
             <li class="imp">Valoración:</li>
             <li>{{this.valoration}}</li>
+            {{#belongsToCurrentUser}}
             <form method="POST" action="/events/{{event.id}}/delete/{{this.id}}">
                 <input type="hidden" name="_csrf" value="{{token}}"/>
                 <li> <button    type="submit">Eliminar  </button></li>
             </form>
-
+            {{/belongsToCurrentUser}}
         </ul>
         {{/event.comments}}
     </div>

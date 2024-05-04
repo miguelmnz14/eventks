@@ -90,13 +90,20 @@ public class EventController {
     @GetMapping("/events/{id}")
     public String showEvent(Model model,@PathVariable long id,HttpServletRequest request){
         Event event = eventService.findById(id);
-            model.addAttribute("event", event);
-
+        model.addAttribute("event", event);
+        if (request.getUserPrincipal() != null){
+            String currentUser = request.getUserPrincipal().getName();
+            User user = userService.findbyusername(currentUser);
+            boolean isAdmin = request.isUserInRole("ADMIN");
             //model.addAttribute("commentUser",request.getUserPrincipal().getName());
-
-            model.addAttribute("filename",imageService.getHashMap(id));
-            return "eventTemplate";
+            for (Comment comment : event.getComments()) {
+                User commentUser = comment.getUser();
+                comment.setBelongsToCurrentUser(commentUser.getId().equals(user.getId()) || isAdmin);
+            }
         }
+        model.addAttribute("filename",imageService.getHashMap(id));
+        return "eventTemplate";
+    }
 
     @GetMapping("/events/new")
     public String createEvent(Model model){

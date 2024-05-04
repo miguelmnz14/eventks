@@ -26,7 +26,8 @@ public class User {
     @JsonIgnore
     private List<Event> myEvents;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL ,orphanRemoval = true)
+    @JsonIgnore
     private List<Comment> comments;
     @JsonIgnore
     private String encodedPassword;
@@ -67,6 +68,14 @@ public class User {
         this.comments = comments;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setEncodedPassword(String encodedPassword) {
         this.encodedPassword = encodedPassword;
     }
@@ -82,5 +91,7 @@ public class User {
     public List<String> getRoles() {
         return roles;
     }
+
+
 }
 
