@@ -65,6 +65,9 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         // PRIVATE ENDPOINTS
+                        .requestMatchers(HttpMethod.GET,"/api/events/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/users/all").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/api/users/all/*").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/events").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT,"/api/events/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/events/*/comments/**").hasRole("USER")

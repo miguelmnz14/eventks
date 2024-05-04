@@ -35,7 +35,8 @@ public class UserService {
             return user.get();
         } else {
             // Handle the case where the user does not exist
-            throw new NoSuchElementException("User not found: " + username);
+            return null;
+
         }
     }
     public void saveUserinDB(User user){

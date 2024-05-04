@@ -26,7 +26,8 @@ public class User {
     @JsonIgnore
     private List<Event> myEvents;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL ,orphanRemoval = true)
+    @JsonIgnore
     private List<Comment> comments;
     @JsonIgnore
     private String encodedPassword;
