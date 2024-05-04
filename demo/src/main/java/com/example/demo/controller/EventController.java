@@ -53,8 +53,9 @@ public class EventController {
 
 
     @GetMapping("/events")
-    public String listAllEvents(Model model){
+    public String listAllEvents(Model model, HttpServletRequest request){
         model.addAttribute("events",eventService.findAll());
+        model.addAttribute("isAdmin", request.isUserInRole("ADMIN"));
         return "events";
     }
     @PostMapping("/events")
@@ -90,13 +91,21 @@ public class EventController {
     @GetMapping("/events/{id}")
     public String showEvent(Model model,@PathVariable long id,HttpServletRequest request){
         Event event = eventService.findById(id);
-            model.addAttribute("event", event);
-
+        model.addAttribute("event", event);
+        boolean isAdmin = request.isUserInRole("ADMIN");
+        if (request.getUserPrincipal() != null){
+            String currentUser = request.getUserPrincipal().getName();
+            User user = userService.findbyusername(currentUser);
             //model.addAttribute("commentUser",request.getUserPrincipal().getName());
-
-            model.addAttribute("filename",imageService.getHashMap(id));
-            return "eventTemplate";
+            for (Comment comment : event.getComments()) {
+                User commentUser = comment.getUser();
+                comment.setBelongsToCurrentUser(commentUser.getId().equals(user.getId()) || isAdmin);
+            }
         }
+        model.addAttribute("filename",imageService.getHashMap(id));
+        model.addAttribute("isAdmin", isAdmin);
+        return "eventTemplate";
+    }
 
     @GetMapping("/events/new")
     public String createEvent(Model model){

@@ -9,18 +9,13 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
-import com.example.demo.model.Event;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -32,6 +27,11 @@ public class ImageService{
     @Value("/src/main/resources/static")
     private String uploadDir;
     private ConcurrentHashMap<Long, String> filess = new ConcurrentHashMap<>();
+    private final ResourceLoader resourceLoader;
+
+    public ImageService(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
 
 
     public String createImage(MultipartFile multiPartFile) {
@@ -120,6 +120,24 @@ public class ImageService{
             return null;
         }
     }
+
+    public Blob convertStaticImageToBlob(String imageName) {
+        try {
+            // Cargar la imagen desde la carpeta static
+            Resource resource = resourceLoader.getResource("classpath:static/imagesLoader/" + imageName);
+            InputStream inputStream = resource.getInputStream();
+
+            // Convertir la imagen a un arreglo de bytes
+            byte[] bytes = inputStream.readAllBytes();
+
+            // Crear y devolver el Blob
+            return new javax.sql.rowset.serial.SerialBlob(bytes);
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public void savefile(String foldername,MultipartFile file,String filemame) throws IOException {
         Path folder = Paths.get(uploadDir,foldername);
         if (!Files.exists(folder)){

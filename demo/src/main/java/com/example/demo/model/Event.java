@@ -23,7 +23,7 @@ public class Event {
     @OneToMany (mappedBy = "event",cascade = CascadeType.ALL ,orphanRemoval = true)
     @JsonIgnore
     private List<Comment> comments;
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany
     private List<User> users;
     @Lob
     @JsonIgnore
@@ -40,6 +40,17 @@ public class Event {
         this.price=price;
         this.ticketsAvailable=ticketsAvailable;
     }
+
+    public Event(String name, String description, String artists, double price, int ticketsAvailable, String image, Blob imageFile) {
+        this.name = name;
+        this.description = description;
+        this.artists = artists;
+        this.price = price;
+        this.ticketsAvailable = ticketsAvailable;
+        this.image = image;
+        this.imageFile = imageFile;
+    }
+
     public List<Comment> getComments(){
         return comments;
     }

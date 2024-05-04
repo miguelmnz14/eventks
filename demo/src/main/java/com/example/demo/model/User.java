@@ -68,6 +68,14 @@ public class User {
         this.comments = comments;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setEncodedPassword(String encodedPassword) {
         this.encodedPassword = encodedPassword;
     }
@@ -83,5 +91,7 @@ public class User {
     public List<String> getRoles() {
         return roles;
     }
+
+
 }
 

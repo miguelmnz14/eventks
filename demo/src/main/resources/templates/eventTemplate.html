@@ -24,18 +24,17 @@
         <p class="normal-txt">Tickets disponibles: <span class="red-text">{{event.ticketsAvailable}}</span></p>
 
         <div class="buttons">
-
+            {{#isAdmin}}
             <button class="Tmpl-button" onclick="location.href='/events/{{event.id}}/edit'">Editar</button>
             <form method="POST" action="/events/{{event.id}}/delete">
                 <input type="hidden" name="_csrf" value="{{token}}"/>
                 <button class="Tmpl-button" type="submit">Eliminar  </button>
             </form>
+            {{/isAdmin}}
             <form method="POST" action="/buy/{{event.id}}">
                 <input type="hidden" name="_csrf" value="{{token}}"/>
                 <button class="Tmpl-button" type="submit">Comprar  </button>
             </form>
-
-
         </div>
     </div>
 </div>
@@ -68,11 +67,12 @@
             <li>{{{this.content}}}</li>
             <li class="imp">Valoración:</li>
             <li>{{this.valoration}}</li>
+            {{#belongsToCurrentUser}}
             <form method="POST" action="/events/{{event.id}}/delete/{{this.id}}">
                 <input type="hidden" name="_csrf" value="{{token}}"/>
                 <li> <button    type="submit">Eliminar  </button></li>
             </form>
-
+            {{/belongsToCurrentUser}}
         </ul>
         {{/event.comments}}
     </div>

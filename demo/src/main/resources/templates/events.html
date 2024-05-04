@@ -29,7 +29,9 @@
     {{^events}}
     <p id="no-events">Todavía no hay eventos.</p>
     {{/events}}
+{{#isAdmin}}
 <button id="button" onclick="location.href='/events/new'">Nuevo evento</button>
+{{/isAdmin}}
 {{>footer}}
 </body>
 </html>
