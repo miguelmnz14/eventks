@@ -10,6 +10,8 @@ import com.example.demo.service.ImageService;
 import com.example.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -187,5 +189,46 @@ public class ApiController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/pdf/{id}")
+    public ResponseEntity<String> editPdf (@PathVariable Long id, @RequestBody(required = false) MultipartFile pdfFile) throws IOException {
+        imageService.deleteImage2(id);
+        if (pdfFile != null) {
+            String pdfname = pdfFile.getOriginalFilename();
+            if (!pdfFile.isEmpty()) {
+                if (pdfname.toLowerCase().endsWith(".pdf")) {
+                    if (!(pdfname.contains("/") || pdfname.contains("..") || pdfname.contains("%"))) {
+                        imageService.savePdf(pdfFile, id);
+                    } else {
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El pdf contiene patrones no permitidos.");
+                    }
+                } else {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El archivo parece no ser un pdf.");
+                }
 
+            }
+        }
+        return ResponseEntity.ok().build();
+    }
+    @PostMapping("/pdf/{id}")
+    public ResponseEntity<String> postPdf (@PathVariable Long id, @RequestBody(required = false) MultipartFile pdfFile) throws IOException {
+        if (pdfFile != null){
+            if(!imageService.havePdf(id)){
+                String pdfname = pdfFile.getOriginalFilename();
+                if (!pdfFile.isEmpty()){
+                    if (pdfname.toLowerCase().endsWith(".pdf")){
+                        if (!(pdfname.contains("/") || pdfname.contains("..") || pdfname.contains("%"))){
+                            imageService.savePdf(pdfFile, id);
+                        } else {
+                            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El pdf contiene patrones no permitidos.");
+                        }
+                    } else {
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El archivo parece no ser un pdf.");
+                    }
+                }
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El evento ya dispone de pdf.");
+            }
+        }
+        return ResponseEntity.ok().build();
+    }
 }

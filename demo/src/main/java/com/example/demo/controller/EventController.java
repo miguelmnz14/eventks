@@ -131,7 +131,7 @@ public class EventController {
         String pdfname = pdffile.getOriginalFilename();
         if (!pdffile.isEmpty()){
             if (pdfname.toLowerCase().endsWith(".pdf")){
-                if (!(pdfname.contains("/")| pdfname.contains(".."))){
+                if (!(pdfname.contains("/") || pdfname.contains("..") || pdfname.contains("%"))){
                     imageService.savePdf(pdffile, eid);
                 } else {
                     return "/error/pdferror2";
