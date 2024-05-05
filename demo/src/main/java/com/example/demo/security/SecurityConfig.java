@@ -89,10 +89,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/api/events").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/events/*").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/events/din").permitAll()
-
-
-                        // PUBLIC ENDPOINTS
-                        //  .anyRequest().permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/events/pdf/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/api/events/pdf/**").hasRole("ADMIN")
                 );
 
         // Disable Form login Authentication

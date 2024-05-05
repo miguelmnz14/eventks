@@ -11,6 +11,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.example.demo.model.Event;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -24,6 +25,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class ImageService{
 
     private static final Path IMAGES_FOLDER = Paths.get(System.getProperty("user.dir"), "static");
+
     @Value("/src/main/resources/static")
     private String uploadDir;
     private ConcurrentHashMap<Long, String> filess = new ConcurrentHashMap<>();
@@ -111,6 +113,31 @@ public class ImageService{
         }
     }
 
+    public void deleteImage2(Long id) {
+        String folder = IMAGES_FOLDER.toString();
+        String imagePath = folder + "\\" + id + "\\" + filess.get(id);
+        File imageFile = new File(imagePath);
+        try {
+            if (imageFile.exists()) {
+                if (imageFile.delete()) {
+                    System.out.println("Archivo borrado exitosamente: " + imagePath);
+                    String file = folder + "\\" + id;
+                    File folderfile = new File(file);
+                    folderfile.delete();
+                    filess.remove(id);
+                } else {
+                    System.out.println("No se pudo borrar el archivo: " + imagePath);
+                }
+            } else {
+                System.out.println("El archivo no existe: " + imagePath);
+            }
+        } catch (SecurityException e) {
+            System.err.println("Error de seguridad al intentar borrar el archivo: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Error al intentar borrar el archivo: " + e.getMessage());
+        }
+    }
+
     public Blob convertMultiparttoBlob (MultipartFile multipartFile){
         try{
             byte[] bytes = multipartFile.getBytes();
@@ -164,4 +191,9 @@ public class ImageService{
 
         return mine;
     }
+
+    public boolean havePdf(Long id){
+        return filess.get(id) != null;
+    }
+
 }
