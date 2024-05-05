@@ -239,10 +239,15 @@ public class EventService {
     public void cleandirectory() throws IOException {
         FileUtils.cleanDirectory(IMAGES_FOLDER.toFile());
     }
+    public void cleanMyDirectory(Long id) throws IOException {
+        Path myPath= IMAGES_FOLDER.resolve(id.toString());
+        FileUtils.cleanDirectory(myPath.toFile());
+    }
     public void saveSimple(Event event){
         eventRepository.save(event);
     }
 }
+
 
 
 
