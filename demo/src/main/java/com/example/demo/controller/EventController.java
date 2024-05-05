@@ -19,6 +19,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 
 
 import java.io.IOException;
@@ -119,9 +122,17 @@ public class EventController {
     public String newEvent(Model model,Event newevent,MultipartFile imageField,MultipartFile pdffile)throws IOException{
         Event event=eventService.save(newevent,imageField);
         Long eid= newevent.getId();
-        String neweid=eid.toString();
+        String pdfname = pdffile.getOriginalFilename();
         if (!pdffile.isEmpty()){
-            imageService.savePdf(pdffile,eid);
+            if (pdfname.toLowerCase().endsWith(".pdf")){
+                if (!(pdfname.contains("/")| pdfname.contains(".."))){
+                    imageService.savePdf(pdffile, eid);
+                } else {
+                    return "/error/pdferror2";
+                }
+            } else {
+                return "/error/pdferror";
+            }
         }
 
         return "eventSubmitted";
