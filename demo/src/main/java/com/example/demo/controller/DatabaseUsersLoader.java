@@ -29,8 +29,8 @@ public class DatabaseUsersLoader {
 
     @PostConstruct
     private void initDatabase() throws IOException {
-        /*userRepository.save(new User("user", passwordEncoder.encode("pass"), "USER"));
-        userRepository.save(new User("admin", passwordEncoder.encode("adminpass"), "USER", "ADMIN"));*/
+        userRepository.save(new User("user", passwordEncoder.encode("pass"), "USER"));
+        userRepository.save(new User("admin", passwordEncoder.encode("adminpass"), "USER", "ADMIN"));
         Event event= new Event("BBO", "La pareja valenciana ha logrado ser la nueva sensación del hip-hop sin sello, sin publicidad, sin mánager, sin contacto con la prensa y con una discretísima presencia en redes gracias a 'BBO', un disco mimado al detalle y repleto de talento, una obra generacional ", "Hoke", 20, 10, "hoke.jpg", imageService.convertStaticImageToBlob("hoke.jpg"));
 
         eventService.save(event,null);

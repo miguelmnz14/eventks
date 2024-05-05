@@ -65,19 +65,34 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         // PRIVATE ENDPOINTS
-                        .requestMatchers(HttpMethod.GET,"/api/events/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/events").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/api/events/*").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/api/events/*").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET,"/api/users/all").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/api/users/all/*").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST,"/api/events").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/api/users/me").hasRole("USER")
+                        .requestMatchers(HttpMethod.DELETE,"/api/users/me").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET,"/api/users/me").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET,"/api/users/mytickets").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST,"/api/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/auth/signup").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/auth/logout").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/auth/refresh").permitAll()
                         .requestMatchers(HttpMethod.PUT,"/api/events/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/events/*/comments/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.DELETE,"/api/events/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/events/*/comments").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/api/events/*/image").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/events/*/image").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/events/*/image").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/events/buy/*").hasRole("USER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/events/*/comments/*").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/events/*/comments").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/events/*/comments").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/events").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/events/*").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/events/din").permitAll()
+
+
                         // PUBLIC ENDPOINTS
-                        .anyRequest().permitAll()
+                        //  .anyRequest().permitAll()
                 );
 
         // Disable Form login Authentication
@@ -117,6 +132,7 @@ public class SecurityConfig {
                         .requestMatchers("/private/**").hasRole("USER")
                         .requestMatchers("/tickets").hasRole("USER")
                         .requestMatchers("/buy/*").hasRole("USER")
+                        .requestMatchers("/events/*/comments").hasRole("USER")
                         .requestMatchers("/**").permitAll()
                 )
                 .formLogin(formLogin -> formLogin

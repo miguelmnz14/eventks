@@ -89,10 +89,12 @@ public class ApiController {
 
     }
     @PostMapping("/{eventId}/comments")
-    public ResponseEntity<Comment> createcomment(@PathVariable Long eventId,@RequestBody Comment comment){
+    public ResponseEntity<Comment> createcomment(@PathVariable Long eventId,@RequestBody Comment comment,HttpServletRequest request){
         String cont= comment.getContent();
         String newcont=eventService.sanitizexss(cont);
         comment.setContent(newcont);
+        User user =userService.findbyusername(request.getUserPrincipal().getName());
+        comment.setUser(user);
         Event event=eventService.findById(eventId);
         comment.setEventId(event);
         eventService.addComment(event,comment);
@@ -178,6 +180,11 @@ public class ApiController {
     @GetMapping("/din")
     public ResponseEntity<List<Event>> findDin (String artist, Double price){
         return ResponseEntity.ok(eventDinService.findAll(artist, price));
+    }
+    @PostMapping("/buy/{id}")
+    public ResponseEntity<Void> buyEvent(HttpServletRequest request,@PathVariable Long id){
+        eventService.buy(id,request);
+        return ResponseEntity.ok().build();
     }
 
 

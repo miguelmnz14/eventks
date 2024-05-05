@@ -1,8 +1,10 @@
 package com.example.demo.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
+@JsonIgnoreProperties(value = {"BelongsToCurrentUser"})
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,8 +18,9 @@ public class Comment {
     @ManyToOne
     private User user;
 
-    @Transient
+
     @JsonIgnore
+    @Transient
     private boolean BelongsToCurrentUser;
 
     public boolean isBelongsToCurrentUser() {
