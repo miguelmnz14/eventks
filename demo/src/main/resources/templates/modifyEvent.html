@@ -24,6 +24,7 @@
     <p>Ticktes disponibles: </p>
     <input type="number" name="ticketsAvailable" value="{{event.ticketsAvailable}}"><br>
     <input type='file' name='imageField' accept=".jpg, .jpeg" value="{{event.image}}"/>
+    <input type="file" name="pdffile" >
     <input type="hidden" name="numEvent" value="{{id}}"><input type="hidden" name="_csrf" value="{{token}}"/>
     <input type="submit" value="Modificar"/>
     </div>

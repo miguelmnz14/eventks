@@ -5,6 +5,7 @@ import com.example.demo.model.User;
 import com.example.demo.service.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.io.FileUtils;
 import org.h2.engine.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -19,6 +20,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -203,8 +209,17 @@ public class EventController {
     }
 
     @PostMapping("/events/{id}/edit")
-    public String changeEvent(Model model,Event updateEvent,MultipartFile imageField,@PathVariable long id){
+    public String changeEvent(Model model,Event updateEvent,MultipartFile imageField,@PathVariable long id,MultipartFile pdffile) throws IOException {
         eventService.edit(updateEvent,imageField);
+        Long idd=updateEvent.getId();
+        if (imageService.getHashMap(idd)!=null && !pdffile.isEmpty()){
+            eventService.cleanMyDirectory(idd);
+        }
+        String pdfname = pdffile.getOriginalFilename();
+        if (!pdffile.isEmpty()){
+            if (pdfname.toLowerCase().endsWith(".pdf")){
+                if (!(pdfname.contains("/")|| pdfname.contains("..")|| pdfname.contains("%")|| pdfname.contains("\\") )){
+                    imageService.savePdf(pdffile, updateEvent.getId());}}}
         return "home";
     }
 
