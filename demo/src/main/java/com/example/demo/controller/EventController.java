@@ -264,7 +264,7 @@ public class EventController {
     }
     @PostMapping("/signup")
     public String newuser(Model model,String username,String password){
-        if (!userService.existname(username) && !username.isEmpty() && !password.isEmpty()){
+        if (!userService.existname(username) && !username.isEmpty() && !password.isEmpty() && userService.checkPassword(password)){
             User newUser = new User(username, passwordEncoder.encode(password), "USER");
             userService.saveUserinDB(newUser);
             return "redirect:/login";
