@@ -103,8 +103,11 @@ public class UserRestController {
         String username = request.getUserPrincipal().getName();
         User user = userService.findbyusername(username);
         Event event = eventService.findById(id);
-        eventService.removeEvent(event, user);
-        eventService.oneMore(event);
+        if (user.getMyEvents().contains(event)){
+            eventService.removeEvent(event, user);
+            eventService.oneMore(event);
+        }
+
         return ResponseEntity.ok().build();
     }
 
