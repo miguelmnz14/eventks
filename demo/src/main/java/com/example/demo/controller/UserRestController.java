@@ -58,6 +58,15 @@ public class UserRestController {
     @PutMapping("/me")
     public ResponseEntity<Void> editMyUser(HttpServletRequest request, @RequestBody UserUpdateRequest newUser){
 
+        if (!newUser.getUsername().equals(request.getUserPrincipal().getName())){
+            if(userService.existname(newUser.getUsername())){
+                return ResponseEntity.badRequest().build();
+            }
+        }
+        if (!userService.checkPassword(newUser.getPassword())){
+            return ResponseEntity.badRequest().build();
+        }
+
         User user = userService.findbyusername(request.getUserPrincipal().getName());
         userService.editUser(request.getUserPrincipal().getName(), newUser.getUsername(), newUser.getPassword());
         return ResponseEntity.ok().build();

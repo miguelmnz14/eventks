@@ -108,9 +108,11 @@ public class webController {
     }
     @PostMapping("/private/myuser/edit")
     public String editMyUser(Model model,HttpServletRequest request,String newUser,String password) throws ServletException {
-       if(userService.existname(newUser)){
-           return "error/changeNameError";
-       }
+        if (!newUser.equals(request.getUserPrincipal().getName())){
+            if(userService.existname(newUser)){
+                return "error/changeNameError";
+            }
+        }
         String username=request.getUserPrincipal().getName();
         userService.editUser(username,newUser,password);
         request.logout();
