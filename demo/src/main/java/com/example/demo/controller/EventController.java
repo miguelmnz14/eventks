@@ -99,6 +99,7 @@ public class EventController {
         Event event = eventService.findById(id);
         model.addAttribute("event", event);
         boolean isAdmin = request.isUserInRole("ADMIN");
+        boolean find = false;
         if (request.getUserPrincipal() != null){
             String currentUser = request.getUserPrincipal().getName();
             User user = userService.findbyusername(currentUser);
@@ -107,6 +108,7 @@ public class EventController {
                 User commentUser = comment.getUser();
                 comment.setBelongsToCurrentUser(commentUser.getId().equals(user.getId()) || isAdmin);
             }
+            find = userService.haveEvent(user, event);
         }
         model.addAttribute("filename",imageService.getHashMap(id));
         model.addAttribute("isAdmin", isAdmin);
@@ -114,6 +116,7 @@ public class EventController {
         model.addAttribute("isUser", isUser);
         boolean ticketsLeft = event.getTicketsAvailable() > 0;
         model.addAttribute("ticketsLeft", ticketsLeft);
+        model.addAttribute("haveEvent", find);
         return "eventTemplate";
     }
 
@@ -131,7 +134,7 @@ public class EventController {
         String pdfname = pdffile.getOriginalFilename();
         if (!pdffile.isEmpty()){
             if (pdfname.toLowerCase().endsWith(".pdf")){
-                if (!(pdfname.contains("/") || pdfname.contains("..") || pdfname.contains("%"))){
+                if (!(pdfname.contains("/") || pdfname.contains("..") || pdfname.contains("%") || pdfname.contains("\\"))){
                     imageService.savePdf(pdffile, eid);
                 } else {
                     return "/error/pdferror2";
@@ -140,7 +143,6 @@ public class EventController {
                 return "/error/pdferror";
             }
         }
-
         return "eventSubmitted";
     }
     @GetMapping("/events/{id}/image")
@@ -269,6 +271,18 @@ public class EventController {
         } else {
             return "redirect:/signuperror";
         }
+    }
+
+    @PostMapping("/{id}/remove")
+    public String removeEvent(Model model, HttpServletRequest request, @PathVariable Long id){
+        if (request.getUserPrincipal() != null){
+            String username = request.getUserPrincipal().getName();
+            User user = userService.findbyusername(username);
+            Event event = eventService.findById(id);
+            eventService.removeEvent(event, user);
+            eventService.oneMore(event);
+        }
+        return "redirect:/";
     }
 
 }

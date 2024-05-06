@@ -40,6 +40,13 @@ public class UserRestController {
     @DeleteMapping("/me")
     public ResponseEntity<Void> deleteMyUser(HttpServletRequest request) throws ServletException {
         if (request.getUserPrincipal()!=null){
+            String username = request.getUserPrincipal().getName();
+            User user = userService.findbyusername(username);
+            List <Event> events = user.getMyEvents();
+            for (Event event : events){
+                eventService.oneMore(event);
+                eventService.saveSimple(event);
+            }
             userService.deleteUser(request.getUserPrincipal().getName());
             jwtCookieManager.deleteAccessTokenCookie();
             return ResponseEntity.ok().build();
@@ -66,6 +73,11 @@ public class UserRestController {
     public ResponseEntity<Void> deleteUser(@PathVariable String username){
         User user =userService.findbyusername(username);
         if(user!=null){
+            List <Event> events = user.getMyEvents();
+            for (Event event : events){
+                eventService.oneMore(event);
+                eventService.saveSimple(event);
+            }
             userService.deleteUser(username);
             return ResponseEntity.ok().build();
         }
@@ -92,6 +104,7 @@ public class UserRestController {
         User user = userService.findbyusername(username);
         Event event = eventService.findById(id);
         eventService.removeEvent(event, user);
+        eventService.oneMore(event);
         return ResponseEntity.ok().build();
     }
 

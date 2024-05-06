@@ -39,11 +39,19 @@
             </form>
             {{/isAdmin}}
             {{#ticketsLeft}}
+            {{^haveEvent}}
             <form method="POST" action="/buy/{{event.id}}">
                 <input type="hidden" name="_csrf" value="{{token}}"/>
                 <button class="Tmpl-button" type="submit">Comprar  </button>
             </form>
+            {{/haveEvent}}
             {{/ticketsLeft}}
+            {{#haveEvent}}
+            <form method="POST" action="/{{event.id}}/remove">
+                <input type="hidden" name="_csrf" value="{{token}}"/>
+                <button class="Tmpl-button" type="submit">Devolver </button>
+            </form>
+            {{/haveEvent}}
         </div>
     </div>
 </div>

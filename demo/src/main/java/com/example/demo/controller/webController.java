@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Event;
 import com.example.demo.model.User;
 
+import com.example.demo.service.EventService;
 import com.example.demo.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,11 +17,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class webController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private EventService eventService;
     @ModelAttribute
     public void addAttributes(Model model, HttpServletRequest request) {
 
@@ -77,6 +82,12 @@ public class webController {
     }
     @GetMapping("/admin/users/{username}")
     public String deleteUser(@PathVariable String username){
+        User user = userService.findbyusername(username);
+        List<Event> events = user.getMyEvents();
+        for (Event event : events){
+            eventService.oneMore(event);
+            eventService.saveSimple(event);
+        }
         userService.deleteUser(username);
         return "redirect:/admin/users";
     }

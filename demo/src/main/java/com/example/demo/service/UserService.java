@@ -81,4 +81,16 @@ public class UserService {
             return false;
         }
     }
+
+    public boolean haveEvent(User user, Event event){
+        List <Event> events = user.getMyEvents();
+        boolean find = false;
+        for(Event event1 : events){
+            if (event == event1){
+                find = true;
+                break;
+            }
+        }
+        return find;
+    }
 }

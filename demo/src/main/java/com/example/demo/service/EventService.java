@@ -268,6 +268,11 @@ public class EventService {
         eventRepository.save(event);
     }
 
+    public void oneMore(Event event){
+        event.setTicketsAvailable(event.getTicketsAvailable() + 1);
+        eventRepository.save(event);
+    }
+
 }
 
 
