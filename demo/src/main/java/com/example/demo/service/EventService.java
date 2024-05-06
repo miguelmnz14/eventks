@@ -246,6 +246,28 @@ public class EventService {
     public void saveSimple(Event event){
         eventRepository.save(event);
     }
+
+    public void removeEvent (Event event, User user){
+        List <Event> events = user.getMyEvents();
+        for (Event event1 : events){
+            if (event1 == event){
+                events.remove(event1);
+                break;
+            }
+        }
+        user.setMyEvents(events);
+        userRepository.save(user);
+        List <User> users = event.getUsers();
+        for (User user1 : users){
+            if (user1 == user){
+                users.remove(user);
+                break;
+            }
+        }
+        event.setUsers(users);
+        eventRepository.save(event);
+    }
+
 }
 
 

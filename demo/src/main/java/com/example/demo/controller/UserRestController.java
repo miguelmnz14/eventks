@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Event;
+import com.example.demo.service.EventService;
 import com.example.demo.service.UserUpdateRequest;
 import com.example.demo.model.User;
 import com.example.demo.security.jwt.JwtCookieManager;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.Path;
 import java.security.Principal;
 import java.util.List;
 
@@ -22,6 +24,8 @@ public class UserRestController {
     private UserService userService;
     @Autowired
     private JwtCookieManager jwtCookieManager;
+    @Autowired
+    private EventService eventService;
 
     @GetMapping("/me")
     public ResponseEntity<User> me(HttpServletRequest request) {
@@ -81,4 +85,14 @@ public class UserRestController {
         }
         return ResponseEntity.ok(myevents);
     }
+
+    @DeleteMapping("/event/{id}")
+    public ResponseEntity <String> removeEvent (@PathVariable Long id, HttpServletRequest request){
+        String username = request.getUserPrincipal().getName();
+        User user = userService.findbyusername(username);
+        Event event = eventService.findById(id);
+        eventService.removeEvent(event, user);
+        return ResponseEntity.ok().build();
+    }
+
 }
