@@ -94,5 +94,9 @@ public class UserService {
         return find;
     }
 
+    public boolean checkPassword(String password){
+        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\\W).{8,}$";
+        return password.matches(regex);
+    }
 
 }

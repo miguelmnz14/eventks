@@ -47,13 +47,17 @@ public class LoginController {
     }
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> signup(@RequestBody UserUpdateRequest myUSer){
-        if (!userrrSerivec.existname(myUSer.getUsername()) && !myUSer.getUsername().isEmpty() && !myUSer.getPassword().isEmpty()){
-            User newUser = new User(myUSer.getUsername(), passwordEncoder.encode(myUSer.getPassword()), "USER");
-            userrrSerivec.saveUserinDB(newUser);
-            return ResponseEntity.ok(new AuthResponse(AuthResponse.Status.SUCCESS,"Creacion Correcta",null));
+        if (userrrSerivec.checkPassword(myUSer.getPassword())){
+            if (!userrrSerivec.existname(myUSer.getUsername()) && !myUSer.getUsername().isEmpty() && !myUSer.getPassword().isEmpty()) {
+                User newUser = new User(myUSer.getUsername(), passwordEncoder.encode(myUSer.getPassword()), "USER");
+                userrrSerivec.saveUserinDB(newUser);
+                return ResponseEntity.ok(new AuthResponse(AuthResponse.Status.SUCCESS, "Creacion Correcta", null));
 
+            } else {
+                return ResponseEntity.ok(new AuthResponse(AuthResponse.Status.FAILURE, "El nombre de usuario no esta disponible", null));
+            }
         } else {
-            return ResponseEntity.ok(new AuthResponse(AuthResponse.Status.FAILURE,"El nombre de usuario no esta disponible",null));
+            return ResponseEntity.ok(new AuthResponse(AuthResponse.Status.FAILURE, "La contraseña no es suficientemente segura.", null));
         }
     }
 
