@@ -59,14 +59,6 @@ public class webController {
 
     @GetMapping("/private")
     public String privatePage(Model model, HttpServletRequest request) {
-
-        /*String name = request.getUserPrincipal().getName();
-
-
-        User user = userService.findbyusername(name);
-        model.addAttribute("username", user.getUsername());
-        model.addAttribute("admin", request.isUserInRole("ADMIN"));*/
-
         return "private";
     }
 
@@ -109,15 +101,17 @@ public class webController {
     @PostMapping("/private/myuser/edit")
     public String editMyUser(Model model,HttpServletRequest request,String newUser,String password) throws ServletException {
         if (!newUser.equals(request.getUserPrincipal().getName())){
-            if(userService.existname(newUser)){
+            if(userService.existname(newUser) || !userService.checkPassword(password)){
                 return "error/changeNameError";
             }
         }
-        String username=request.getUserPrincipal().getName();
-        userService.editUser(username,newUser,password);
-        request.logout();
-        return "redirect:/login";
+        if (userService.checkPassword(password)){
+            String username = request.getUserPrincipal().getName();
+            userService.editUser(username, newUser, password);
+            request.logout();
+            return "redirect:/login";
+        } else {
+            return "error/changeNameError";
+        }
     }
 }
-
-
