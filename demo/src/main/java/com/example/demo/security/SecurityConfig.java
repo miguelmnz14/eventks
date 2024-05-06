@@ -132,6 +132,7 @@ public class SecurityConfig {
                         .requestMatchers("/tickets").hasRole("USER")
                         .requestMatchers("/buy/*").hasRole("USER")
                         .requestMatchers("/events/*/comments").hasRole("USER")
+                        .requestMatchers("/*/remove").hasRole("USER")
                         .requestMatchers("/**").permitAll()
                 )
                 .formLogin(formLogin -> formLogin

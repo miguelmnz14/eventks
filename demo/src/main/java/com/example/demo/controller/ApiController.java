@@ -43,14 +43,23 @@ public class ApiController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<Event>> getAllEvents(){
+    public ResponseEntity<List<Event>> getAllEvents(HttpServletRequest request){
+
         List<Event> events = eventService.findAll();
+        if (!request.isUserInRole("ADMIN")){
+            for (Event event:events){
+                event.setUsers(null);
+            }
+        }
         return ResponseEntity.ok(events);
     }
 
     @GetMapping("/{eventId}")
-    public ResponseEntity<Event> getEvent(@PathVariable Long eventId){
+    public ResponseEntity<Event> getEvent(@PathVariable Long eventId,HttpServletRequest request){
         Event event = eventService.findById(eventId);
+        if (!request.isUserInRole("ADMIN")){
+            event.setUsers(null);
+        }
         return ResponseEntity.ok(event);
     }
     @PostMapping
@@ -196,7 +205,7 @@ public class ApiController {
             String pdfname = pdfFile.getOriginalFilename();
             if (!pdfFile.isEmpty()) {
                 if (pdfname.toLowerCase().endsWith(".pdf")) {
-                    if (!(pdfname.contains("/") || pdfname.contains("..") || pdfname.contains("%"))) {
+                    if (!(pdfname.contains("/") || pdfname.contains("..") || pdfname.contains("%") || pdfname.contains("\\"))) {
                         imageService.savePdf(pdfFile, id);
                     } else {
                         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El pdf contiene patrones no permitidos.");
@@ -216,7 +225,7 @@ public class ApiController {
                 String pdfname = pdfFile.getOriginalFilename();
                 if (!pdfFile.isEmpty()){
                     if (pdfname.toLowerCase().endsWith(".pdf")){
-                        if (!(pdfname.contains("/") || pdfname.contains("..") || pdfname.contains("%"))){
+                        if (!(pdfname.contains("/") || pdfname.contains("..") || pdfname.contains("%")|| pdfname.contains("\\"))){
                             imageService.savePdf(pdfFile, id);
                         } else {
                             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El pdf contiene patrones no permitidos.");

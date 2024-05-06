@@ -67,10 +67,12 @@ public class UserService {
         }
     }
     public void editUser(String oldUser,String username,String password){
-        User user =findbyusername(oldUser);
-        user.setUsername(username);
-        user.setEncodedPassword(passwordEncoder.encode(password));
-        userRepository.save(user);
+        if (!username.isEmpty()) {
+            User user = findbyusername(oldUser);
+            user.setUsername(username);
+            user.setEncodedPassword(passwordEncoder.encode(password));
+            userRepository.save(user);
+        }
     }
 
     public boolean existname(String username){
