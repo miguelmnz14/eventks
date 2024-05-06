@@ -63,6 +63,9 @@ public class UserRestController {
                 return ResponseEntity.badRequest().build();
             }
         }
+        if (!userService.checkPassword(newUser.getPassword())){
+            return ResponseEntity.badRequest().build();
+        }
 
         User user = userService.findbyusername(request.getUserPrincipal().getName());
         userService.editUser(request.getUserPrincipal().getName(), newUser.getUsername(), newUser.getPassword());
